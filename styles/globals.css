@@ -1,3 +1,10 @@
+/* 1. Tailwind CSS 기본 구성 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 2. 사용자 정의 CSS (Tailwind 위에 작성 가능) */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
