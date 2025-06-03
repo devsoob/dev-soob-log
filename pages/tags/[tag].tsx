@@ -74,7 +74,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allTags = new Set<string>();
 
   filenames.forEach((filename) => {
-    if (filename.endsWith('.mdx')) {
+    if (filename.endsWith('.mdx') || filename.endsWith('.md')) {
       const filePath = path.join(postsDirectory, filename);
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(fileContents);
@@ -89,6 +89,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { tag },
   }));
 
+  console.log('Generated tag paths:', paths);
+
   return {
     paths,
     fallback: false,
@@ -101,22 +103,24 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const filenames = fs.readdirSync(postsDirectory);
 
   const posts = filenames
-    .filter((filename) => filename.endsWith('.mdx'))
+    .filter((filename) => filename.endsWith('.mdx') || filename.endsWith('.md'))
     .map((filename) => {
       const filePath = path.join(postsDirectory, filename);
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data, content } = matter(fileContents);
 
       return {
-        slug: filename.replace(/\.mdx$/, ''),
+        slug: filename.replace(/\.(mdx?|md)$/, ''),
         title: data.title || '',
         date: data.date || '',
         excerpt: content.slice(0, 200).trim() + '...',
         tags: data.tags || [],
       };
     })
-    .filter((post) => post.tags.includes(tag))
+    .filter((post) => post.tags.some((t: string) => t.toLowerCase() === tag.toLowerCase()))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  console.log(`Found ${posts.length} posts for tag: ${tag}`);
 
   return {
     props: {
