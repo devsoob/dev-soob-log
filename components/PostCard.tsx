@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { UnifiedPost } from '@/types/post';
+import Tag from './Tag';
 
 interface PostCardProps {
   post: UnifiedPost;
@@ -18,19 +19,28 @@ function PostCard({ post }: PostCardProps) {
   const formattedDate = React.useMemo(() => formatDate(post.date), [post.date]);
 
   return (
-    <Link 
-      href={`/posts/${post.slug}`}
-      className="block border rounded-lg p-6 mb-4 hover:shadow-lg transition-shadow"
-      prefetch={true}
-    >
-      <article>
-        <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-        <div className="text-gray-600 text-sm mb-3">
-          {formattedDate}
+    <div className="block border rounded-lg p-6 mb-4 hover:shadow-lg transition-shadow">
+      <Link 
+        href={`/posts/${post.slug}`}
+        className="block"
+        prefetch={true}
+      >
+        <article>
+          <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
+          <div className="text-gray-600 text-sm mb-3">
+            {formattedDate}
+          </div>
+          <p className="text-gray-600 mb-4">{post.description}</p>
+        </article>
+      </Link>
+      {post.tags && post.tags.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-4">
+          {post.tags.map((tag) => (
+            <Tag key={tag} name={tag} />
+          ))}
         </div>
-        <p className="text-gray-600">{post.description}</p>
-      </article>
-    </Link>
+      )}
+    </div>
   );
 }
 
