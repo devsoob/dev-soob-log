@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { DefaultSeo } from 'next-seo';
 import LoadingSpinner from "@/components/LoadingSpinner";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import localFont from 'next/font/local';
 import "../styles/globals.css";
 
@@ -80,6 +82,43 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <MDXProvider components={mdxComponents}>
+      <DefaultSeo
+        title={process.env.NEXT_PUBLIC_SITE_NAME || 'Dev Log'}
+        description={process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '개발 경험과 지식을 공유하는 개발 블로그'}
+        canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app'}
+        openGraph={{
+          type: 'website',
+          locale: 'ko_KR',
+          url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app',
+          siteName: process.env.NEXT_PUBLIC_SITE_NAME || 'Dev Log',
+          images: [
+            {
+              url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app'}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: process.env.NEXT_PUBLIC_SITE_NAME || 'Dev Log',
+            },
+          ],
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'viewport',
+            content: 'width=device-width, initial-scale=1',
+          },
+          {
+            name: 'author',
+            content: process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Author Name',
+          },
+        ]}
+      />
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
       <div className={`${pretendard.variable} font-sans min-h-screen`}>
         {isLoading && <LoadingSpinner />}
         <Component {...pageProps} />

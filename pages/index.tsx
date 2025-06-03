@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import { UnifiedPost } from "@/types/post";
 import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
+import Search from "@/components/Search";
 import Head from "next/head";
 
 interface Props {
@@ -28,6 +29,10 @@ export default function Home({ posts }: Props) {
             Thoughts, learnings, and experiences in software development
           </p>
         </header>
+
+        <div className="mb-8">
+          <Search />
+        </div>
 
         <section className="space-y-8">
           {posts.map((post) => (
