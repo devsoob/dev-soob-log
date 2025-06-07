@@ -1,35 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { UnifiedPost } from '@/types/post';
 
-interface SearchResult {
-  title: string;
-  excerpt: string;
-  slug: string;
+interface SearchProps {
+  onSearchResults: (results: UnifiedPost[] | null) => void;
 }
 
-export default function Search() {
+export default function Search({ onSearchResults }: SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  console.log('searchTerm', searchTerm);
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
-    if (searchTerm.length < 2) return;
+    if (searchTerm.length < 2) {
+      onSearchResults(null);
+      return;
+    }
     
     console.log('Searching for:', searchTerm);
     setIsSearching(true);
-    setHasSearched(true);
     
     try {
       const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}`);
       const data = await response.json();
       console.log('Search response:', data);
-      setSearchResults(data);
+      onSearchResults(data);
     } catch (error) {
       console.error('Search error:', error);
-      setSearchResults([]);
+      onSearchResults([]);
     } finally {
       setIsSearching(false);
     }
@@ -39,6 +36,8 @@ export default function Search() {
     const delayDebounceFn = setTimeout(() => {
       if (searchTerm.length >= 2) {
         handleSearch();
+      } else if (searchTerm.length === 0) {
+        onSearchResults(null);
       }
     }, 300);
 
@@ -66,36 +65,6 @@ export default function Search() {
           </div>
         )}
       </form>
-
-      {hasSearched && (
-        <div className="mt-4">
-          {isSearching ? (
-            <p className="text-center text-gray-600">검색 중...</p>
-          ) : searchResults.length > 0 ? (
-            <>
-              <p className="text-sm text-gray-600 mb-4">
-                '{searchTerm}' 검색 결과: {searchResults.length}개
-              </p>
-              <div className="space-y-4">
-                {searchResults.map((result) => (
-                  <Link
-                    href={`/posts/${result.slug}`}
-                    key={result.slug}
-                    className="block p-4 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
-                  >
-                    <h3 className="text-lg font-semibold text-gray-900">{result.title}</h3>
-                    <p className="mt-1 text-gray-600">{result.excerpt}</p>
-                  </Link>
-                ))}
-              </div>
-            </>
-          ) : (
-            <p className="text-center text-gray-600">
-              '{searchTerm}'에 대한 검색 결과가 없습니다.
-            </p>
-          )}
-        </div>
-      )}
     </div>
   );
 } 

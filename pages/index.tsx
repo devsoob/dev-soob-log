@@ -4,12 +4,22 @@ import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Search from "@/components/Search";
 import Head from "next/head";
+import { useState } from "react";
 
 interface Props {
   posts: UnifiedPost[];
 }
 
 export default function Home({ posts }: Props) {
+  const [searchResults, setSearchResults] = useState<UnifiedPost[] | null>(null);
+
+  const handleSearchResults = (results: UnifiedPost[] | null) => {
+    setSearchResults(results);
+  };
+
+  // 표시할 포스트 결정
+  const displayPosts = searchResults !== null ? searchResults : posts;
+
   return (
     <>
       <Head>
@@ -31,13 +41,21 @@ export default function Home({ posts }: Props) {
         </header>
 
         <div className="mb-8">
-          <Search />
+          <Search onSearchResults={handleSearchResults} />
         </div>
 
         <section className="space-y-8">
-          {posts.map((post) => (
-            <PostCard key={post.id || post.slug} post={post} />
-          ))}
+          {displayPosts.length > 0 ? (
+            displayPosts.map((post) => (
+              <PostCard key={post.id || post.slug} post={post} />
+            ))
+          ) : (
+            searchResults !== null && (
+              <p className="text-center text-gray-600 py-8">
+                검색 결과가 없습니다.
+              </p>
+            )
+          )}
         </section>
       </main>
     </>
