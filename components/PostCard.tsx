@@ -8,11 +8,20 @@ interface PostCardProps {
 }
 
 function formatDate(date: string) {
-  return new Date(date).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).replace(/\./g, '/').replace(/\s/g, '').replace(/\/$/, '');
+  try {
+    const d = new Date(date);
+    if (isNaN(d.getTime())) {
+      return '날짜 없음';
+    }
+    return d.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).replace(/\./g, '/').replace(/\s/g, '').replace(/\/$/, '');
+  } catch (error) {
+    console.error('Date formatting error:', error);
+    return '날짜 없음';
+  }
 }
 
 function PostCard({ post }: PostCardProps) {
