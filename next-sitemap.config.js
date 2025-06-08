@@ -2,18 +2,19 @@
 module.exports = {
   siteUrl: 'https://dev-log-pi.vercel.app',
   generateRobotsTxt: true,
-  sitemapSize: 7000,
   changefreq: 'daily',
   priority: 0.7,
   transform: async (config, path) => {
-    // 경로를 URL 인코딩
-    const encodedPath = encodeURI(path);
     return {
-      loc: encodedPath,
-      changefreq: config.changefreq,
-      priority: config.priority,
-      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
-      alternateRefs: config.alternateRefs ?? [],
+      loc: `${config.siteUrl}${path}`,
+      changefreq: 'daily',
+      priority: 0.7,
+      lastmod: new Date().toISOString()
     }
   },
+  additionalPaths: async (config) => {
+    const result = [];
+    return result;
+  },
+  exclude: ['**/tags/**']
 } 
