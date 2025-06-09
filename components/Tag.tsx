@@ -9,7 +9,7 @@ interface TagProps {
 }
 
 export default function Tag({ name, count, className = '', onClick }: TagProps) {
-  const baseClasses = 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors';
+  const baseClasses = 'inline-flex items-center px-2 py-1 rounded-md text-sm bg-white dark:bg-black border border-black dark:border-white text-black dark:text-white';
   
   if (onClick) {
     return (
@@ -19,7 +19,7 @@ export default function Tag({ name, count, className = '', onClick }: TagProps) 
       >
         {name}
         {count !== undefined && (
-          <span className="ml-2 bg-gray-200 px-2 py-0.5 rounded-full text-xs">
+          <span className="ml-2 bg-gray-800 dark:bg-gray-200 px-2 py-0.5 rounded-full text-xs">
             {count}
           </span>
         )}
@@ -34,7 +34,7 @@ export default function Tag({ name, count, className = '', onClick }: TagProps) 
     >
       {name}
       {count !== undefined && (
-        <span className="ml-2 bg-gray-200 px-2 py-0.5 rounded-full text-xs">
+        <span className="ml-2 bg-gray-800 dark:bg-gray-200 px-2 py-0.5 rounded-full text-xs">
           {count}
         </span>
       )}

@@ -5,6 +5,7 @@ import PostCard from "@/components/PostCard";
 import Search from "@/components/Search";
 import Head from "next/head";
 import { useState } from "react";
+import Header from "@/components/Header";
 
 interface Props {
   posts: UnifiedPost[];
@@ -32,32 +33,28 @@ export default function Home({ posts }: Props) {
         <meta property="og:type" content="website" />
       </Head>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <header className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">Dev Log</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Thoughts, learnings, and experiences in software development
-          </p>
-        </header>
+      <div className="min-h-screen bg-white dark:bg-black">
+        <Header />
+        <main className="max-w-4xl mx-auto px-4 pt-24 pb-8">
+          <div className="mb-8">
+            <Search onSearchResults={handleSearchResults} />
+          </div>
 
-        <div className="mb-8">
-          <Search onSearchResults={handleSearchResults} />
-        </div>
-
-        <section className="space-y-8">
-          {displayPosts.length > 0 ? (
-            displayPosts.map((post) => (
-              <PostCard key={post.id || post.slug} post={post} />
-            ))
-          ) : (
-            searchResults !== null && (
-              <p className="text-center text-gray-600 dark:text-gray-300 py-8">
-                검색 결과가 없습니다.
-              </p>
-            )
-          )}
-        </section>
-      </main>
+          <section className="space-y-8">
+            {displayPosts.length > 0 ? (
+              displayPosts.map((post) => (
+                <PostCard key={post.id || post.slug} post={post} />
+              ))
+            ) : (
+              searchResults !== null && (
+                <p className="text-center text-black dark:text-white py-8">
+                  검색 결과가 없습니다.
+                </p>
+              )
+            )}
+          </section>
+        </main>
+      </div>
     </>
   );
 }

@@ -28,18 +28,18 @@ function PostCard({ post }: PostCardProps) {
   const formattedDate = React.useMemo(() => formatDate(post.date), [post.date]);
 
   return (
-    <div className="block border rounded-lg p-6 mb-4 hover:shadow-lg transition-shadow">
+    <div className="block border border-black dark:border-white rounded-lg p-6 mb-4">
       <Link 
         href={`/posts/${post.slug}`}
         className="block"
         prefetch={true}
       >
         <article>
-          <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-          <div className="text-gray-600 dark:text-white text-sm mb-3">
+          <h2 className="text-2xl font-bold mb-2 text-black dark:text-white">{post.title}</h2>
+          <div className="text-black dark:text-white text-sm mb-3">
             {formattedDate}
           </div>
-          <p className="text-gray-600 dark:text-white mb-4">{post.description}</p>
+          <p className="text-black dark:text-white mb-4">{post.description}</p>
         </article>
       </Link>
       {post.tags && post.tags.length > 0 && (
