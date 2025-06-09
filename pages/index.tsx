@@ -35,7 +35,7 @@ export default function Home({ posts }: Props) {
       <main className="max-w-4xl mx-auto px-4 py-8">
         <header className="mb-12">
           <h1 className="text-4xl font-bold mb-4">Dev Log</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
+          <p className="text-xl text-gray-600 dark:text-gray-300">
             Thoughts, learnings, and experiences in software development
           </p>
         </header>
@@ -51,7 +51,7 @@ export default function Home({ posts }: Props) {
             ))
           ) : (
             searchResults !== null && (
-              <p className="text-center text-gray-600 py-8">
+              <p className="text-center text-gray-600 dark:text-gray-300 py-8">
                 검색 결과가 없습니다.
               </p>
             )

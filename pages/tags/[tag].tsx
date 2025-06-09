@@ -38,8 +38,8 @@ export default function TagPage({ posts, tag }: TagPageProps) {
               className="block hover:text-blue-600 transition-colors"
             >
               <h2 className="text-2xl font-semibold mb-2">{post.title}</h2>
-              <p className="text-gray-600 mb-4">{post.excerpt}</p>
-              <div className="flex items-center text-sm text-gray-500">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{post.excerpt}</p>
+              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                 <time>{new Date(post.date).toLocaleDateString()}</time>
                 <span className="mx-2">·</span>
                 <div className="flex gap-2">
@@ -59,7 +59,7 @@ export default function TagPage({ posts, tag }: TagPageProps) {
       </div>
 
       {posts.length === 0 && (
-        <p className="text-center text-gray-600">
+        <p className="text-center text-gray-600 dark:text-gray-300">
           이 태그가 포함된 포스트가 없습니다.
         </p>
       )}

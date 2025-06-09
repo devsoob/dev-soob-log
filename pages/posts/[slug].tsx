@@ -26,7 +26,7 @@ export default function PostPage({ post, mdxSource }: PostPageProps) {
           ← Back to Home
         </Link>
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-        <div className="flex flex-col gap-3 text-gray-600">
+        <div className="flex flex-col gap-3 text-gray-600 dark:text-white">
           <time dateTime={post.date} className="text-sm">
             {new Date(post.date).toLocaleDateString('ko-KR', {
               year: 'numeric',
@@ -40,17 +40,17 @@ export default function PostPage({ post, mdxSource }: PostPageProps) {
           {post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {post.tags.map(tag => (
-                <span key={tag} className="bg-gray-100 px-2 py-1 rounded-md text-sm">
+                <span key={tag} className="bg-gray-100 px-2 py-1 rounded-md text-sm text-gray-900">
                   {tag}
                 </span>
               ))}
             </div>
           )}
-          <p className="text-gray-600 mt-2 text-lg">{post.description}</p>
+          <p className="text-gray-600 dark:text-white mt-2 text-lg">{post.description}</p>
         </div>
       </header>
 
-      <div className="prose prose-lg max-w-none">
+      <div className="prose prose-lg max-w-none dark:prose-invert dark:text-white prose-headings:dark:text-white prose-p:dark:text-white prose-strong:dark:text-white prose-em:dark:text-white prose-code:dark:text-white prose-pre:dark:text-white">
         <MDXRemote {...mdxSource} />
       </div>
     </article>

@@ -36,10 +36,10 @@ function PostCard({ post }: PostCardProps) {
       >
         <article>
           <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-          <div className="text-gray-600 text-sm mb-3">
+          <div className="text-gray-600 dark:text-white text-sm mb-3">
             {formattedDate}
           </div>
-          <p className="text-gray-600 mb-4">{post.description}</p>
+          <p className="text-gray-600 dark:text-white mb-4">{post.description}</p>
         </article>
       </Link>
       {post.tags && post.tags.length > 0 && (
