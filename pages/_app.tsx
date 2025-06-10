@@ -84,6 +84,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <MDXProvider components={mdxComponents}>
       <DefaultSeo
         title={process.env.NEXT_PUBLIC_SITE_NAME || 'Dev Log'}
+        titleTemplate="%s | Dev Log"
         description={process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '개발 경험과 지식을 공유하는 개발 블로그'}
         canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app'}
         openGraph={{
@@ -111,8 +112,43 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             content: 'width=device-width, initial-scale=1',
           },
           {
+            name: 'naver-site-verification',
+            content: '01f879679eb5dd93ae99dc948742910e33135369',
+          },
+          {
             name: 'author',
             content: process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Author Name',
+          },
+          {
+            name: 'keywords',
+            content: 'development, programming, web development, software engineering, tech blog',
+          },
+          {
+            name: 'theme-color',
+            content: '#000000',
+          },
+          {
+            name: 'apple-mobile-web-app-capable',
+            content: 'yes',
+          },
+          {
+            name: 'apple-mobile-web-app-status-bar-style',
+            content: 'black',
+          },
+        ]}
+        additionalLinkTags={[
+          {
+            rel: 'icon',
+            href: '/favicon.ico',
+          },
+          {
+            rel: 'manifest',
+            href: '/manifest.json',
+          },
+          {
+            rel: 'apple-touch-icon',
+            href: '/icons/apple-touch-icon.png',
+            sizes: '180x180',
           },
         ]}
       />
