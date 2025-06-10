@@ -6,6 +6,7 @@ import Search from "@/components/Search";
 import Head from "next/head";
 import { useState } from "react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface Props {
   posts: UnifiedPost[];
@@ -33,9 +34,9 @@ export default function Home({ posts }: Props) {
         <meta property="og:type" content="website" />
       </Head>
 
-      <div className="min-h-screen bg-white dark:bg-black">
+      <div className="min-h-screen bg-white dark:bg-black flex flex-col">
         <Header />
-        <main className="max-w-4xl mx-auto px-4 pt-24 pb-8">
+        <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
           <div className="mb-8">
             <Search onSearchResults={handleSearchResults} />
           </div>
@@ -54,6 +55,7 @@ export default function Home({ posts }: Props) {
             )}
           </section>
         </main>
+        <Footer />
       </div>
     </>
   );

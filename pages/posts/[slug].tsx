@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { getPublishedPosts } from '@/lib/posts';
 import { UnifiedPost } from '@/types/post';
 import Header from '@/components/Header';
+import Footer from "@/components/Footer";
 
 interface PostPageProps {
   post: UnifiedPost;
@@ -16,7 +17,7 @@ export default function PostPage({ post, mdxSource }: PostPageProps) {
   if (!post) return <div>Post not found</div>;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-white dark:bg-black flex flex-col">
       <Head>
         <title>{post.title}</title>
         <meta name="description" content={post.description} />
@@ -24,7 +25,7 @@ export default function PostPage({ post, mdxSource }: PostPageProps) {
 
       <Header />
 
-      <article className="max-w-4xl mx-auto px-4 pt-24 pb-8">
+      <article className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
         <Link href="/" className="text-blue-500 hover:text-blue-600 mb-4 inline-block">
           ← Back to Home
         </Link>
@@ -56,6 +57,7 @@ export default function PostPage({ post, mdxSource }: PostPageProps) {
           <MDXRemote {...mdxSource} />
         </div>
       </article>
+      <Footer />
     </div>
   );
 }
