@@ -5,16 +5,21 @@ import { Post } from '../types/post';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
-export function getAllPosts(fields: string[] = []): Partial<Post>[] {
+type PostField = keyof Post;
+
+export function getAllPosts(fields: PostField[] = []): Partial<Post>[] {
   const slugs = fs.readdirSync(postsDirectory);
   const posts = slugs
     .filter(slug => slug.endsWith('.mdx') || slug.endsWith('.md'))
     .map(slug => getPostBySlug(slug, fields))
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+    .sort((post1, post2) => {
+      if (!post1.date || !post2.date) return 0;
+      return post1.date > post2.date ? -1 : 1;
+    });
   return posts;
 }
 
-export function getPostBySlug(slug: string, fields: string[] = []): Partial<Post> {
+export function getPostBySlug(slug: string, fields: PostField[] = []): Partial<Post> {
   const realSlug = slug.replace(/\.mdx?$/, '');
   const fullPath = path.join(postsDirectory, slug);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
