@@ -1,10 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { Post } from '../types/post';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
-export function getAllPosts(fields: string[] = []) {
+export function getAllPosts(fields: string[] = []): Partial<Post>[] {
   const slugs = fs.readdirSync(postsDirectory);
   const posts = slugs
     .filter(slug => slug.endsWith('.mdx') || slug.endsWith('.md'))
@@ -13,17 +14,13 @@ export function getAllPosts(fields: string[] = []) {
   return posts;
 }
 
-export function getPostBySlug(slug: string, fields: string[] = []) {
+export function getPostBySlug(slug: string, fields: string[] = []): Partial<Post> {
   const realSlug = slug.replace(/\.mdx?$/, '');
   const fullPath = path.join(postsDirectory, slug);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  type Items = {
-    [key: string]: string
-  }
-
-  const items: Items = {};
+  const items: Partial<Post> = {};
 
   fields.forEach((field) => {
     if (field === 'slug') {
@@ -32,7 +29,13 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     if (field === 'content') {
       items[field] = content;
     }
-    if (typeof data[field] !== 'undefined') {
+    if (field === 'author' && typeof data[field] === 'object') {
+      items[field] = {
+        name: data[field].name || 'Anonymous',
+        picture: data[field].picture || '/images/default-avatar.png'
+      };
+    }
+    if (typeof data[field] !== 'undefined' && field !== 'author') {
       items[field] = data[field];
     }
   });

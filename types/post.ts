@@ -59,4 +59,20 @@ export interface MarkdownPost {
   status: string;
   isPublished: boolean;
   description: string;
+}
+
+export interface Author {
+  name: string;
+  picture: string;
+}
+
+export interface Post {
+  slug: string;
+  title: string;
+  date: string;
+  author: Author;
+  coverImage?: string;
+  excerpt: string;
+  content?: string;
+  tags?: string[];
 } 

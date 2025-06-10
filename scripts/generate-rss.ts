@@ -1,15 +1,16 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 import { getAllPosts } from '../lib/api';
+import { Post } from '../types/post';
 
 async function generateRssFeed() {
   const posts = getAllPosts(['title', 'date', 'slug', 'author', 'coverImage', 'excerpt']);
-  const siteURL = 'https://dev-log.vercel.app';
+  const siteURL = 'https://dev-log-pi.vercel.app';
   const date = new Date();
 
   const feed = new Feed({
     title: 'Dev Log',
-    description: 'A blog about development and technology',
+    description: '개발 경험과 지식을 공유하는 개발 블로그',
     id: siteURL,
     link: siteURL,
     language: 'ko',
@@ -24,6 +25,8 @@ async function generateRssFeed() {
   });
 
   posts.forEach((post) => {
+    if (!post.title || !post.date || !post.slug || !post.author) return;
+    
     const url = `${siteURL}/posts/${post.slug}`;
     feed.addItem({
       title: post.title,
@@ -33,8 +36,8 @@ async function generateRssFeed() {
       content: post.excerpt,
       author: [
         {
-          name: post.author.name,
-          link: post.author.picture,
+          name: post.author.name || 'Anonymous',
+          link: post.author.picture || '/images/default-avatar.png',
         },
       ],
       date: new Date(post.date),
