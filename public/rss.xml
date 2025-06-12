@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Dev Log</title>
+        <link>https://dev-log-pi.vercel.app</link>
+        <description>개발 경험과 지식을 공유하는 개발 블로그</description>
+        <lastBuildDate>Tue, 10 Jun 2025 16:05:58 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Feed for Node.js</generator>
+        <language>ko</language>
+        <image>
+            <title>Dev Log</title>
+            <url>https://dev-log-pi.vercel.app/images/og-image.png</url>
+            <link>https://dev-log-pi.vercel.app</link>
+        </image>
+        <copyright>All rights reserved 2025</copyright>
+    </channel>
+</rss>
