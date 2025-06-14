@@ -2,7 +2,6 @@ import { GetStaticProps } from "next";
 import { UnifiedPost } from "@/types/post";
 import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
-import Search from "@/components/Search";
 import Head from "next/head";
 import { useState } from "react";
 import Header from "@/components/Header";
@@ -35,12 +34,8 @@ export default function Home({ posts }: Props) {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-black flex flex-col">
-        <Header />
+        <Header onSearchResults={handleSearchResults} />
         <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
-          <div className="mb-8">
-            <Search onSearchResults={handleSearchResults} />
-          </div>
-
           <section className="space-y-8">
             {displayPosts.length > 0 ? (
               displayPosts.map((post) => (

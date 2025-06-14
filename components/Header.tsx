@@ -2,49 +2,89 @@ import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { UnifiedPost } from '@/types/post';
 
-export default function Header() {
+interface HeaderProps {
+  onSearchResults?: (results: UnifiedPost[] | null) => void;
+}
+
+export default function Header({ onSearchResults }: HeaderProps) {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   const router = useRouter();
+  const isHomePage = router.pathname === '/';
 
-  useEffect(() => {
-    if (searchTerm.length >= 2) {
-      router.push(`/search?q=${encodeURIComponent(searchTerm)}`);
-    } else if (searchTerm.length === 0 && isSearchVisible) {
-      setIsSearchVisible(false);
+  const handleSearch = async () => {
+    if (searchTerm.length < 2) {
+      onSearchResults?.(null);
+      return;
     }
-  }, [searchTerm, router]);
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchTerm.length >= 2) {
-      router.push(`/search?q=${encodeURIComponent(searchTerm)}`);
+    
+    setIsSearching(true);
+    
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}`);
+      const data = await response.json();
+      onSearchResults?.(data);
+    } catch (error) {
+      console.error('Search error:', error);
+      onSearchResults?.([]);
+    } finally {
+      setIsSearching(false);
     }
   };
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTerm.length >= 2) {
+        handleSearch();
+      } else if (searchTerm.length === 0) {
+        onSearchResults?.(null);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSearch();
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    setIsSearchVisible(false);
+    onSearchResults?.(null);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white dark:bg-black z-50 border-b border-black/10 dark:border-white/10">
+    <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-black/80 backdrop-blur-sm z-[100]">
       <div className="w-full h-14 flex justify-between items-center px-5">
         <Link href="/" className="text-lg font-medium text-black dark:text-white">
           Dev Log
         </Link>
         <div className="flex items-center gap-4">
-          {isSearchVisible ? (
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="검색어를 입력하세요 (2글자 이상)..."
-                className="w-64 px-4 py-1 text-sm text-gray-900 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:text-white"
-                autoFocus
-              />
-              {searchTerm.length > 0 && (
+          {isHomePage && (
+            isSearchVisible ? (
+              <form onSubmit={handleSearchSubmit} className="relative">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="검색어를 입력하세요 (2글자 이상)..."
+                  className="w-64 pl-2 pr-8 py-1 text-sm text-gray-900 bg-white/50 dark:bg-black/50 border-b border-black dark:border-white focus:outline-none dark:text-white backdrop-blur-sm"
+                  autoFocus
+                />
+                {isSearching && (
+                  <div className="absolute right-8 top-1/2 -translate-y-1/2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 dark:border-white"></div>
+                  </div>
+                )}
                 <button
                   type="button"
-                  onClick={() => setSearchTerm('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  onClick={handleClearSearch}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -61,29 +101,29 @@ export default function Header() {
                     <line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
                 </button>
-              )}
-            </form>
-          ) : (
-            <button
-              onClick={() => setIsSearchVisible(true)}
-              className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
-              title="Search"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              </form>
+            ) : (
+              <button
+                onClick={() => setIsSearchVisible(true)}
+                className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
+                title="Search"
               >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </button>
+            )
           )}
           <ThemeToggle />
           <Link
