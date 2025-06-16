@@ -59,6 +59,7 @@ const mdxComponents = {
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     const handleStart = () => {
@@ -69,14 +70,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       setIsLoading(false);
     };
 
+    const handleError = () => {
+      setIsLoading(false);
+    };
+
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
-    router.events.on('routeChangeError', handleComplete);
+    router.events.on('routeChangeError', handleError);
 
     return () => {
       router.events.off('routeChangeStart', handleStart);
       router.events.off('routeChangeComplete', handleComplete);
-      router.events.off('routeChangeError', handleComplete);
+      router.events.off('routeChangeError', handleError);
     };
   }, [router]);
 
@@ -156,7 +161,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
       )}
       <div className={`${pretendard.variable} font-sans min-h-screen`}>
-        {isLoading && <LoadingSpinner />}
+        {isLoading && <div className="loading-line" />}
         <Component {...pageProps} />
       </div>
     </MDXProvider>

@@ -6,6 +6,7 @@ import Head from "next/head";
 import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface Props {
   posts: UnifiedPost[];
@@ -13,9 +14,14 @@ interface Props {
 
 export default function Home({ posts }: Props) {
   const [searchResults, setSearchResults] = useState<UnifiedPost[] | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSearchResults = (results: UnifiedPost[] | null) => {
     setSearchResults(results);
+  };
+
+  const handleSearching = (searching: boolean) => {
+    setIsSearching(searching);
   };
 
   // 표시할 포스트 결정
@@ -34,18 +40,24 @@ export default function Home({ posts }: Props) {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-black flex flex-col">
-        <Header onSearchResults={handleSearchResults} />
+        <Header onSearchResults={handleSearchResults} onSearching={handleSearching} />
         <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
           <section className="space-y-8">
-            {displayPosts.length > 0 ? (
+            {isSearching ? (
+              <div className="flex flex-col items-center justify-center py-16">
+                <div className="w-12 h-12 border-4 border-gray-200 dark:border-gray-700 border-t-black dark:border-t-white rounded-full animate-spin mb-4" />
+                <p className="text-gray-600 dark:text-gray-400">검색 중...</p>
+              </div>
+            ) : displayPosts.length > 0 ? (
               displayPosts.map((post) => (
                 <PostCard key={post.id || post.slug} post={post} />
               ))
             ) : (
               searchResults !== null && (
-                <p className="text-center text-black dark:text-white py-8">
-                  검색 결과가 없습니다.
-                </p>
+                <div className="flex flex-col items-center justify-center py-16">
+                  <span className="text-5xl mb-4">🤔</span>
+                  <p className="text-gray-600 dark:text-gray-400">검색 결과가 없습니다.</p>
+                </div>
               )
             )}
           </section>

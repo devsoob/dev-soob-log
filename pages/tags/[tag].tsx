@@ -67,42 +67,11 @@ export default function TagPage({ posts, tag }: TagPageProps) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+function getAllPosts(): Post[] {
   const postsDirectory = path.join(process.cwd(), 'posts');
   const filenames = fs.readdirSync(postsDirectory);
 
-  const allTags = new Set<string>();
-
-  filenames.forEach((filename) => {
-    if (filename.endsWith('.mdx') || filename.endsWith('.md')) {
-      const filePath = path.join(postsDirectory, filename);
-      const fileContents = fs.readFileSync(filePath, 'utf8');
-      const { data } = matter(fileContents);
-      
-      if (data.tags && Array.isArray(data.tags)) {
-        data.tags.forEach((tag: string) => allTags.add(tag));
-      }
-    }
-  });
-
-  const paths = Array.from(allTags).map((tag) => ({
-    params: { tag },
-  }));
-
-  console.log('Generated tag paths:', paths);
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const tag = params?.tag as string;
-  const postsDirectory = path.join(process.cwd(), 'posts');
-  const filenames = fs.readdirSync(postsDirectory);
-
-  const posts = filenames
+  return filenames
     .filter((filename) => filename.endsWith('.mdx') || filename.endsWith('.md'))
     .map((filename) => {
       const filePath = path.join(postsDirectory, filename);
@@ -116,11 +85,32 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         excerpt: content.slice(0, 200).trim() + '...',
         tags: data.tags || [],
       };
-    })
+    });
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = getAllPosts();
+  const allTags = new Set<string>();
+
+  posts.forEach((post) => {
+    post.tags.forEach((tag: string) => allTags.add(tag));
+  });
+
+  const paths = Array.from(allTags).map((tag) => ({
+    params: { tag },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const tag = params?.tag as string;
+  const posts = getAllPosts()
     .filter((post) => post.tags.some((t: string) => t.toLowerCase() === tag.toLowerCase()))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  console.log(`Found ${posts.length} posts for tag: ${tag}`);
 
   return {
     props: {

@@ -2,9 +2,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   darkMode: 'class',
   theme: {
@@ -26,13 +26,17 @@ module.exports = {
       },
       keyframes: {
         loading: {
-          '0%': { width: '0%', marginLeft: '0%' },
-          '50%': { width: '30%', marginLeft: '35%' },
-          '100%': { width: '0%', marginLeft: '100%' }
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' }
+        },
+        slideIn: {
+          '0%': { transform: 'scaleX(0)' },
+          '100%': { transform: 'scaleX(1)' }
         }
       },
       animation: {
-        loading: 'loading 1s ease-in-out infinite'
+        loading: 'loading 1s ease-in-out infinite',
+        'slideIn': 'slideIn 0.3s ease-out forwards'
       }
     },
   },
