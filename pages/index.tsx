@@ -15,6 +15,7 @@ interface Props {
 export default function Home({ posts }: Props) {
   const [searchResults, setSearchResults] = useState<UnifiedPost[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const handleSearchResults = (results: UnifiedPost[] | null) => {
     setSearchResults(results);
@@ -24,29 +25,34 @@ export default function Home({ posts }: Props) {
     setIsSearching(searching);
   };
 
+  // 검색바 표시 상태를 Header에서 받아오기 위한 핸들러
+  const handleSearchVisible = (visible: boolean) => {
+    setIsSearchVisible(visible);
+  };
+
   // 표시할 포스트 결정
   const displayPosts = searchResults !== null ? searchResults : posts;
 
   return (
     <>
       <Head>
-        <title>Dev Log</title>
+        <title>Dev Log's</title>
         <meta name="description" content="A developer's blog about programming, technology, and more." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Dev Log" />
+        <meta property="og:title" content="Dev Log's" />
         <meta property="og:description" content="A developer's blog about programming, technology, and more." />
         <meta property="og:type" content="website" />
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-black flex flex-col">
-        <Header onSearchResults={handleSearchResults} onSearching={handleSearching} />
+        <Header onSearchResults={handleSearchResults} onSearching={handleSearching} onSearchVisible={handleSearchVisible} />
         <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
-          <section className="space-y-8">
+          <section className={`space-y-8 ${isSearchVisible ? 'mt-8 xs:mt-0' : ''}`}>
             {isSearching ? (
-              <div className="flex flex-col items-center justify-center py-16">
-                <div className="w-12 h-12 border-4 border-gray-200 dark:border-gray-700 border-t-black dark:border-t-white rounded-full animate-spin mb-4" />
-                <p className="text-gray-600 dark:text-gray-400">검색 중...</p>
+              <div className="flex flex-col items-center justify-center py-12 xs:py-16">
+                <div className="w-8 h-8 xs:w-12 xs:h-12 border-4 border-gray-200 dark:border-gray-700 border-t-black dark:border-t-white rounded-full animate-spin mb-3 xs:mb-4" />
+                <p className="text-sm xs:text-base text-gray-600 dark:text-gray-400">검색 중...</p>
               </div>
             ) : displayPosts.length > 0 ? (
               displayPosts.map((post) => (
@@ -54,9 +60,9 @@ export default function Home({ posts }: Props) {
               ))
             ) : (
               searchResults !== null && (
-                <div className="flex flex-col items-center justify-center py-16">
-                  <span className="text-5xl mb-4">🤔</span>
-                  <p className="text-gray-600 dark:text-gray-400">검색 결과가 없습니다.</p>
+                <div className="flex flex-col items-center justify-center py-12 xs:py-16">
+                  <span className="text-4xl xs:text-5xl mb-3 xs:mb-4">🤔</span>
+                  <p className="text-sm xs:text-base text-gray-600 dark:text-gray-400">검색 결과가 없습니다.</p>
                 </div>
               )
             )}

@@ -35,10 +35,10 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+      className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
       aria-label="Toggle theme"
     >
-      <div className={`relative w-6 h-6 transition-transform duration-500 ${isAnimating ? 'rotate-180' : ''}`}>
+      <div className={`relative w-5 h-5 xs:w-6 xs:h-6 transition-transform duration-500 ${isAnimating ? 'rotate-180' : ''}`}>
         {theme === 'light' ? (
           // Crescent moon icon for light mode
           <svg
@@ -47,7 +47,7 @@ export default function ThemeToggle() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 text-black dark:text-white absolute inset-0 transition-opacity duration-300"
+            className="w-5 h-5 xs:w-6 xs:h-6 text-black dark:text-white absolute inset-0 transition-opacity duration-300"
           >
             <path
               strokeLinecap="round"
@@ -64,7 +64,7 @@ export default function ThemeToggle() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 text-black dark:text-white absolute inset-0 transition-opacity duration-300"
+            className="w-5 h-5 xs:w-6 xs:h-6 text-black dark:text-white absolute inset-0 transition-opacity duration-300"
           >
             <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.5" fill="none" />
             <line x1="12" y1="2" x2="12" y2="4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

@@ -7,6 +7,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import localFont from 'next/font/local';
 import "../styles/globals.css";
+import Head from "next/head";
 
 const pretendard = localFont({
   src: [
@@ -87,22 +88,27 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <MDXProvider components={mdxComponents}>
+      <Head>
+        <title>Dev Log&apos;s</title>
+        <meta name="description" content="Choi Soobin&apos;s Development Blog" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <DefaultSeo
-        title={process.env.NEXT_PUBLIC_SITE_NAME || 'Dev Log'}
-        titleTemplate="%s | Dev Log"
+        title="Dev Log's"
+        titleTemplate="%s | Dev Log's"
         description={process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '개발 경험과 지식을 공유하는 개발 블로그'}
         canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app'}
         openGraph={{
           type: 'website',
           locale: 'ko_KR',
           url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app',
-          siteName: process.env.NEXT_PUBLIC_SITE_NAME || 'Dev Log',
+          siteName: "Dev Log's",
           images: [
             {
               url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app'}/og-image.png`,
               width: 1200,
               height: 630,
-              alt: process.env.NEXT_PUBLIC_SITE_NAME || 'Dev Log',
+              alt: "Dev Log's",
             },
           ],
         }}
