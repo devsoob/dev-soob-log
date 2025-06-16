@@ -92,8 +92,8 @@ export default function Header({ onSearchResults, onSearching }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-black/80 backdrop-blur-sm z-[100]">
       <div className="w-full h-16 flex justify-between items-center px-8">
-        <Link href="/" className="text-lg font-medium text-black dark:text-white" onClick={handleLogoClick}>
-          Dev Log
+        <Link href="/" className="text-2xl font-bold italic hover:scale-105 transition-transform duration-200" onClick={handleLogoClick}>
+          Dev Log&apos;s
         </Link>
         <div className="flex items-center gap-4">
           {isHomePage && (
