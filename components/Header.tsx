@@ -97,7 +97,7 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
   }, [isSearchVisible]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-black/80 backdrop-blur-sm z-[100]">
+    <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-sm z-[100]">
       <div className="w-full flex justify-between items-center px-4 xs:px-8 h-14 xs:h-16">
         <Link href="/" className="text-xl xs:text-2xl font-bold italic hover:scale-105 transition-transform duration-200 text-black dark:text-white" onClick={handleLogoClick}>
           Dev Log&apos;s
@@ -106,7 +106,7 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
           {isHomePage && !isSearchVisible && (
             <button
               onClick={() => setIsSearchVisible(true)}
-              className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200"
               title="Search"
             >
               <svg
@@ -132,7 +132,7 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-48 xs:w-64 pl-2 pr-8 py-1 text-xs xs:text-sm text-gray-900 bg-white/50 dark:bg-black/50 border-b border-black dark:border-white focus:outline-none dark:text-white backdrop-blur-sm"
+                className="w-48 xs:w-64 pl-2 pr-8 py-1 text-xs xs:text-sm text-gray-900 dark:text-white border-b border-black dark:border-white focus:outline-none bg-transparent"
                 autoFocus
               />
               <button
@@ -161,7 +161,7 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
           <ThemeToggle />
           <Link
             href="/rss.xml"
-            className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+            className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200"
             title="RSS Feed"
             target="_blank"
             rel="noopener noreferrer"
@@ -185,13 +185,13 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
           </Link>
         </div>
         {isHomePage && isSearchVisible && (
-          <div className="w-full xs:hidden mt-2 absolute top-full left-0 px-4 bg-white/80 dark:bg-black/80 backdrop-blur-sm pb-4">
+          <div className="w-full xs:hidden mt-2 absolute top-full left-0 px-4 pb-4">
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-2 pr-8 py-1 text-xs text-gray-900 bg-white/50 dark:bg-black/50 border-b border-black dark:border-white focus:outline-none dark:text-white backdrop-blur-sm"
+                className="w-full pl-2 pr-8 py-1 text-xs text-gray-900 dark:text-white border-b border-black dark:border-white focus:outline-none bg-transparent"
                 autoFocus
               />
               <button

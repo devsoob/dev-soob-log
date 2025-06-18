@@ -45,7 +45,7 @@ export default function Home({ posts }: Props) {
         <meta property="og:type" content="website" />
       </Head>
 
-      <div className="min-h-screen bg-white dark:bg-black flex flex-col">
+      <div className="min-h-screen bg-white dark:bg-[#1a1a1a] flex flex-col">
         <Header onSearchResults={handleSearchResults} onSearching={handleSearching} onSearchVisible={handleSearchVisible} />
         <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
           <section className={`space-y-8 ${isSearchVisible ? 'mt-8 xs:mt-0' : ''}`}>

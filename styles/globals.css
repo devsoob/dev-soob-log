@@ -13,7 +13,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #1a1a1a;
     --foreground: #ededed;
   }
 }
@@ -25,16 +25,26 @@ html {
 
 @media (prefers-color-scheme: dark) {
   html {
-    background-color: #0a0a0a;
+    background-color: #1a1a1a;
     color-scheme: dark;
   }
 }
 
 @layer base {
   body {
-    @apply text-gray-900 bg-white dark:text-gray-100 dark:bg-gray-900;
+    @apply bg-white dark:bg-[#4d4d4d] text-black dark:text-white;
     font-feature-settings: "rlig" 1, "calt" 1;
     overscroll-behavior: none;
+  }
+
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+  }
+
+  .dark {
+    --background: 0 0% 30%;
+    --foreground: 0 0% 98%;
   }
 }
 

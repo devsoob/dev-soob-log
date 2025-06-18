@@ -9,7 +9,7 @@ interface TagProps {
 }
 
 export default function Tag({ name, count, className = '', onClick }: TagProps) {
-  const baseClasses = 'inline-flex items-center px-1.5 xs:px-2 py-0.5 xs:py-1 rounded-md text-xs xs:text-sm bg-white dark:bg-black border border-black dark:border-white text-black dark:text-white';
+  const baseClasses = 'inline-flex items-center px-1.5 xs:px-2 py-0.5 xs:py-1 rounded-md text-xs xs:text-sm bg-white dark:bg-[#1a1a1a] border border-black dark:border-white text-black dark:text-white';
   
   if (onClick) {
     return (
