@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { UnifiedPost } from '@/types/post';
-import Tag from './Tag';
 import Link from 'next/link';
 
 interface PostCardProps {
