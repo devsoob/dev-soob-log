@@ -3,10 +3,11 @@ import { UnifiedPost } from "@/types/post";
 import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import Pagination from "@/components/Pagination";
 
 interface Props {
   posts: UnifiedPost[];
@@ -16,9 +17,13 @@ export default function Home({ posts }: Props) {
   const [searchResults, setSearchResults] = useState<UnifiedPost[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const POSTS_PER_PAGE = 5; // 페이지당 포스트 수
 
   const handleSearchResults = (results: UnifiedPost[] | null) => {
     setSearchResults(results);
+    setCurrentPage(1); // 검색 시 첫 페이지로 이동
   };
 
   const handleSearching = (searching: boolean) => {
@@ -30,8 +35,24 @@ export default function Home({ posts }: Props) {
     setIsSearchVisible(visible);
   };
 
+  // 페이지 변경 핸들러
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // 페이지 변경 시 상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // 표시할 포스트 결정
   const displayPosts = searchResults !== null ? searchResults : posts;
+
+  // 페이지네이션 계산
+  const paginatedPosts = useMemo(() => {
+    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+    const endIndex = startIndex + POSTS_PER_PAGE;
+    return displayPosts.slice(startIndex, endIndex);
+  }, [displayPosts, currentPage]);
+
+  const totalPages = Math.ceil(displayPosts.length / POSTS_PER_PAGE);
 
   return (
     <>
@@ -55,9 +76,19 @@ export default function Home({ posts }: Props) {
                 <p className="text-sm xs:text-base text-gray-600 dark:text-gray-400">검색 중...</p>
               </div>
             ) : displayPosts.length > 0 ? (
-              displayPosts.map((post) => (
-                <PostCard key={post.id || post.slug} post={post} />
-              ))
+              <>
+                {/* 포스트 목록 */}
+                {paginatedPosts.map((post) => (
+                  <PostCard key={post.id || post.slug} post={post} />
+                ))}
+                
+                {/* 페이지네이션 */}
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </>
             ) : (
               searchResults !== null && (
                 <div className="flex flex-col items-center justify-center py-12 xs:py-16">
