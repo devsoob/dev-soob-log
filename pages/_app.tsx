@@ -38,13 +38,13 @@ const pretendard = localFont({
 
 const mdxComponents = {
   h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className="text-3xl font-bold mt-8 mb-4" {...props}>{children}</h1>
+    <h1 className="text-3xl font-bold mt-8 mb-4 scroll-mt-24" {...props}>{children}</h1>
   ),
   h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="text-2xl font-bold mt-6 mb-3" {...props}>{children}</h2>
+    <h2 className="text-2xl font-bold mt-6 mb-3 scroll-mt-24" {...props}>{children}</h2>
   ),
   h3: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="text-xl font-semibold mt-4 mb-2" {...props}>{children}</h3>
+    <h3 className="text-xl font-semibold mt-4 mb-2 scroll-mt-24" {...props}>{children}</h3>
   ),
   p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p className="mb-4 leading-relaxed" {...props}>{children}</p>
@@ -166,10 +166,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       {process.env.NEXT_PUBLIC_GA_ID && (
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
       )}
-      <div className={`${pretendard.variable} font-sans min-h-screen`}>
+      <style jsx global>{`
+        :root {
+          --font-pretendard: ${pretendard.style.fontFamily};
+        }
+      `}</style>
+      <main className={`${pretendard.variable} font-sans`}>
         {isLoading && <div className="loading-line" />}
         <Component {...pageProps} />
-      </div>
+      </main>
     </MDXProvider>
   );
 }
