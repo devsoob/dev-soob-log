@@ -58,9 +58,6 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
           <div className="lg:flex lg:justify-center lg:gap-8 lg:items-start">
             <div className="w-full max-w-4xl">
               <article className="min-w-0">
-                <Link href="/" className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300 mb-4 inline-block text-base xs:text-lg sm:text-xl">
-                  ← Back to Home
-                </Link>
 
                 <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert mt-8">
                   <MDXRemote {...mdxSource} />
