@@ -55,7 +55,7 @@ export default function GestureHelp() {
           </div>
           <div className="flex items-center space-x-2">
             <span className="text-sm">🖱️</span>
-            <span>트랙패드: 좌우 스와이프로 이전/다음</span>
+            <span>트랙패드: 오른쪽 스크롤(다음), 왼쪽 스크롤(이전)</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="text-sm">⌨️</span>

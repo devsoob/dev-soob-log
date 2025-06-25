@@ -111,11 +111,11 @@ export function useGestureNavigation({ prevPost, nextPost, onNavigate }: Gesture
       const threshold = 100;
       if (Math.abs(wheelDeltaRef.current) > threshold) {
         if (wheelDeltaRef.current > 0) {
-          // 오른쪽으로 스크롤 (이전 글)
-          navigateToPost('prev');
-        } else {
-          // 왼쪽으로 스크롤 (다음 글)
+          // 오른쪽으로 스크롤 (다음 글)
           navigateToPost('next');
+        } else {
+          // 왼쪽으로 스크롤 (이전 글)
+          navigateToPost('prev');
         }
         wheelDeltaRef.current = 0;
       }
