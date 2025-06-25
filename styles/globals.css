@@ -78,6 +78,74 @@ a {
   }
 }
 
+/* Giscus 댓글 스타일링 */
+.giscus-container {
+  @apply rounded-lg overflow-hidden bg-transparent;
+}
+
+.giscus-container iframe {
+  @apply border-0 bg-transparent;
+}
+
+/* 라이트모드에서 Giscus 스타일링 */
+:not(.dark) .giscus-container {
+  color-scheme: light;
+}
+
+:not(.dark) .giscus-container iframe {
+  color-scheme: light;
+}
+
+/* 다크모드에서 Giscus 스타일링 */
+.dark .giscus-container {
+  @apply bg-transparent;
+  color-scheme: dark;
+}
+
+.dark .giscus-container iframe {
+  @apply bg-transparent;
+  color-scheme: dark;
+}
+
+/* Giscus 컨테이너 내부 요소들의 기본 스타일 */
+.giscus-container * {
+  @apply bg-transparent;
+}
+
+/* Giscus 기본 테마 오버라이드 - 라이트모드 */
+:not(.dark) .giscus-container {
+  --giscus-background-color: #ffffff !important;
+  --giscus-text-color: #111827 !important;
+  --giscus-border-color: #d1d5db !important;
+}
+
+/* Giscus 기본 테마 오버라이드 - 다크모드 */
+.dark .giscus-container {
+  --giscus-background-color: #18181b !important;
+  --giscus-text-color: #e5e7eb !important;
+  --giscus-border-color: #33343b !important;
+}
+
+/* Giscus iframe 내부 스타일 강제 적용 */
+.giscus-container iframe {
+  background-color: var(--giscus-background-color) !important;
+  color: var(--giscus-text-color) !important;
+}
+
+/* 라이트모드에서 Giscus 댓글 박스 스타일 */
+:not(.dark) .giscus-container .giscus-comment-box {
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  color: #111827 !important;
+}
+
+/* 다크모드에서 Giscus 댓글 박스 스타일 */
+.dark .giscus-container .giscus-comment-box {
+  background-color: #232329 !important;
+  border: 1px solid #33343b !important;
+  color: #e5e7eb !important;
+}
+
 /* 로딩 애니메이션 선 */
 .loading-line {
   position: fixed;

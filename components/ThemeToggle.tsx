@@ -23,10 +23,14 @@ export default function ThemeToggle() {
       setTheme('dark');
       localStorage.theme = 'dark';
       document.documentElement.classList.add('dark');
+      // storage 이벤트 발생시켜 Giscus가 테마 변경을 감지하도록 함
+      window.dispatchEvent(new StorageEvent('storage', { key: 'theme', newValue: 'dark' }));
     } else {
       setTheme('light');
       localStorage.theme = 'light';
       document.documentElement.classList.remove('dark');
+      // storage 이벤트 발생시켜 Giscus가 테마 변경을 감지하도록 함
+      window.dispatchEvent(new StorageEvent('storage', { key: 'theme', newValue: 'light' }));
     }
     // Reset animation state after animation completes
     setTimeout(() => setIsAnimating(false), 500);

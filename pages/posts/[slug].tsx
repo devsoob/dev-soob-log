@@ -11,6 +11,7 @@ import TableOfContents, { TocItem } from '@/components/TableOfContents';
 import MobileTableOfContents from '@/components/MobileTableOfContents';
 import GestureIndicator from '@/components/GestureIndicator';
 import GestureHelp from '@/components/GestureHelp';
+import GiscusComments from '@/components/GiscusComments';
 import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState } from 'react';
 
@@ -77,6 +78,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
                 <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert mt-8">
                   <MDXRemote {...mdxSource} />
                 </div>
+
+                {/* 댓글 섹션 */}
+                <GiscusComments postSlug={post.slug} postTitle={post.title} />
 
                 {/* 이전/다음 글 네비게이션 */}
                 {(prevPost || nextPost) && (
