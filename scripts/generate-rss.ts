@@ -1,10 +1,9 @@
 import { Feed } from 'feed';
 import fs from 'fs';
-import { getAllPosts } from '../lib/api';
-import { Post } from '../types/post';
+import { getAllPostsSync } from '../lib/posts';
 
 async function generateRssFeed() {
-  const posts = getAllPosts(['title', 'date', 'slug', 'author', 'coverImage', 'excerpt']);
+  const posts = getAllPostsSync();
   const siteURL = 'https://dev-log-pi.vercel.app';
   const date = new Date();
 

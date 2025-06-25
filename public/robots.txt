@@ -7,6 +7,3 @@ Host: https://dev-log-pi.vercel.app
 
 # Sitemaps
 Sitemap: https://dev-log-pi.vercel.app/sitemap.xml
-
-# RSS Feed
-Sitemap: https://dev-log-pi.vercel.app/rss.xml

@@ -29,6 +29,29 @@ export async function getAllPosts(): Promise<UnifiedPost[]> {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
+// RSS 생성용 동기 버전 (마크다운 포스트만)
+export function getAllPostsSync(): Array<{
+  title: string;
+  date: string;
+  slug: string;
+  author: { name: string; picture: string };
+  excerpt: string;
+}> {
+  const markdownPosts = getMarkdownPosts();
+  const publishedPosts = markdownPosts.filter((post: UnifiedPost) => post.isPublished);
+  
+  return publishedPosts.map(post => ({
+    title: post.title,
+    date: post.date,
+    slug: post.slug,
+    author: {
+      name: 'Choi Soobin',
+      picture: '/images/default-avatar.png'
+    },
+    excerpt: post.excerpt || post.content.slice(0, 200) + '...'
+  }));
+}
+
 export async function getPublishedPosts(): Promise<UnifiedPost[]> {
   const markdownPosts = await getMarkdownPosts();
   const filteredMarkdownPosts = markdownPosts.filter((post: UnifiedPost) => post.isPublished);
