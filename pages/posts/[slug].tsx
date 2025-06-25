@@ -9,6 +9,9 @@ import Header from '@/components/Header';
 import Footer from "@/components/Footer";
 import TableOfContents, { TocItem } from '@/components/TableOfContents';
 import MobileTableOfContents from '@/components/MobileTableOfContents';
+import GestureIndicator from '@/components/GestureIndicator';
+import GestureHelp from '@/components/GestureHelp';
+import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState } from 'react';
 
 interface PostPageProps {
@@ -20,6 +23,18 @@ interface PostPageProps {
 
 export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPageProps) {
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
+  const [gestureDirection, setGestureDirection] = useState<'prev' | 'next' | 'back' | null>(null);
+  const [showGestureIndicator, setShowGestureIndicator] = useState(false);
+
+  // 제스처 네비게이션 훅 사용
+  useGestureNavigation({
+    prevPost,
+    nextPost,
+    onNavigate: (direction) => {
+      setGestureDirection(direction);
+      setShowGestureIndicator(true);
+    }
+  });
 
   useEffect(() => {
     // .prose 클래스 내부의 h1, h2, h3 태그를 찾아서 목차 생성
@@ -129,6 +144,15 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
       
       {/* 모바일 목차 */}
       <MobileTableOfContents tocItems={tocItems} />
+      
+      {/* 제스처 네비게이션 인디케이터 */}
+      <GestureIndicator 
+        direction={gestureDirection} 
+        isVisible={showGestureIndicator} 
+      />
+      
+      {/* 제스처 네비게이션 도움말 */}
+      <GestureHelp />
       
       <Footer />
     </div>
