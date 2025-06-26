@@ -8,29 +8,12 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
   const getVisiblePages = () => {
-    const delta = 2; // 현재 페이지 양쪽에 보여줄 페이지 수
-    const range = [];
-    const rangeWithDots = [];
-
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
-      range.push(i);
+    // 모든 페이지 번호를 배열로 생성
+    const allPages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      allPages.push(i);
     }
-
-    if (currentPage - delta > 2) {
-      rangeWithDots.push(1, '...');
-    } else {
-      rangeWithDots.push(1);
-    }
-
-    rangeWithDots.push(...range);
-
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push('...', totalPages);
-    } else {
-      rangeWithDots.push(totalPages);
-    }
-
-    return rangeWithDots;
+    return allPages;
   };
 
   if (totalPages <= 1) return null;
@@ -54,22 +37,17 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
       {/* 페이지 번호들 */}
       {visiblePages.map((page, index) => (
-        <React.Fragment key={index}>
-          {page === '...' ? (
-            <span className="px-3 py-2 text-gray-500">...</span>
-          ) : (
-            <button
-              onClick={() => onPageChange(page as number)}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                currentPage === page
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-              }`}
-            >
-              {page}
-            </button>
-          )}
-        </React.Fragment>
+        <button
+          key={index}
+          onClick={() => onPageChange(page)}
+          className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+            currentPage === page
+              ? 'bg-blue-600 text-white'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+          }`}
+        >
+          {page}
+        </button>
       ))}
 
       {/* 다음 페이지 버튼 */}

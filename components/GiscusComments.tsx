@@ -118,6 +118,7 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
           theme={theme}
           lang="ko"
           loading="lazy"
+          key={theme + postSlug}
         />
       </div>
     </div>

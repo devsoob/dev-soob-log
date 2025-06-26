@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { getPublishedPosts } from '@/lib/posts';
 import { UnifiedPost } from '@/types/post';
 import Header from '@/components/Header';
@@ -23,6 +24,7 @@ interface PostPageProps {
 }
 
 export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPageProps) {
+  const router = useRouter();
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
   const [gestureDirection, setGestureDirection] = useState<'prev' | 'next' | 'back' | null>(null);
   const [showGestureIndicator, setShowGestureIndicator] = useState(false);
@@ -74,6 +76,27 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
           <div className="lg:flex lg:justify-center lg:gap-8 lg:items-start">
             <div className="w-full max-w-4xl">
               <article className="min-w-0">
+                {/* 뒤로가기 아이콘 */}
+                <div className="mb-6">
+                  <button
+                    onClick={() => router.back()}
+                    className="text-gray-400 dark:text-gray-600 hover:text-gray-700 dark:hover:text-gray-400 transition-colors duration-200"
+                  >
+                    <svg 
+                      width="32" 
+                      height="32" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                      className="w-8 h-8"
+                    >
+                      <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                  </button>
+                </div>
 
                 <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert mt-8">
                   <MDXRemote {...mdxSource} />
