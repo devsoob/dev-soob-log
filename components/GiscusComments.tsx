@@ -13,16 +13,20 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    // 초기 테마 설정
+    // 초기 테마 설정 - ThemeToggle과 동일한 로직 사용
     const checkTheme = () => {
-      const isDark = document.documentElement.classList.contains('dark') ||
-        window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(isDark ? 'dark' : 'light');
+      if (typeof window !== 'undefined') {
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          setTheme('dark');
+        } else {
+          setTheme('light');
+        }
+      }
     };
     
     checkTheme();
 
-    // storage 이벤트 리스너 추가
+    // storage 이벤트 리스너 추가 (ThemeToggle에서 발생시키는 커스텀 이벤트 포함)
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === 'theme') {
         const newTheme = event.newValue === 'dark' ? 'dark' : 'light';
