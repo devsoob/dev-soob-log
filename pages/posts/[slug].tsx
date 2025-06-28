@@ -28,6 +28,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
   const [gestureDirection, setGestureDirection] = useState<'prev' | 'next' | 'back' | null>(null);
   const [showGestureIndicator, setShowGestureIndicator] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   // 제스처 네비게이션 훅 사용
   useGestureNavigation({
@@ -59,6 +60,25 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
 
     setTocItems(items);
   }, [mdxSource]); // mdxSource가 변경될 때마다 목차를 다시 생성합니다.
+
+  // 스크롤 이벤트 리스너 추가
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setShowScrollToTop(scrollTop > 300); // 300px 이상 스크롤했을 때 버튼 표시
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 최상단으로 스크롤하는 함수
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   if (!post) return <div>Post not found</div>;
 
@@ -180,6 +200,29 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
       
       {/* 제스처 네비게이션 도움말 */}
       <GestureHelp />
+      
+      {/* 스크롤 to top 버튼 */}
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-6 right-20 lg:right-6 z-50 p-3 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
+          showScrollToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        }`}
+        aria-label="최상단으로 이동"
+      >
+        <svg 
+          width="20" 
+          height="20" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+          className="w-5 h-5 lg:w-6 lg:h-6"
+        >
+          <path d="m18 15-6-6-6 6"/>
+        </svg>
+      </button>
       
       <Footer />
     </div>
