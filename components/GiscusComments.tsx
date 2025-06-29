@@ -79,6 +79,18 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
   const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'Announcements';
   const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || '';
 
+  // 디버깅을 위한 콘솔 로그
+  useEffect(() => {
+    console.log('Giscus 환경 변수 확인:', {
+      repo,
+      repoId,
+      category,
+      categoryId,
+      hasRepoId: !!repoId,
+      hasCategoryId: !!categoryId
+    });
+  }, [repo, repoId, category, categoryId]);
+
   // 설정값이 없으면 로딩 중 표시
   if (!repoId || !categoryId) {
     return (
