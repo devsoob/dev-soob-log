@@ -11,6 +11,7 @@ interface GiscusCommentsProps {
 export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsProps) {
   const giscusRef = useRef<HTMLDivElement>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // 초기 테마 설정 - ThemeToggle과 동일한 로직 사용
@@ -45,6 +46,19 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
     };
   }, []);
 
+  // 테마 변경 시 Giscus iframe에 메시지 전송
+  useEffect(() => {
+    if (isLoaded) {
+      const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+      if (iframe?.contentWindow) {
+        iframe.contentWindow.postMessage(
+          { giscus: { setConfig: { theme } } },
+          'https://giscus.app'
+        );
+      }
+    }
+  }, [theme, isLoaded]);
+
   useEffect(() => {
     // Giscus가 로드된 후 스크롤 위치 조정
     const handleGiscusLoad = () => {
@@ -52,9 +66,11 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
         const giscusFrame = giscusRef.current.querySelector('iframe');
         if (giscusFrame) {
           giscusFrame.style.minHeight = '400px';
+          setIsLoaded(true);
         }
       }
     };
+    
     // MutationObserver로 Giscus iframe 감지
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -67,16 +83,18 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
         }
       });
     });
+    
     if (giscusRef.current) {
       observer.observe(giscusRef.current, { childList: true, subtree: true });
     }
+    
     return () => observer.disconnect();
   }, [postSlug]);
 
-  // GitHub 저장소 정보 (환경변수로 관리 예정)
+  // GitHub 저장소 정보 (환경변수로 관리)
   const repo = process.env.NEXT_PUBLIC_GISCUS_REPO || '123456soobin-choi/dev-log';
   const repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID || '';
-  const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'Announcements';
+  const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'Q&A';
   const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || '';
 
   // 디버깅을 위한 콘솔 로그
@@ -102,6 +120,15 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
           <p className="text-sm text-gray-600 dark:text-gray-400">
             GitHub Discussions 설정 중입니다...
           </p>
+          <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+            <p className="text-sm text-yellow-800 dark:text-yellow-200">
+              환경 변수가 설정되지 않았습니다. Vercel 대시보드에서 다음 변수들을 확인해주세요:
+            </p>
+            <ul className="mt-2 text-xs text-yellow-700 dark:text-yellow-300 space-y-1">
+              <li>• NEXT_PUBLIC_GISCUS_REPO_ID</li>
+              <li>• NEXT_PUBLIC_GISCUS_CATEGORY_ID</li>
+            </ul>
+          </div>
         </div>
       </div>
     );
