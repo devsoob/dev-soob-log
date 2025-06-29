@@ -97,18 +97,6 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
   const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'Q&A';
   const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || '';
 
-  // 디버깅을 위한 콘솔 로그
-  useEffect(() => {
-    console.log('Giscus 환경 변수 확인:', {
-      repo,
-      repoId,
-      category,
-      categoryId,
-      hasRepoId: !!repoId,
-      hasCategoryId: !!categoryId
-    });
-  }, [repo, repoId, category, categoryId]);
-
   // 설정값이 없으면 로딩 중 표시
   if (!repoId || !categoryId) {
     return (
@@ -120,15 +108,6 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
           <p className="text-sm text-gray-600 dark:text-gray-400">
             GitHub Discussions 설정 중입니다...
           </p>
-          <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
-              환경 변수가 설정되지 않았습니다. Vercel 대시보드에서 다음 변수들을 확인해주세요:
-            </p>
-            <ul className="mt-2 text-xs text-yellow-700 dark:text-yellow-300 space-y-1">
-              <li>• NEXT_PUBLIC_GISCUS_REPO_ID</li>
-              <li>• NEXT_PUBLIC_GISCUS_CATEGORY_ID</li>
-            </ul>
-          </div>
         </div>
       </div>
     );
