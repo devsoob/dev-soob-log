@@ -1,7 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Copy, Check, ExternalLink, Play } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Copy, Check } from 'lucide-react';
+import Highlight, { Prism } from 'prism-react-renderer';
+import type { Language } from 'prism-react-renderer';
+// @ts-ignore
+import duotoneDark from 'prism-react-renderer/themes/duotoneDark';
+// @ts-ignore
+import duotoneLight from 'prism-react-renderer/themes/duotoneLight';
 
 interface CodeBlockProps {
   children: string;
@@ -16,27 +20,23 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   children,
   className = '',
   filename,
-  showLineNumbers = true,
+  showLineNumbers = false,
   highlightLines = [],
   language = 'text'
 }) => {
   const [copied, setCopied] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const codeRef = useRef<HTMLDivElement>(null);
 
-  // 다크모드 감지
   useEffect(() => {
     const checkDarkMode = () => {
       setIsDarkMode(document.documentElement.classList.contains('dark'));
     };
-    
     checkDarkMode();
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['class']
     });
-    
     return () => observer.disconnect();
   }, []);
 
@@ -45,8 +45,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     const match = className.match(/language-(\w+)/);
     return match ? match[1] : 'text';
   };
-
-  const detectedLanguage = extractLanguage(className) || language;
+  const detectedLanguage = (extractLanguage(className) || language) as Language;
 
   // 복사 기능
   const handleCopy = async () => {
@@ -59,141 +58,88 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     }
   };
 
-  // CodePen으로 열기
-  const openInCodePen = () => {
-    const encodedCode = encodeURIComponent(children);
-    const encodedTitle = encodeURIComponent(filename || 'Code Example');
-    
-    const codePenUrl = `https://codepen.io/pen?default-tab=js,result&editors=0010&title=${encodedTitle}&code=${encodedCode}`;
-    window.open(codePenUrl, '_blank');
+  // 다크모드용 파스텔톤 컬러 팔레트 테마
+  const customDarkTheme = {
+    plain: {
+      color: '#23272f', // 기본 텍스트
+      backgroundColor: '#f6f6f7', // 바깥과 동일하게 밝은 회색
+    },
+    styles: [
+      { types: ['comment'], style: { color: '#6c7086', fontStyle: 'italic' as 'italic' } },
+      { types: ['keyword'], style: { color: '#7fdbca', fontWeight: 'bold' as 'bold' } },
+      { types: ['function', 'method'], style: { color: '#f6c177' } },
+      { types: ['variable', 'attr-name'], style: { color: '#e5c07b' } },
+      { types: ['string', 'inserted'], style: { color: '#a3be8c' } },
+      { types: ['number', 'constant'], style: { color: '#d67ad2' } },
+      { types: ['type', 'class-name'], style: { color: '#e99287' } },
+      { types: ['operator', 'punctuation'], style: { color: '#b4befe' } },
+      { types: ['tag'], style: { color: '#f28fad' } },
+      { types: ['property'], style: { color: '#f2cdcd' } },
+      { types: ['boolean'], style: { color: '#f6c177' } },
+      { types: ['namespace'], style: { color: '#b4befe' } },
+      { types: ['deleted'], style: { color: '#f28fad' } },
+      { types: ['builtin', 'char', 'selector'], style: { color: '#7fdbca' } },
+    ],
   };
 
-  // JSFiddle으로 열기
-  const openInJSFiddle = () => {
-    const encodedCode = encodeURIComponent(children);
-    const encodedTitle = encodeURIComponent(filename || 'Code Example');
-    
-    const jsFiddleUrl = `https://jsfiddle.net/?html,js,console,output&title=${encodedTitle}&code=${encodedCode}`;
-    window.open(jsFiddleUrl, '_blank');
-  };
-
-  // 지원하는 언어 목록
-  const supportedLanguages = [
-    'javascript', 'js', 'typescript', 'ts', 'jsx', 'tsx',
-    'python', 'py', 'java', 'cpp', 'c', 'csharp', 'cs',
-    'php', 'ruby', 'go', 'rust', 'swift', 'kotlin',
-    'html', 'css', 'scss', 'sass', 'less',
-    'sql', 'bash', 'shell', 'json', 'yaml', 'yml',
-    'markdown', 'md', 'xml', 'dockerfile', 'docker'
-  ];
-
-  const isExecutableLanguage = ['javascript', 'js', 'typescript', 'ts', 'jsx', 'tsx', 'html', 'css'].includes(detectedLanguage);
+  // 라이트모드도 다크모드 팔레트와 동일하게 적용
+  const customLightTheme = customDarkTheme;
 
   return (
-    <div className="my-6 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-      {/* 헤더 */}
-      <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <div
+      className="notion-code-block"
+      style={isDarkMode
+        ? { backgroundColor: '#181c23', border: 'none', boxShadow: 'none', outline: 'none' }
+        : { border: 'none', boxShadow: 'none', outline: 'none' }}
+      tabIndex={-1}
+    >
+      <div className="notion-code-header" style={isDarkMode ? { color: '#e5e5e5' } : {}}>
         <div className="flex items-center space-x-2">
           {filename && (
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="text-sm font-medium notion-code-language" style={isDarkMode ? { color: '#e5e5e5' } : {}}>
               {filename}
             </span>
           )}
-          {detectedLanguage !== 'text' && (
-            <span className="px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 rounded">
+          {detectedLanguage && (detectedLanguage as string) !== 'text' && (detectedLanguage as string) !== 'plaintext' && (detectedLanguage as string) !== 'plain' && (
+            <span className="notion-code-language" style={isDarkMode ? { color: '#e5e5e5' } : {}}>
               {detectedLanguage.toUpperCase()}
             </span>
           )}
         </div>
-        
-        <div className="flex items-center space-x-2">
-          {/* 실행 버튼 */}
-          {isExecutableLanguage && (
-            <button
-              onClick={openInCodePen}
-              className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
-              title="Open in CodePen"
-            >
-              <Play size={16} />
-            </button>
-          )}
-          
-          {/* 복사 버튼 */}
+        <div className="notion-code-actions">
           <button
             onClick={handleCopy}
-            className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
+            className="notion-code-button"
             title={copied ? 'Copied!' : 'Copy code'}
+            style={isDarkMode ? { color: '#e5e5e5' } : {}}
           >
-            {copied ? <Check size={16} /> : <Copy size={16} />}
+            {copied ? <Check size={20} color={isDarkMode ? '#e5e5e5' : undefined} /> : <Copy size={20} color={isDarkMode ? '#e5e5e5' : undefined} />}
           </button>
         </div>
       </div>
-
-      {/* 코드 블록 */}
-      <div className="relative" ref={codeRef}>
-        <SyntaxHighlighter
-          language={detectedLanguage}
-          style={isDarkMode ? oneDark : oneLight}
-          showLineNumbers={showLineNumbers}
-          wrapLines={true}
-          lineNumberStyle={{
-            color: isDarkMode ? '#6b7280' : '#9ca3af',
-            fontSize: '0.875rem',
-            paddingRight: '1rem',
-            minWidth: '2.5rem',
-            textAlign: 'right',
-            userSelect: 'none'
-          }}
-          customStyle={{
-            margin: 0,
-            padding: '1rem',
-            fontSize: '0.875rem',
-            lineHeight: '1.5',
-            backgroundColor: 'transparent',
-            borderRadius: 0
-          }}
-          lineProps={(lineNumber) => {
-            const isHighlighted = highlightLines.includes(lineNumber);
-            return {
-              style: {
-                backgroundColor: isHighlighted 
-                  ? (isDarkMode ? 'rgba(59, 130, 246, 0.1)' : 'rgba(59, 130, 246, 0.05)')
-                  : 'transparent',
-                display: 'block',
-                paddingLeft: isHighlighted ? '0.5rem' : '0',
-                marginLeft: isHighlighted ? '-0.5rem' : '0',
-                borderLeft: isHighlighted 
-                  ? `3px solid ${isDarkMode ? '#3b82f6' : '#2563eb'}`
-                  : 'none'
-              }
-            };
-          }}
-        >
-          {children}
-        </SyntaxHighlighter>
-      </div>
-
-      {/* 푸터 - 추가 액션 버튼들 */}
-      {isExecutableLanguage && (
-        <div className="flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={openInCodePen}
-              className="flex items-center space-x-1 px-2 py-1 text-xs text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
-            >
-              <ExternalLink size={12} />
-              <span>CodePen</span>
-            </button>
-            <button
-              onClick={openInJSFiddle}
-              className="flex items-center space-x-1 px-2 py-1 text-xs text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
-            >
-              <ExternalLink size={12} />
-              <span>JSFiddle</span>
-            </button>
-          </div>
-        </div>
-      )}
+      <Highlight
+        Prism={Prism}
+        code={children.trim()}
+        language={detectedLanguage}
+        theme={isDarkMode ? customDarkTheme : customLightTheme}
+      >
+        {({ className, style, tokens, getLineProps, getTokenProps }: any) => (
+          <pre className={className} style={style}>
+            {tokens.map((line: any, i: number) => (
+              <div key={i} {...getLineProps({ line, key: i })}>
+                {showLineNumbers && (
+                  <span className="select-none opacity-50 mr-4 min-w-[2.5rem] text-right inline-block">
+                    {i + 1}
+                  </span>
+                )}
+                {line.map((token: any, key: number) => (
+                  <span key={key} {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
     </div>
   );
 };
