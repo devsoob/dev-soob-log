@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { DefaultSeo } from 'next-seo';
 import LoadingSpinner from "@/components/LoadingSpinner";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import CodeBlock from "@/components/CodeBlock";
+import InlineCode from "@/components/InlineCode";
 import localFont from 'next/font/local';
 import "../styles/globals.css";
 import Head from "next/head";
@@ -52,9 +54,32 @@ const mdxComponents = {
   a: ({ children, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
     <a className="text-blue-500 hover:text-blue-600 underline" {...props}>{children}</a>
   ),
-  code: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
-  ),
+  code: ({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+    const isCodeBlock = className && className.includes('language-');
+    
+    if (isCodeBlock) {
+      return (
+        <CodeBlock className={className} {...props}>
+          {children as string}
+        </CodeBlock>
+      );
+    }
+    
+    return (
+      <InlineCode className={className} {...props}>
+        {children}
+      </InlineCode>
+    );
+  },
+  pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
+    return (
+      <div className="notion-code-block my-6">
+        <pre className="p-4 m-0 bg-transparent" {...props}>
+          {children}
+        </pre>
+      </div>
+    );
+  },
 };
 
 export default function MyApp({ Component, pageProps }: AppProps) {
