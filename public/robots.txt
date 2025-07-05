@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://dev-log-pi.vercel.app
+Host: https://dev-soob-log.vercel.app
 
 # Sitemaps
-Sitemap: https://dev-log-pi.vercel.app/sitemap.xml
+Sitemap: https://dev-soob-log.vercel.app/sitemap.xml

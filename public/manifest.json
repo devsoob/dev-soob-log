@@ -1,6 +1,6 @@
 {
-  "name": "Dev Log",
-  "short_name": "Dev Log",
+  "name": "Dev Soob Log",
+  "short_name": "Dev Soob Log",
   "description": "개발 경험과 지식을 공유하는 개발 블로그",
   "start_url": "/",
   "display": "standalone",

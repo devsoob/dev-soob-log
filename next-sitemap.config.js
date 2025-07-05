@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://dev-log-pi.vercel.app',
+  siteUrl: 'https://dev-soob-log.vercel.app',
   generateRobotsTxt: true,
   changefreq: 'daily',
   priority: 0.7,

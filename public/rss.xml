@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-        <title>Dev Log</title>
-        <link>https://dev-log-pi.vercel.app</link>
+        <title>Dev Soob Log</title>
+        <link>https://dev-soob-log.vercel.app</link>
         <description>개발 경험과 지식을 공유하는 개발 블로그</description>
-        <lastBuildDate>Wed, 25 Jun 2025 08:18:12 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 04 Jul 2025 13:54:10 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <language>ko</language>
         <image>
-            <title>Dev Log</title>
-            <url>https://dev-log-pi.vercel.app/images/og-image.png</url>
-            <link>https://dev-log-pi.vercel.app</link>
+            <title>Dev Soob Log</title>
+            <url>https://dev-soob-log.vercel.app/images/og-image.png</url>
+            <link>https://dev-soob-log.vercel.app</link>
         </image>
         <copyright>All rights reserved 2025</copyright>
         <item>
             <title><![CDATA[React 시작하기: 기초부터 실전까지]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-01-getting-started-with-react</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-01-getting-started-with-react</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-01-getting-started-with-react</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-01-getting-started-with-react</guid>
             <pubDate>Wed, 01 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # React 시작하기: 기초부터 실전까지
@@ -40,8 +40,8 @@ React의 모든 UI는 컴포넌트로 구성됩니다. 컴포넌트는 재사용
         </item>
         <item>
             <title><![CDATA[TypeScript 기초: JavaScript의 슈퍼셋]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-02-typescript-basics</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-02-typescript-basics</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-02-typescript-basics</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-02-typescript-basics</guid>
             <pubDate>Thu, 02 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # TypeScript 기초: JavaScript의 슈퍼셋
@@ -62,8 +62,8 @@ TypeScript는 Microsoft에서 개발한 JavaScript의 상위 집합(Superset) �
         </item>
         <item>
             <title><![CDATA[Node.js 백엔드 개발: Express.js로 REST API 구축하기]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-03-nodejs-backend-development</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-03-nodejs-backend-development</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-03-nodejs-backend-development</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-03-nodejs-backend-development</guid>
             <pubDate>Fri, 03 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Node.js 백엔드 개발: Express.js로 REST API 구축하기
@@ -82,8 +82,8 @@ Node.js는 JavaScript 런타임 환경으로, 서버 사이드 애플리케이�
         </item>
         <item>
             <title><![CDATA[Docker 컨테이너화: 애플리케이션 배포의 혁신]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-04-docker-containerization</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-04-docker-containerization</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-04-docker-containerization</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-04-docker-containerization</guid>
             <pubDate>Sat, 04 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Docker 컨테이너화: 애플리케이션 배포의 혁신
@@ -114,8 +114,8 @@ Docker를 사용하여 애플리케이션을 컨테이너화하고 배포하는 
         </item>
         <item>
             <title><![CDATA[Git 버전 관리: 협업을 위한 필수 도구]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-05-git-version-control</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-05-git-version-control</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-05-git-version-control</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-05-git-version-control</guid>
             <pubDate>Sun, 05 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Git 버전 관리: 협업을 위한 필수 도구
@@ -148,8 +148,8 @@ Git을 사용한 버전 관리와 팀 협업 방법을 단계별로 학습합니
         </item>
         <item>
             <title><![CDATA[Python 데이터 분석: Pandas와 NumPy 활용]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-06-python-data-analysis</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-06-python-data-analysis</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-06-python-data-analysis</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-06-python-data-analysis</guid>
             <pubDate>Mon, 06 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Python 데이터 분석: Pandas와 NumPy 활용
@@ -180,8 +180,8 @@ Python의 Pandas와 NumPy를 사용하여 데이터 분석을 수행하는 방�
         </item>
         <item>
             <title><![CDATA[AWS 클라우드 컴퓨팅: 서버리스 아키텍처]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-07-aws-cloud-computing</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-07-aws-cloud-computing</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-07-aws-cloud-computing</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-07-aws-cloud-computing</guid>
             <pubDate>Tue, 07 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # AWS 클라우드 컴퓨팅: 서버리스 아키텍처
@@ -214,8 +214,8 @@ AWS의 서버리스 서비스를 활용하여 확장 가능한 애플리케이�
         </item>
         <item>
             <title><![CDATA[머신러닝 기초: 지도학습과 비지도학습]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-08-machine-learning-basics</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-08-machine-learning-basics</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-08-machine-learning-basics</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-08-machine-learning-basics</guid>
             <pubDate>Wed, 08 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # 머신러닝 기초: 지도학습과 비지도학습
@@ -248,8 +248,8 @@ AWS의 서버리스 서비스를 활용하여 확장 가능한 애플리케이�
         </item>
         <item>
             <title><![CDATA[Kubernetes 오케스트레이션: 컨테이너 관리의 표준]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-09-kubernetes-orchestration</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-09-kubernetes-orchestration</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-09-kubernetes-orchestration</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-09-kubernetes-orchestration</guid>
             <pubDate>Thu, 09 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Kubernetes 오케스트레이션: 컨테이너 관리의 표준
@@ -280,8 +280,8 @@ Kubernetes를 사용하여 컨테이너 기반 애플리케이션을 관리하�
         </item>
         <item>
             <title><![CDATA[Vue.js 프론트엔드 프레임워크: 반응형 UI 구축]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-10-vuejs-frontend-framework</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-10-vuejs-frontend-framework</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-10-vuejs-frontend-framework</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-10-vuejs-frontend-framework</guid>
             <pubDate>Fri, 10 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Vue.js 프론트엔드 프레임워크: 반응형 UI 구축
@@ -312,8 +312,8 @@ Vue.js를 사용하여 반응형 사용자 인터페이스를 구축하는 방�
         </item>
         <item>
             <title><![CDATA[PostgreSQL 데이터베이스: 관계형 DB의 강자]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-11-postgresql-database</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-11-postgresql-database</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-11-postgresql-database</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-11-postgresql-database</guid>
             <pubDate>Sat, 11 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # PostgreSQL 데이터베이스: 관계형 DB의 강자
@@ -346,8 +346,8 @@ PostgreSQL의 고급 기능과 성능 최적화 방법을 학습합니다.
         </item>
         <item>
             <title><![CDATA[Redis 캐싱: 고성능 인메모리 데이터 저장소]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-12-redis-caching</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-12-redis-caching</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-12-redis-caching</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-12-redis-caching</guid>
             <pubDate>Sun, 12 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Redis 캐싱: 고성능 인메모리 데이터 저장소
@@ -380,8 +380,8 @@ Redis를 사용하여 애플리케이션 성능을 향상시키는 캐싱 전략
         </item>
         <item>
             <title><![CDATA[GraphQL API 설계: 효율적인 데이터 요청]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-13-graphql-api-design</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-13-graphql-api-design</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-13-graphql-api-design</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-13-graphql-api-design</guid>
             <pubDate>Mon, 13 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # GraphQL API 설계: 효율적인 데이터 요청
@@ -412,8 +412,8 @@ GraphQL을 사용하여 효율적이고 유연한 API를 설계하는 방법을 
         </item>
         <item>
             <title><![CDATA[Jest 테스팅 프레임워크: JavaScript 테스트 자동화]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-14-jest-testing-framework</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-14-jest-testing-framework</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-14-jest-testing-framework</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-14-jest-testing-framework</guid>
             <pubDate>Tue, 14 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Jest 테스팅 프레임워크: JavaScript 테스트 자동화
@@ -444,8 +444,8 @@ Jest를 사용하여 JavaScript 코드의 단위 테스트와 통합 테스트�
         </item>
         <item>
             <title><![CDATA[Webpack 모듈 번들러: 현대적 빌드 도구]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-15-webpack-module-bundler</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-15-webpack-module-bundler</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-15-webpack-module-bundler</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-15-webpack-module-bundler</guid>
             <pubDate>Wed, 15 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Webpack 모듈 번들러: 현대적 빌드 도구
@@ -476,8 +476,8 @@ Webpack을 사용하여 모던 JavaScript 애플리케이션을 번들링하고 
         </item>
         <item>
             <title><![CDATA[Nginx 웹 서버: 고성능 리버스 프록시]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-16-nginx-web-server</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-16-nginx-web-server</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-16-nginx-web-server</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-16-nginx-web-server</guid>
             <pubDate>Thu, 16 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Nginx 웹 서버: 고성능 리버스 프록시
@@ -510,8 +510,8 @@ Nginx를 사용하여 웹 서버 설정과 로드 밸런싱을 구성합니다.
         </item>
         <item>
             <title><![CDATA[MongoDB NoSQL 데이터베이스: 문서 기반 저장소]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-17-mongodb-nosql-database</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-17-mongodb-nosql-database</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-17-mongodb-nosql-database</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-17-mongodb-nosql-database</guid>
             <pubDate>Fri, 17 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # MongoDB NoSQL 데이터베이스: 문서 기반 저장소
@@ -542,8 +542,8 @@ MongoDB의 문서 기반 데이터 모델과 쿼리 최적화 방법을 학습�
         </item>
         <item>
             <title><![CDATA[Elasticsearch 검색 엔진: 실시간 검색 구현]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-18-elasticsearch-search-engine</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-18-elasticsearch-search-engine</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-18-elasticsearch-search-engine</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-18-elasticsearch-search-engine</guid>
             <pubDate>Sat, 18 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Elasticsearch 검색 엔진: 실시간 검색 구현
@@ -574,8 +574,8 @@ Elasticsearch를 사용하여 강력한 검색 기능과 데이터 분석을 구
         </item>
         <item>
             <title><![CDATA[Angular 프레임워크: 엔터프라이즈급 SPA 개발]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-19-angular-framework</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-19-angular-framework</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-19-angular-framework</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-19-angular-framework</guid>
             <pubDate>Sun, 19 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Angular 프레임워크: 엔터프라이즈급 SPA 개발
@@ -608,8 +608,8 @@ Angular를 사용하여 대규모 엔터프라이즈 애플리케이션을 개�
         </item>
         <item>
             <title><![CDATA[Python 웹 스크래핑: BeautifulSoup과 Scrapy]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-20-python-web-scraping</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-20-python-web-scraping</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-20-python-web-scraping</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-20-python-web-scraping</guid>
             <pubDate>Mon, 20 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Python 웹 스크래핑: BeautifulSoup과 Scrapy
@@ -640,8 +640,8 @@ Python을 사용하여 웹사이트에서 데이터를 수집하고 분석하는
         </item>
         <item>
             <title><![CDATA[React Native 모바일 개발: 크로스 플랫폼 앱]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-21-react-native-mobile</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-21-react-native-mobile</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-21-react-native-mobile</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-21-react-native-mobile</guid>
             <pubDate>Tue, 21 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # React Native 모바일 개발: 크로스 플랫폼 앱
@@ -672,8 +672,8 @@ React Native를 사용하여 iOS와 Android 앱을 동시에 개발합니다.
         </item>
         <item>
             <title><![CDATA[Flutter 앱 개발: Dart 기반 UI 프레임워크]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-22-flutter-app-development</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-22-flutter-app-development</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-22-flutter-app-development</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-22-flutter-app-development</guid>
             <pubDate>Wed, 22 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # Flutter 앱 개발: Dart 기반 UI 프레임워크
@@ -704,8 +704,8 @@ Flutter를 사용하여 네이티브 성능의 크로스 플랫폼 모바일 앱
         </item>
         <item>
             <title><![CDATA[블록체인 기초: 분산 원장 기술의 이해]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-01-23-blockchain-basics</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-01-23-blockchain-basics</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-23-blockchain-basics</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-23-blockchain-basics</guid>
             <pubDate>Thu, 23 Jan 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[
 # 블록체인 기초: 분산 원장 기술의 이해
@@ -737,9 +737,37 @@ Flutter를 사용하여 네이티브 성능의 크로스 플랫폼 모바일 앱
 - **유연성...]]></content:encoded>
         </item>
         <item>
+            <title><![CDATA[노션 스타일 코드 블록 테스트]]></title>
+            <link>https://dev-soob-log.vercel.app/posts/2025-01-24-notion-style-code-test</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-01-24-notion-style-code-test</guid>
+            <pubDate>Fri, 24 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[
+# 노션 스타일 코드 블록 테스트
+
+이 글은 노션과 유사한 스타일의 인라인 코드와 코드 블록이 제대로 작동하는지 테스트하기 위한 글입니다.
+
+## 인라인 코드 테스트
+
+일반적인 텍스트 중에 `console.log('Hello World')` 같은 인라인 코드가 어떻게 보이는지 확인해보겠습니다.
+
+다른 예시들:
+- `npm install react` 명령어...]]></description>
+            <content:encoded><![CDATA[
+# 노션 스타일 코드 블록 테스트
+
+이 글은 노션과 유사한 스타일의 인라인 코드와 코드 블록이 제대로 작동하는지 테스트하기 위한 글입니다.
+
+## 인라인 코드 테스트
+
+일반적인 텍스트 중에 `console.log('Hello World')` 같은 인라인 코드가 어떻게 보이는지 확인해보겠습니다.
+
+다른 예시들:
+- `npm install react` 명령어...]]></content:encoded>
+        </item>
+        <item>
             <title><![CDATA[Next.js와 Notion API로 블로그 만들기]]></title>
-            <link>https://dev-log-pi.vercel.app/posts/2025-06-03-nextjs-notion-blog</link>
-            <guid isPermaLink="false">https://dev-log-pi.vercel.app/posts/2025-06-03-nextjs-notion-blog</guid>
+            <link>https://dev-soob-log.vercel.app/posts/2025-06-03-nextjs-notion-blog</link>
+            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-06-03-nextjs-notion-blog</guid>
             <pubDate>Mon, 02 Jun 2025 15:00:00 GMT</pubDate>
             <description><![CDATA[
 # Next.js와 Notion API로 블로그 만들기

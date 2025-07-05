@@ -114,26 +114,26 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MDXProvider components={mdxComponents}>
       <Head>
-        <title>Dev Log&apos;s</title>
+        <title>Dev Soob Log</title>
         <meta name="description" content="Choi Soobin&apos;s Development Blog" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <DefaultSeo
-        title="Dev Log's"
-        titleTemplate="%s | Dev Log's"
+        title="Dev Soob Log"
+        titleTemplate="%s | Dev Soob Log"
         description={process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '개발 경험과 지식을 공유하는 개발 블로그'}
-        canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app'}
+        canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}
         openGraph={{
           type: 'website',
           locale: 'ko_KR',
-          url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app',
-          siteName: "Dev Log's",
+          url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app',
+          siteName: "Dev Soob Log",
           images: [
             {
-              url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-log-pi.vercel.app'}/og-image.png`,
+              url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/og-image.png`,
               width: 1200,
               height: 630,
-              alt: "Dev Log's",
+              alt: "Dev Soob Log",
             },
           ],
         }}

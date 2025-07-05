@@ -103,7 +103,7 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
     <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-[#1a1a1a]/80 z-[100]">
       <div className="w-full flex justify-between items-center px-4 xs:px-8 h-14 xs:h-16">
         <Link href="/" className="text-xl xs:text-2xl font-bold italic hover:scale-105 transition-transform duration-200 text-black dark:text-white" onClick={handleLogoClick}>
-          Dev Log&apos;s
+          Dev Soob Log
         </Link>
         <div className="flex items-center gap-2 xs:gap-4">
           {isHomePage && !isSearchVisible && (

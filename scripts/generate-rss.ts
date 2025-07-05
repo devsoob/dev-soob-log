@@ -4,11 +4,11 @@ import { getAllPostsSync } from '../lib/posts';
 
 async function generateRssFeed() {
   const posts = getAllPostsSync();
-  const siteURL = 'https://dev-log-pi.vercel.app';
+  const siteURL = 'https://dev-soob-log.vercel.app';
   const date = new Date();
 
   const feed = new Feed({
-    title: 'Dev Log',
+    title: 'Dev Soob Log',
     description: '개발 경험과 지식을 공유하는 개발 블로그',
     id: siteURL,
     link: siteURL,

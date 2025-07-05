@@ -57,11 +57,11 @@ export default function Home({ posts }: Props) {
   return (
     <>
       <Head>
-        <title>Dev Log's</title>
+        <title>Dev Soob Log</title>
         <meta name="description" content="A developer's blog about programming, technology, and more." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Dev Log's" />
+        <meta property="og:title" content="Dev Soob Log" />
         <meta property="og:description" content="A developer's blog about programming, technology, and more." />
         <meta property="og:type" content="website" />
       </Head>
