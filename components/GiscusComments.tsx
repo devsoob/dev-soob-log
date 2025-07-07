@@ -92,7 +92,7 @@ export default function GiscusComments({ postSlug, postTitle }: GiscusCommentsPr
   }, [postSlug]);
 
   // GitHub 저장소 정보 (환경변수로 관리)
-  const repo = process.env.NEXT_PUBLIC_GISCUS_REPO || '123456soobin-choi/dev-log';
+  const repo = process.env.NEXT_PUBLIC_GISCUS_REPO || 'devsoob/dev-soob-log';
   const repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID || '';
   const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'Q&A';
   const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || '';
