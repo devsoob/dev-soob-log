@@ -13,6 +13,7 @@ import MobileTableOfContents from '@/components/MobileTableOfContents';
 import GestureIndicator from '@/components/GestureIndicator';
 import GestureHelp from '@/components/GestureHelp';
 import GiscusComments from '@/components/GiscusComments';
+import ReadingProgress from '@/components/ReadingProgress';
 import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState } from 'react';
 
@@ -21,6 +22,17 @@ interface PostPageProps {
   mdxSource: any;
   prevPost: UnifiedPost | null;
   nextPost: UnifiedPost | null;
+}
+
+// 상세 페이지에서 제목과 설명을 제거하는 함수
+function stripTitleAndDescription(markdown: string, title: string, description: string) {
+  // 제목(헤더) 제거: # 제목\n 또는 ## 제목\n
+  let result = markdown.replace(new RegExp(`^#{1,6}\\s*${title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\n+`, 'm'), '');
+  // 설명(첫 문단) 제거: description이 있으면 제거
+  if (description) {
+    result = result.replace(new RegExp(`^${description.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\n+`, 'm'), '');
+  }
+  return result;
 }
 
 export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPageProps) {
@@ -90,6 +102,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
       </Head>
 
       <Header />
+      
+      {/* 읽기 진행률 바 */}
+      <ReadingProgress />
 
       <main className="flex-1 w-full pt-20 xs:pt-24 pb-8">
         <div className="max-w-7xl mx-auto px-4 xs:px-6 sm:px-10">
@@ -118,7 +133,48 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
                   </button>
                 </div>
 
-                <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert mt-8">
+                {/* 포스트 헤더 */}
+                <header className="mb-8">
+                  <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                    {post.title}
+                  </h1>
+                  <div className="flex flex-col xs:flex-row xs:items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <time dateTime={post.date}>
+                        {new Date(post.date).toLocaleDateString('ko-KR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </time>
+                    </div>
+                    {post.category && (
+                      <div className="flex items-center">
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                        <span>{post.category}</span>
+                      </div>
+                    )}
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 items-center">
+                        {post.tags.map((tag) => (
+                          <span key={tag} className="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-300">#{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {post.description && (
+                    <p className="text-lg text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">
+                      {post.description}
+                    </p>
+                  )}
+                </header>
+
+                <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert">
                   <MDXRemote {...mdxSource} />
                 </div>
 
@@ -258,7 +314,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const prevPost = postIndex > 0 ? posts[postIndex - 1] : null;
   const nextPost = postIndex < posts.length - 1 ? posts[postIndex + 1] : null;
 
-  const mdxSource = await serialize(post.content);
+  // 제목과 설명 제거
+  const strippedContent = stripTitleAndDescription(post.content, post.title, post.description);
+  const mdxSource = await serialize(strippedContent);
 
   return {
     props: {
