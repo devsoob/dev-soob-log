@@ -14,6 +14,7 @@ import GestureIndicator from '@/components/GestureIndicator';
 import GestureHelp from '@/components/GestureHelp';
 import GiscusComments from '@/components/GiscusComments';
 import ReadingProgress from '@/components/ReadingProgress';
+import ShareButtons from '@/components/ShareButtons';
 import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState } from 'react';
 
@@ -177,6 +178,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
                 <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert">
                   <MDXRemote {...mdxSource} />
                 </div>
+
+                {/* 공유 버튼 */}
+                <ShareButtons post={post} />
 
                 {/* 댓글 섹션 */}
                 <GiscusComments postSlug={post.slug} postTitle={post.title} />
