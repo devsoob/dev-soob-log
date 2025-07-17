@@ -175,12 +175,12 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
                   )}
                 </header>
 
-                <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert">
-                  <MDXRemote {...mdxSource} />
-                </div>
-
                 {/* 공유 버튼 */}
                 <ShareButtons post={post} />
+
+                <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert mt-8">
+                  <MDXRemote {...mdxSource} />
+                </div>
 
                 {/* 댓글 섹션 */}
                 <GiscusComments postSlug={post.slug} postTitle={post.title} />
