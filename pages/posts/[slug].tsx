@@ -112,25 +112,21 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
           <div className="lg:flex lg:justify-center lg:gap-8 lg:items-start">
             <div className="w-full max-w-4xl">
               <article className="min-w-0">
-                {/* 뒤로가기 아이콘 */}
-                <div className="mb-6">
+                {/* 네비게이션 버튼들 */}
+                <div className="mb-6 flex items-center justify-between">
                   <button
-                    onClick={() => router.back()}
-                    className="text-gray-400 dark:text-gray-600 hover:text-gray-700 dark:hover:text-gray-400 transition-colors duration-200"
+                    onClick={() => router.push('/')}
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200"
                   >
                     <svg 
-                      width="32" 
-                      height="32" 
-                      viewBox="0 0 24 24" 
+                      className="w-4 h-4 mr-2" 
                       fill="none" 
                       stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
-                      className="w-8 h-8"
+                      viewBox="0 0 24 24"
                     >
-                      <path d="m15 18-6-6 6-6"/>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
+                    목록으로
                   </button>
                 </div>
 
@@ -261,28 +257,52 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
       {/* 제스처 네비게이션 도움말 */}
       <GestureHelp />
       
-      {/* 스크롤 to top 버튼 */}
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-6 right-20 lg:right-6 z-50 p-3 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
-          showScrollToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
-        }`}
-        aria-label="최상단으로 이동"
-      >
-        <svg 
-          width="20" 
-          height="20" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-          className="w-5 h-5 lg:w-6 lg:h-6"
+      {/* 플로팅 액션 버튼들 */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 lg:right-6 lg:left-auto left-6 right-auto sm:right-6 sm:left-auto">
+        {/* 목록으로 가기 버튼 */}
+        <button
+          onClick={() => router.push('/')}
+          className="p-3 rounded-full bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
+          aria-label="목록으로 이동"
         >
-          <path d="m18 15-6-6-6 6"/>
-        </svg>
-      </button>
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="w-5 h-5 lg:w-6 lg:h-6"
+          >
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+        </button>
+        
+        {/* 스크롤 to top 버튼 */}
+        <button
+          onClick={scrollToTop}
+          className={`p-3 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
+            showScrollToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+          }`}
+          aria-label="최상단으로 이동"
+        >
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="w-5 h-5 lg:w-6 lg:h-6"
+          >
+            <path d="m18 15-6-6-6 6"/>
+          </svg>
+        </button>
+      </div>
       
       <Footer />
     </div>
