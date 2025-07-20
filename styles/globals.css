@@ -268,3 +268,18 @@ a {
 .dark .notion-code-block pre, .dark .notion-code-block code {
   background-color: #f6f6f7 !important;
 }
+
+/* 모바일 코드블럭/인라인코드 폰트 크기 축소 및 연속 코드블럭 간격 */
+@media (max-width: 480px) {
+  .notion-code-block pre,
+  .notion-code-block code {
+    font-size: 0.8rem;
+  }
+  .notion-inline-code {
+    font-size: 0.75rem;
+  }
+}
+
+.notion-code-block + .notion-code-block {
+  margin-top: 1.25rem;
+}
