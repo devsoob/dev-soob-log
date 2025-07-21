@@ -1,20 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { MarkdownPost, UnifiedPost, PostStatus } from '@/types/post';
+import { MarkdownPost, UnifiedPost } from '@/types/post';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
-
-// 문자열 status를 PostStatus로 변환하는 함수
-function convertStatusToPostStatus(status: string): PostStatus {
-  if (status === 'published' || status === '🚀 배포 완료') {
-    return 'published';
-  } else if (status === 'archived' || status === '📁 보관됨') {
-    return 'archived';
-  } else {
-    return 'draft';
-  }
-}
 
 export function getMarkdownPosts(): UnifiedPost[] {
   if (!fs.existsSync(postsDirectory)) {
@@ -58,7 +47,7 @@ export function convertMarkdownToUnifiedPost(markdownPost: MarkdownPost): Unifie
     slug: markdownPost.slug,
     category: markdownPost.category,
     tags: markdownPost.tags,
-    status: convertStatusToPostStatus(markdownPost.status),
+    status: markdownPost.status,
     isPublished: markdownPost.isPublished,
     lastModified: new Date().toISOString(), // For markdown files, we'll use current time
     description: markdownPost.description,
