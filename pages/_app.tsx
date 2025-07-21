@@ -10,7 +10,9 @@ import InlineCode from "@/components/InlineCode";
 import localFont from 'next/font/local';
 import "../styles/globals.css";
 import Head from "next/head";
+import { SITE_CONFIG, SEO_CONFIG, META_TAGS } from '@/lib/constants';
 
+// 폰트 설정
 const pretendard = localFont({
   src: [
     {
@@ -38,6 +40,7 @@ const pretendard = localFont({
   display: 'swap',
 });
 
+// MDX 컴포넌트 설정
 const mdxComponents = {
   h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className="text-3xl font-bold mt-8 mb-4 scroll-mt-24" {...props}>{children}</h1>
@@ -82,23 +85,15 @@ const mdxComponents = {
   },
 };
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+// 라우터 이벤트 핸들러 훅
+function useRouterEvents() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    const handleStart = () => {
-      setIsLoading(true);
-    };
-
-    const handleComplete = () => {
-      setIsLoading(false);
-    };
-
-    const handleError = () => {
-      setIsLoading(false);
-    };
+    const handleStart = () => setIsLoading(true);
+    const handleComplete = () => setIsLoading(false);
+    const handleError = () => setIsLoading(false);
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
@@ -111,69 +106,75 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router]);
 
+  return isLoading;
+}
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  const isLoading = useRouterEvents();
+
   return (
     <MDXProvider components={mdxComponents}>
       <Head>
-        <title>Dev Soob Log</title>
-        <meta name="description" content="Choi Soobin&apos;s Development Blog" />
+        <title>{SITE_CONFIG.name}</title>
+        <meta name="description" content={SITE_CONFIG.description} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <DefaultSeo
-        title="Dev Soob Log"
-        titleTemplate="%s | Dev Soob Log"
-        description={process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '개발 경험과 지식을 공유하는 개발 블로그'}
-        canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}
+        title={SITE_CONFIG.name}
+        titleTemplate={SEO_CONFIG.titleTemplate}
+        description={SITE_CONFIG.description}
+        canonical={SITE_CONFIG.url}
         openGraph={{
           type: 'website',
-          locale: 'ko_KR',
-          url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app',
-          siteName: "Dev Soob Log",
+          locale: SEO_CONFIG.locale,
+          url: SITE_CONFIG.url,
+          siteName: SITE_CONFIG.name,
           images: [
             {
-              url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/og-image.png`,
+              url: `${SITE_CONFIG.url}${SITE_CONFIG.ogImage}`,
               width: 1200,
               height: 630,
-              alt: "Dev Soob Log",
+              alt: SITE_CONFIG.name,
             },
           ],
         }}
         twitter={{
-          handle: '@handle',
-          site: '@site',
-          cardType: 'summary_large_image',
+          handle: SEO_CONFIG.twitterHandle,
+          site: SEO_CONFIG.twitterSite,
+          cardType: SEO_CONFIG.twitterCardType,
         }}
         additionalMetaTags={[
           {
             name: 'viewport',
-            content: 'width=device-width, initial-scale=1',
+            content: META_TAGS.viewport,
           },
           {
             name: 'naver-site-verification',
-            content: '01f879679eb5dd93ae99dc948742910e33135369',
+            content: META_TAGS.naverSiteVerification,
           },
           {
             name: 'google-site-verification',
-            content: 'YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE',
+            content: META_TAGS.googleSiteVerification,
           },
           {
             name: 'author',
-            content: process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Author Name',
+            content: SITE_CONFIG.author,
           },
           {
             name: 'keywords',
-            content: 'development, programming, web development, software engineering, tech blog',
+            content: SEO_CONFIG.keywords,
           },
           {
             name: 'theme-color',
-            content: '#000000',
+            content: SEO_CONFIG.themeColor,
           },
           {
             name: 'apple-mobile-web-app-capable',
-            content: 'yes',
+            content: META_TAGS.appleMobileWebAppCapable,
           },
           {
             name: 'apple-mobile-web-app-status-bar-style',
-            content: 'black',
+            content: META_TAGS.appleMobileWebAppStatusBarStyle,
           },
         ]}
         additionalLinkTags={[

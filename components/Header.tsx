@@ -2,23 +2,29 @@ import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { UnifiedPost } from '@/types/post';
+import { SearchResultPost } from '@/types/post';
 import SearchIcon from './icons/SearchIcon';
 import CloseIcon from './icons/CloseIcon';
 import RssIcon from './icons/RssIcon';
+import { ROUTES, SEARCH_CONFIG } from '@/lib/constants';
+import { debounce } from '@/lib/utils';
 
 interface HeaderProps {
-  onSearchResults?: (results: UnifiedPost[] | null) => void;
+  onSearchResults?: (results: SearchResultPost[] | null) => void;
   onSearching?: (isSearching: boolean) => void;
   onSearchVisible?: (visible: boolean) => void;
 }
 
-function useSearch(onSearchResults?: (results: UnifiedPost[] | null) => void, onSearching?: (isSearching: boolean) => void) {
+// 검색 훅
+function useSearch(
+  onSearchResults?: (results: SearchResultPost[] | null) => void,
+  onSearching?: (isSearching: boolean) => void
+) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
 
-  const handleSearch = async () => {
-    if (searchTerm.length < 1) {
+  const performSearch = async (term: string) => {
+    if (term.length < SEARCH_CONFIG.minSearchLength) {
       onSearchResults?.(null);
       return;
     }
@@ -27,7 +33,10 @@ function useSearch(onSearchResults?: (results: UnifiedPost[] | null) => void, on
     onSearching?.(true);
     
     try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}`);
+      const response = await fetch(`${ROUTES.api.search}?q=${encodeURIComponent(term)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       onSearchResults?.(data);
     } catch (error) {
@@ -39,21 +48,20 @@ function useSearch(onSearchResults?: (results: UnifiedPost[] | null) => void, on
     }
   };
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (searchTerm.length >= 1) {
-        handleSearch();
-      } else if (searchTerm.length === 0) {
-        onSearchResults?.(null);
-      }
-    }, 300);
+  // 디바운스된 검색 함수
+  const debouncedSearch = debounce(performSearch, SEARCH_CONFIG.debounceDelay);
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm]);
+  useEffect(() => {
+    if (searchTerm.length >= SEARCH_CONFIG.minSearchLength) {
+      debouncedSearch(searchTerm);
+    } else if (searchTerm.length === 0) {
+      onSearchResults?.(null);
+    }
+  }, [searchTerm, debouncedSearch, onSearchResults]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSearch();
+    performSearch(searchTerm);
   };
 
   const handleClearSearch = () => {
@@ -73,7 +81,7 @@ function useSearch(onSearchResults?: (results: UnifiedPost[] | null) => void, on
 export default function Header({ onSearchResults, onSearching, onSearchVisible }: HeaderProps) {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const router = useRouter();
-  const isHomePage = router.pathname === '/';
+  const isHomePage = router.pathname === ROUTES.home;
 
   const {
     searchTerm,
@@ -94,73 +102,72 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
   };
 
   useEffect(() => {
-    if (onSearchVisible) {
-      onSearchVisible(isSearchVisible);
-    }
-  }, [isSearchVisible]);
+    onSearchVisible?.(isSearchVisible);
+  }, [isSearchVisible, onSearchVisible]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-[#1a1a1a]/80 z-[100]">
-      <div className="w-full flex justify-between items-center px-4 xs:px-8 h-14 xs:h-16">
-        <Link href="/" className="text-xl xs:text-2xl font-bold italic hover:scale-105 transition-transform duration-200 text-black dark:text-white" onClick={handleLogoClick}>
-          Dev Soob Log
-        </Link>
-        <div className="flex items-center gap-2 xs:gap-4">
-          {isHomePage && !isSearchVisible && (
-            <button
-              onClick={() => setIsSearchVisible(true)}
-              className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200"
-              title="Search"
+    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* 로고 */}
+          <div className="flex items-center">
+            <Link 
+              href={ROUTES.home}
+              onClick={handleLogoClick}
+              className="text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              <SearchIcon className="text-black dark:text-white xs:w-5 xs:h-5" />
+              {isSearchVisible ? '←' : 'Dev Soob Log'}
+            </Link>
+          </div>
+
+          {/* 검색 및 네비게이션 */}
+          <div className="flex items-center space-x-4">
+            {/* 검색 버튼 */}
+            <button
+              onClick={() => setIsSearchVisible(!isSearchVisible)}
+              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+              aria-label="검색"
+            >
+              <SearchIcon className="w-5 h-5" />
             </button>
-          )}
-          {isHomePage && isSearchVisible && (
-            <form onSubmit={handleSearchSubmit} className="relative hidden xs:block">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-48 xs:w-64 pl-2 pr-8 py-1 text-xs xs:text-sm text-gray-900 dark:text-white border-b border-black dark:border-white focus:outline-none bg-transparent"
-                autoFocus
-              />
-              <button
-                type="button"
-                onClick={handleClearSearchAndHide}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
-              >
-                <CloseIcon className="xs:w-4 xs:h-4" />
-              </button>
-            </form>
-          )}
-          <ThemeToggle />
-          <Link
-            href="/rss.xml"
-            className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200"
-            title="RSS Feed"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <RssIcon className="text-black dark:text-white xs:w-5 xs:h-5" />
-          </Link>
+
+            {/* RSS 링크 */}
+            <Link
+              href="/rss.xml"
+              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+              aria-label="RSS 피드"
+            >
+              <RssIcon className="w-5 h-5" />
+            </Link>
+
+            {/* 테마 토글 */}
+            <ThemeToggle />
+          </div>
         </div>
-        {isHomePage && isSearchVisible && (
-          <div className="w-full xs:hidden mt-2 absolute top-full left-0 px-4 pb-4">
+
+        {/* 검색 바 */}
+        {isSearchVisible && (
+          <div className="pb-4">
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-2 pr-8 py-1 text-xs text-gray-900 dark:text-white border-b border-black dark:border-white focus:outline-none bg-transparent"
+                placeholder="포스트 검색..."
+                className="w-full px-4 py-2 pl-10 pr-10 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 autoFocus
               />
-              <button
-                type="button"
-                onClick={handleClearSearchAndHide}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
-              >
-                <CloseIcon />
-              </button>
+              <SearchIcon className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={handleClearSearch}
+                  className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                  aria-label="검색어 지우기"
+                >
+                  <CloseIcon className="w-4 h-4" />
+                </button>
+              )}
             </form>
           </div>
         )}
