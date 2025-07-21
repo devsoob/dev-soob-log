@@ -1,9 +1,20 @@
 import { Client } from "@notionhq/client";
-import { NotionPost, UnifiedPost } from "@/types/post";
+import { NotionPost, UnifiedPost, PostStatus } from "@/types/post";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 // Notion API 클라이언트를 생성, 인증키는 환경변수로 관리해
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
+
+// 문자열 status를 PostStatus로 변환하는 함수
+function convertStatusToPostStatus(status: string): PostStatus {
+  if (status === 'published' || status === '🚀 배포 완료') {
+    return 'published';
+  } else if (status === 'archived' || status === '📁 보관됨') {
+    return 'archived';
+  } else {
+    return 'draft';
+  }
+}
 
 // 제목으로부터 슬러그 생성하는 함수
 function generateSlug(title: string): string {
@@ -156,7 +167,7 @@ export async function convertNotionToUnifiedPost(notionPost: NotionPost): Promis
     slug: generateSlug(title),
     category,
     tags,
-    status,
+    status: convertStatusToPostStatus(status),
     isPublished,
     lastModified: notionPost.last_edited_time,
     description

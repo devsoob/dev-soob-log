@@ -4,7 +4,7 @@
         <title>Dev Soob Log</title>
         <link>https://dev-soob-log.vercel.app</link>
         <description>개발 경험과 지식을 공유하는 개발 블로그</description>
-        <lastBuildDate>Fri, 04 Jul 2025 13:54:10 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 21 Jul 2025 15:19:53 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <language>ko</language>
@@ -763,34 +763,6 @@ Flutter를 사용하여 네이티브 성능의 크로스 플랫폼 모바일 앱
 
 다른 예시들:
 - `npm install react` 명령어...]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[Next.js와 Notion API로 블로그 만들기]]></title>
-            <link>https://dev-soob-log.vercel.app/posts/2025-06-03-nextjs-notion-blog</link>
-            <guid isPermaLink="false">https://dev-soob-log.vercel.app/posts/2025-06-03-nextjs-notion-blog</guid>
-            <pubDate>Mon, 02 Jun 2025 15:00:00 GMT</pubDate>
-            <description><![CDATA[
-# Next.js와 Notion API로 블로그 만들기
-
-Next.js와 Notion API를 사용하여 개인 블로그를 만드는 방법을 소개합니다. 
-이 블로그는 마크다운과 Notion 데이터베이스를 동시에 지원하여 더욱 유연한 글쓰기 환경을 제공합니다.
-
-## 주요 기능
-
-- Next.js 기반의 정적 사이트 생성
-- Notion API 통합
-- 마크다운 ...]]></description>
-            <content:encoded><![CDATA[
-# Next.js와 Notion API로 블로그 만들기
-
-Next.js와 Notion API를 사용하여 개인 블로그를 만드는 방법을 소개합니다. 
-이 블로그는 마크다운과 Notion 데이터베이스를 동시에 지원하여 더욱 유연한 글쓰기 환경을 제공합니다.
-
-## 주요 기능
-
-- Next.js 기반의 정적 사이트 생성
-- Notion API 통합
-- 마크다운 ...]]></content:encoded>
         </item>
     </channel>
 </rss>
