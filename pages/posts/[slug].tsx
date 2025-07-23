@@ -132,7 +132,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
 
                 {/* 포스트 헤더 */}
                 <header className="mb-8">
-                  <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                  <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4" style={{ lineHeight: '1.3' }}>
                     {post.title}
                   </h1>
                   <div className="flex flex-col xs:flex-row xs:items-center gap-4 text-sm text-gray-500 dark:text-gray-400">

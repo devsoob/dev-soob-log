@@ -283,3 +283,25 @@ a {
 .notion-code-block + .notion-code-block {
   margin-top: 1.25rem;
 }
+
+/* 드래그 영역 스타일 */
+::selection {
+  background-color: #3b82f6;
+  color: white;
+}
+
+::-moz-selection {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* 다크모드에서 드래그 영역 스타일 */
+.dark ::selection {
+  background-color: #60a5fa;
+  color: white;
+}
+
+.dark ::-moz-selection {
+  background-color: #60a5fa;
+  color: white;
+}
