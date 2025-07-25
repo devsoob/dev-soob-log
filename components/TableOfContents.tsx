@@ -70,10 +70,10 @@ export default function TableOfContents({ className = '', tocItems }: TableOfCon
   }
 
   return (
-    <nav className={`max-h-[calc(100vh-6rem)] overflow-y-auto ${className}`}>
-      <ul className="space-y-2">
+    <nav className={`max-h-[calc(100vh-6rem)] overflow-y-auto ${className}`} aria-label="Table of contents">
+      <ul className="space-y-2" role="list">
         {tocItems.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} role="listitem">
             <button
               onClick={() => scrollToHeading(item.id)}
               className={`text-left w-full whitespace-nowrap px-2 py-1 rounded text-sm transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 ${
@@ -84,6 +84,8 @@ export default function TableOfContents({ className = '', tocItems }: TableOfCon
               style={{
                 paddingLeft: `${(item.level - 1) * 12 + 8}px`
               }}
+              aria-current={activeId === item.id ? 'true' : undefined}
+              aria-label={`Jump to section: ${item.text}`}
             >
               {item.text}
             </button>

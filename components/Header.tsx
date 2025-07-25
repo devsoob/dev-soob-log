@@ -100,36 +100,41 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
   }, [isSearchVisible]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-[#1a1a1a]/80 z-[100]">
+    <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-[#1a1a1a]/80 z-[100]" role="banner">
       <div className="w-full flex justify-between items-center px-4 xs:px-8 h-14 xs:h-16">
-        <Link href="/" className="text-xl xs:text-2xl font-bold italic hover:scale-105 transition-transform duration-200 text-black dark:text-white" onClick={handleLogoClick}>
+        <Link href="/" className="text-xl xs:text-2xl font-bold italic hover:scale-105 transition-transform duration-200 text-black dark:text-white" onClick={handleLogoClick} aria-label="Dev Soob Log - Home">
           Dev Soob Log
         </Link>
-        <div className="flex items-center gap-2 xs:gap-4">
+        <nav className="flex items-center gap-2 xs:gap-4" role="navigation" aria-label="Main navigation">
           {isHomePage && !isSearchVisible && (
             <button
               onClick={() => setIsSearchVisible(true)}
               className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200"
-              title="Search"
+              aria-label="Open search"
             >
-              <SearchIcon className="text-black dark:text-white xs:w-5 xs:h-5" />
+              <SearchIcon className="text-black dark:text-white xs:w-5 xs:h-5" aria-hidden="true" />
             </button>
           )}
           {isHomePage && isSearchVisible && (
-            <form onSubmit={handleSearchSubmit} className="relative hidden xs:block">
+            <form onSubmit={handleSearchSubmit} className="relative hidden xs:block" role="search">
+              <label htmlFor="desktop-search" className="sr-only">Search blog posts</label>
               <input
-                type="text"
+                id="desktop-search"
+                type="search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-48 xs:w-64 pl-2 pr-8 py-1 text-xs xs:text-sm text-gray-900 dark:text-white border-b border-black dark:border-white focus:outline-none bg-transparent"
                 autoFocus
+                placeholder="Search blog posts..."
+                aria-label="Search blog posts"
               />
               <button
                 type="button"
                 onClick={handleClearSearchAndHide}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
+                aria-label="Clear search"
               >
-                <CloseIcon className="xs:w-4 xs:h-4" />
+                <CloseIcon className="xs:w-4 xs:h-4" aria-hidden="true" />
               </button>
             </form>
           )}
@@ -137,29 +142,34 @@ export default function Header({ onSearchResults, onSearching, onSearchVisible }
           <Link
             href="/rss.xml"
             className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200"
-            title="RSS Feed"
+            aria-label="RSS Feed"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <RssIcon className="text-black dark:text-white xs:w-5 xs:h-5" />
+            <RssIcon className="text-black dark:text-white xs:w-5 xs:h-5" aria-hidden="true" />
           </Link>
-        </div>
+        </nav>
         {isHomePage && isSearchVisible && (
-          <div className="w-full xs:hidden mt-2 absolute top-full left-0 px-4 pb-4">
+          <div className="w-full xs:hidden mt-2 absolute top-full left-0 px-4 pb-4" role="search">
             <form onSubmit={handleSearchSubmit} className="relative">
+              <label htmlFor="mobile-search" className="sr-only">Search blog posts</label>
               <input
-                type="text"
+                id="mobile-search"
+                type="search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-2 pr-8 py-1 text-xs text-gray-900 dark:text-white border-b border-black dark:border-white focus:outline-none bg-transparent"
                 autoFocus
+                placeholder="Search blog posts..."
+                aria-label="Search blog posts"
               />
               <button
                 type="button"
                 onClick={handleClearSearchAndHide}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
+                aria-label="Clear search"
               >
-                <CloseIcon />
+                <CloseIcon aria-hidden="true" />
               </button>
             </form>
           </div>
