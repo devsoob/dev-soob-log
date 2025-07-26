@@ -18,6 +18,24 @@ import ShareButtons from '@/components/ShareButtons';
 import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState } from 'react';
 
+// MDX 컴포넌트 정의
+const mdxComponents = {
+  img: ({ src, alt, ...props }: any) => (
+    <div className="relative w-full">
+      <img
+        src={src}
+        alt={alt || ''}
+        className="rounded-lg"
+        loading="lazy"
+        {...props}
+      />
+      {alt && (
+        <span className="sr-only">{alt}</span>
+      )}
+    </div>
+  ),
+};
+
 interface PostPageProps {
   post: UnifiedPost;
   mdxSource: any;
@@ -174,8 +192,8 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
                 {/* 공유 버튼 */}
                 <ShareButtons post={post} />
 
-                <div id="post-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert mt-8">
-                  <MDXRemote {...mdxSource} />
+                <div id="main-content" className="prose prose-sm xs:prose-base sm:prose-lg max-w-none dark:prose-invert mt-8">
+                  <MDXRemote {...mdxSource} components={mdxComponents} />
                 </div>
 
                 {/* 댓글 섹션 */}

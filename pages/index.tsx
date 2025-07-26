@@ -72,20 +72,36 @@ export default function Home({ posts }: Props) {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-[#1a1a1a] flex flex-col">
-        <Header onSearchResults={handleSearchResults} onSearching={handleSearching} onSearchVisible={handleSearchVisible} />
+        <Header
+          onSearchResults={handleSearchResults}
+          onSearching={handleSearching}
+          onSearchVisible={handleSearchVisible}
+        />
         <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
           <section className={`space-y-8 ${isSearchVisible ? 'mt-8 xs:mt-0' : ''}`}>
             {isSearching ? (
-              <div className="flex flex-col items-center justify-center py-12 xs:py-16">
-                <div className="w-8 h-8 xs:w-12 xs:h-12 border-4 border-gray-200 dark:border-gray-700 border-t-black dark:border-t-white rounded-full animate-spin mb-3 xs:mb-4" />
-                <p className="text-sm xs:text-base text-gray-600 dark:text-gray-400">검색 중...</p>
+              <div className="flex justify-center items-center py-8" aria-live="polite">
+                <LoadingSpinner />
+                <span className="sr-only">검색 중입니다...</span>
               </div>
-            ) : displayPosts.length > 0 ? (
+            ) : searchResults !== null ? (
               <>
-                {/* 포스트 목록 */}
-                {paginatedPosts.map((post) => (
-                  <PostCard key={post.id || post.slug} post={post} />
-                ))}
+                <div className="sr-only" aria-live="polite">
+                  {searchResults.length > 0
+                    ? `${searchResults.length}개의 검색 결과를 찾았습니다.`
+                    : "검색 결과가 없습니다."}
+                </div>
+                {searchResults.length > 0 ? (
+                  <div className="space-y-8">
+                    {paginatedPosts.map((post) => (
+                      <PostCard key={post.slug} post={post} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-gray-600 dark:text-gray-300">
+                    검색 결과가 없습니다.
+                  </div>
+                )}
                 
                 {/* 페이지네이션 */}
                 <Pagination
@@ -95,12 +111,19 @@ export default function Home({ posts }: Props) {
                 />
               </>
             ) : (
-              searchResults !== null && (
-                <div className="flex flex-col items-center justify-center py-12 xs:py-16">
-                  <span className="text-4xl xs:text-5xl mb-3 xs:mb-4">🤔</span>
-                  <p className="text-sm xs:text-base text-gray-600 dark:text-gray-400">검색 결과가 없습니다.</p>
-                </div>
-              )
+              <>
+                {/* 포스트 목록 */}
+                {paginatedPosts.map((post) => (
+                  <PostCard key={post.slug} post={post} />
+                ))}
+                
+                {/* 페이지네이션 */}
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </>
             )}
           </section>
         </main>

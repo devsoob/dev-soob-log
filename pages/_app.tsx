@@ -192,18 +192,26 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           },
         ]}
       />
-      {process.env.NEXT_PUBLIC_GA_ID && (
-        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
-      )}
-      <style jsx global>{`
-        :root {
-          --font-pretendard: ${pretendard.style.fontFamily};
-        }
-      `}</style>
-      <main className={`${pretendard.variable} font-sans`}>
-        {isLoading && <div className="loading-line" />}
-        <Component {...pageProps} />
-      </main>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:outline-none"
+      >
+        메인 콘텐츠로 바로가기
+      </a>
+      <div className="min-h-screen">
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+        <style jsx global>{`
+          :root {
+            --font-pretendard: ${pretendard.style.fontFamily};
+          }
+        `}</style>
+        <main className={`${pretendard.variable} font-sans`}>
+          {isLoading && <div className="loading-line" />}
+          <Component {...pageProps} />
+        </main>
+      </div>
     </MDXProvider>
   );
 }

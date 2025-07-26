@@ -7,14 +7,16 @@
 /* 2. 사용자 정의 CSS (Tailwind 위에 작성 가능) */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1a1a1a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 26, 26, 26;
+    --background-end-rgb: 26, 26, 26;
   }
 }
 
@@ -304,4 +306,88 @@ a {
 .dark ::-moz-selection {
   background-color: #60a5fa;
   color: white;
+}
+
+/* 접근성을 위한 색상 대비 개선 */
+@layer base {
+  /* 기본 텍스트 색상 */
+  .text-gray-600 {
+    color: #4B5563; /* 더 진한 회색으로 조정 */
+  }
+  
+  .dark .text-gray-400 {
+    color: #9CA3AF; /* 더 밝은 회색으로 조정 */
+  }
+
+  /* 링크 색상 */
+  .text-blue-600 {
+    color: #2563EB; /* 더 진한 파란색으로 조정 */
+  }
+
+  .dark .text-blue-400 {
+    color: #60A5FA; /* 더 밝은 파란색으로 조정 */
+  }
+
+  /* 버튼 배경색 */
+  .bg-blue-600 {
+    background-color: #2563EB; /* 더 진한 파란색으로 조정 */
+  }
+
+  .dark .bg-blue-900\/20 {
+    background-color: rgba(30, 58, 138, 0.4); /* 더 진한 투명도로 조정 */
+  }
+}
+
+/* 포커스 표시 개선 */
+*:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+.dark *:focus-visible {
+  outline-color: #60A5FA;
+}
+
+/* 로딩 라인 애니메이션 */
+.loading-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: #2563EB;
+  animation: loading 2s ease-in-out infinite;
+  z-index: 1000;
+}
+
+@keyframes loading {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  50% {
+    width: 100%;
+    left: 0;
+  }
+  100% {
+    width: 0;
+    left: 100%;
+  }
+}
+
+/* 스킵 네비게이션 포커스 스타일 */
+.skip-nav:focus {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+  background: #2563EB;
+  color: white;
+  z-index: 9999;
+  border-radius: 0 0 0.5rem 0.5rem;
+  outline: none;
+}
+
+.dark .skip-nav:focus {
+  background: #60A5FA;
 }
