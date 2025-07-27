@@ -391,3 +391,30 @@ a {
 .dark .skip-nav:focus {
   background: #60A5FA;
 }
+
+/* 목차 스크롤바 스타일링 */
+.toc-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 transparent;
+}
+
+.toc-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.toc-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #CBD5E1;
+  border-radius: 3px;
+}
+
+.dark .toc-scrollbar {
+  scrollbar-color: #4B5563 transparent;
+}
+
+.dark .toc-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4B5563;
+}

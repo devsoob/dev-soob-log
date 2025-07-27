@@ -70,8 +70,8 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
       {/* 모바일 목차 버튼 */}
       <button
         onClick={() => setIsOpen(true)}
-        className="lg:hidden fixed bottom-6 right-6 z-40 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors duration-200"
-        aria-label="Open table of contents"
+        className="fixed bottom-6 right-6 z-[60] bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors duration-200"
+        aria-label="목차 열기"
         aria-expanded={isOpen}
         aria-controls="mobile-toc-modal"
       >
@@ -88,7 +88,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
       {/* 모바일 목차 모달 */}
       {isOpen && (
         <div 
-          className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-end"
+          className="fixed inset-0 z-[70] bg-black bg-opacity-50 flex items-end"
           role="dialog"
           aria-modal="true"
           id="mobile-toc-modal"
@@ -98,14 +98,14 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
             className="bg-white dark:bg-[#1a1a1a] w-full max-h-[80vh] rounded-t-lg shadow-lg"
             role="document"
           >
-            <div className="flex items-center justify-between p-4">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
               <h2 id="mobile-toc-title" className="text-lg font-semibold text-black dark:text-white">
-                Table of Contents
+                목차
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                aria-label="Close table of contents"
+                aria-label="목차 닫기"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -113,8 +113,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
                 </svg>
               </button>
             </div>
-            <hr className="mx-4 border-gray-200 dark:border-gray-700" role="separator" />
-            <nav className="overflow-y-auto max-h-[calc(80vh-76px)] p-4" aria-label="Table of contents navigation">
+            <nav className="overflow-y-auto max-h-[calc(80vh-76px)] p-4" aria-label="목차 네비게이션">
               <ul className="space-y-2" role="list">
                 {tocItems.map((item) => (
                   <li key={item.id} role="listitem">
@@ -129,7 +128,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
                         paddingLeft: `${(item.level - 1) * 12 + 8}px`
                       }}
                       aria-current={activeId === item.id ? 'true' : undefined}
-                      aria-label={`Jump to section: ${item.text}`}
+                      aria-label={`${item.text}로 이동`}
                     >
                       {item.text}
                     </button>
@@ -142,4 +141,4 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
       )}
     </>
   );
-} 
+}

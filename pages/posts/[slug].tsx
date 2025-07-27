@@ -73,7 +73,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
 
   useEffect(() => {
     // .prose 클래스 내부의 h1, h2, h3 태그를 찾아서 목차 생성
-    const headings = document.querySelectorAll('#post-content h1, #post-content h2, #post-content h3');
+    const headings = document.querySelectorAll('#main-content h1, #main-content h2, #main-content h3');
     const items: TocItem[] = [];
 
     headings.forEach((heading, index) => {
@@ -127,7 +127,8 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
 
       <main className="flex-1 w-full pt-20 xs:pt-24 pb-8">
         <div className="max-w-7xl mx-auto px-4 xs:px-6 sm:px-10">
-          <div className="lg:flex lg:justify-center lg:gap-8 lg:items-start">
+          <div className="lg:flex lg:justify-between lg:gap-8">
+            {/* 메인 콘텐츠 */}
             <div className="w-full max-w-4xl">
               <article className="min-w-0">
                 {/* 네비게이션 버튼들 */}
@@ -254,9 +255,12 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
               </article>
             </div>
             
+            {/* 데스크톱 목차 */}
             {tocItems.length > 0 && (
-              <aside className="hidden lg:sticky lg:top-24 lg:block flex-shrink-0">
-                <TableOfContents tocItems={tocItems} />
+              <aside className="hidden lg:block lg:sticky lg:top-24 w-64 flex-shrink-0 ml-8 h-[calc(100vh-8rem)]">
+                <div className="overflow-y-auto h-full pr-4 toc-scrollbar">
+                  <TableOfContents tocItems={tocItems} />
+                </div>
               </aside>
             )}
           </div>
@@ -264,7 +268,11 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
       </main>
       
       {/* 모바일 목차 */}
-      <MobileTableOfContents tocItems={tocItems} />
+      {tocItems.length > 0 && (
+        <div className="block lg:hidden">
+          <MobileTableOfContents tocItems={tocItems} />
+        </div>
+      )}
       
       {/* 제스처 네비게이션 인디케이터 */}
       <GestureIndicator 
@@ -276,7 +284,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
       <GestureHelp />
       
       {/* 플로팅 액션 버튼들 */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 lg:right-6 lg:left-auto left-6 right-auto sm:right-6 sm:left-auto">
+      <div className="fixed bottom-6 left-6 z-40 flex flex-col gap-3">
         {/* 목록으로 가기 버튼 */}
         <button
           onClick={() => router.push('/')}
