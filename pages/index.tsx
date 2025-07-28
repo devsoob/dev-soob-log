@@ -8,16 +8,20 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Pagination from "@/components/Pagination";
+import { useRouter } from 'next/router';
 
 interface Props {
   posts: UnifiedPost[];
 }
 
 export default function Home({ posts }: Props) {
+  const router = useRouter();
   const [searchResults, setSearchResults] = useState<UnifiedPost[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  
+  // URL의 page 쿼리 파라미터를 사용하여 현재 페이지 관리
+  const currentPage = Number(router.query.page) || 1;
 
   const POSTS_PER_PAGE = 5; // 페이지당 포스트 수
 
@@ -27,7 +31,8 @@ export default function Home({ posts }: Props) {
     setSearchResults(results);
     
     if (isSearchResultsChanged) {
-      setCurrentPage(1); // 검색 시 첫 페이지로 이동
+      // URL을 통해 페이지 상태 업데이트
+      router.push({ query: { page: 1 } }, undefined, { shallow: true });
     }
   };
 
@@ -42,7 +47,8 @@ export default function Home({ posts }: Props) {
 
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    // URL을 통해 페이지 상태 업데이트
+    router.push({ query: { page } }, undefined, { shallow: true });
     // 페이지 변경 시 상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

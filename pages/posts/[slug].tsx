@@ -56,6 +56,19 @@ function stripTitleAndDescription(markdown: string, title: string, description: 
 
 export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPageProps) {
   const router = useRouter();
+  const { from_page } = router.query;
+
+  const handleBackToList = () => {
+    if (from_page) {
+      router.push({
+        pathname: '/',
+        query: { page: from_page }
+      });
+    } else {
+      router.push('/');
+    }
+  };
+
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
   const [gestureDirection, setGestureDirection] = useState<'prev' | 'next' | 'back' | null>(null);
   const [showGestureIndicator, setShowGestureIndicator] = useState(false);
@@ -134,7 +147,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
                 {/* 네비게이션 버튼들 */}
                 <div className="mb-6 flex items-center justify-between">
                   <button
-                    onClick={() => router.push('/')}
+                    onClick={handleBackToList}
                     className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200"
                   >
                     <svg 
