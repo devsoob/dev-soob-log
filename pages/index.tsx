@@ -3,10 +3,9 @@ import { UnifiedPost } from "@/types/post";
 import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Head from "next/head";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import Pagination from "@/components/Pagination";
 import { useRouter } from 'next/router';
 
@@ -16,54 +15,23 @@ interface Props {
 
 export default function Home({ posts }: Props) {
   const router = useRouter();
-  const [searchResults, setSearchResults] = useState<UnifiedPost[] | null>(null);
-  const [isSearching, setIsSearching] = useState(false);
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  
-  // URL의 page 쿼리 파라미터를 사용하여 현재 페이지 관리
   const currentPage = Number(router.query.page) || 1;
-
-  const POSTS_PER_PAGE = 5; // 페이지당 포스트 수
-
-  const handleSearchResults = (results: UnifiedPost[] | null) => {
-    // 검색 결과가 실제로 변경될 때만 페이지를 1로 리셋
-    const isSearchResultsChanged = searchResults !== results;
-    setSearchResults(results);
-    
-    if (isSearchResultsChanged) {
-      // URL을 통해 페이지 상태 업데이트
-      router.push({ query: { page: 1 } }, undefined, { shallow: true });
-    }
-  };
-
-  const handleSearching = (searching: boolean) => {
-    setIsSearching(searching);
-  };
-
-  // 검색바 표시 상태를 Header에서 받아오기 위한 핸들러
-  const handleSearchVisible = (visible: boolean) => {
-    setIsSearchVisible(visible);
-  };
+  const POSTS_PER_PAGE = 5;
 
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
-    // URL을 통해 페이지 상태 업데이트
     router.push({ query: { page } }, undefined, { shallow: true });
-    // 페이지 변경 시 상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  // 표시할 포스트 결정
-  const displayPosts = searchResults !== null ? searchResults : posts;
 
   // 페이지네이션 계산
   const paginatedPosts = useMemo(() => {
     const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
     const endIndex = startIndex + POSTS_PER_PAGE;
-    return displayPosts.slice(startIndex, endIndex);
-  }, [displayPosts, currentPage]);
+    return posts.slice(startIndex, endIndex);
+  }, [posts, currentPage]);
 
-  const totalPages = Math.ceil(displayPosts.length / POSTS_PER_PAGE);
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
 
   return (
     <>
@@ -78,62 +46,22 @@ export default function Home({ posts }: Props) {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-[#1a1a1a] flex flex-col">
-        <Header
-          onSearchResults={handleSearchResults}
-          onSearching={handleSearching}
-          onSearchVisible={handleSearchVisible}
-        />
+        <Header />
         <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
-          <section className={`space-y-8 ${isSearchVisible ? 'mt-8 xs:mt-0' : ''}`}>
-            {isSearching ? (
-              <div className="flex justify-center items-center py-8" aria-live="polite">
-                <LoadingSpinner />
-                <span className="sr-only">검색 중입니다...</span>
-              </div>
-            ) : searchResults !== null ? (
-              <>
-                <div className="sr-only" aria-live="polite">
-                  {searchResults.length > 0
-                    ? `${searchResults.length}개의 검색 결과를 찾았습니다.`
-                    : "검색 결과가 없습니다."}
-                </div>
-                {searchResults.length > 0 ? (
-                  <div className="space-y-8">
-                    {paginatedPosts.map((post) => (
-                      <PostCard key={post.slug} post={post} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8 text-gray-600 dark:text-gray-300">
-                    검색 결과가 없습니다.
-                  </div>
-                )}
-                
-                {/* 페이지네이션 */}
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </>
-            ) : (
-              <>
-                {/* 포스트 목록 */}
-                {paginatedPosts.map((post) => (
-                  <PostCard key={post.slug} post={post} />
-                ))}
-                
-                {/* 페이지네이션 */}
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </>
+          <section className="space-y-8">
+            {paginatedPosts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+            
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             )}
           </section>
         </main>
-        
         <Footer />
       </div>
     </>
