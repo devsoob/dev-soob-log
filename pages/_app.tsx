@@ -10,6 +10,7 @@ import InlineCode from "@/components/InlineCode";
 import localFont from 'next/font/local';
 import "../styles/globals.css";
 import Head from "next/head";
+import { ThemeProvider } from 'next-themes';
 
 const pretendard = localFont({
   src: [
