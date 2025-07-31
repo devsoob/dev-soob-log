@@ -21,8 +21,8 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-[#1a1a1a]/80 z-[100]" role="banner">
-      <div className="w-full flex justify-between items-center px-4 xs:px-8 h-14 xs:h-16">
+    <header className="fixed w-full top-0 z-50 bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm">
+      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="text-xl xs:text-2xl font-bold italic hover:scale-105 transition-transform duration-200 text-black dark:text-white" aria-label="Dev Soob Log - Home">
           Dev Soob Log
         </Link>
