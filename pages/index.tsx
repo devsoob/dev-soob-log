@@ -16,7 +16,7 @@ interface Props {
 export default function Home({ posts }: Props) {
   const router = useRouter();
   const currentPage = Number(router.query.page) || 1;
-  const POSTS_PER_PAGE = 5;
+  const POSTS_PER_PAGE = 6;
 
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
@@ -47,18 +47,20 @@ export default function Home({ posts }: Props) {
 
       <div className="min-h-screen bg-white dark:bg-[#1a1a1a] flex flex-col">
         <Header />
-        <main className="flex-1 max-w-4xl mx-auto px-4 pt-24 pb-8 w-full">
-          <section className="space-y-8">
+        <main className="flex-1 max-w-4xl mx-auto px-4 pt-20 pb-8 w-full">
+          <section className="space-y-12">
             {paginatedPosts.map((post) => (
               <PostCard key={post.slug} post={post} />
             ))}
             
             {totalPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
+              <div className="pt-4">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </div>
             )}
           </section>
         </main>

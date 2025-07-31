@@ -138,11 +138,11 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost }: PostPa
       {/* 읽기 진행률 바 */}
       <ReadingProgress />
 
-      <main className="flex-1 w-full pt-20 xs:pt-24 pb-8">
-        <div className="max-w-7xl mx-auto px-4 xs:px-6 sm:px-10">
+      <main className="flex-1 w-full pt-20 pb-8">
+        <div className="max-w-4xl mx-auto px-4">
           <div className="lg:flex lg:justify-between lg:gap-8">
             {/* 메인 콘텐츠 */}
-            <div className="w-full max-w-4xl">
+            <div className="w-full">
               <article className="min-w-0">
                 {/* 네비게이션 버튼들 */}
                 <div className="mb-6 flex items-center justify-between">
