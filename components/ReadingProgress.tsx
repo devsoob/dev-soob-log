@@ -6,6 +6,7 @@ interface ReadingProgressProps {
 
 export default function ReadingProgress({ className = '' }: ReadingProgressProps) {
   const [progress, setProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const updateProgress = () => {
@@ -13,18 +14,23 @@ export default function ReadingProgress({ className = '' }: ReadingProgressProps
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
       setProgress(Math.min(scrollPercent, 100));
+      setIsVisible(scrollTop > 50);
     };
 
     window.addEventListener('scroll', updateProgress);
-    updateProgress(); // 초기값 설정
+    updateProgress();
 
     return () => window.removeEventListener('scroll', updateProgress);
   }, []);
 
   return (
-    <div className={`fixed top-0 left-0 w-full h-1.5 bg-gray-100 dark:bg-gray-800 z-40 ${className}`}>
+    <div 
+      className={`fixed top-16 left-0 w-full z-40 transition-opacity duration-300 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      } ${className}`}
+    >
       <div 
-        className="h-full bg-blue-600 dark:bg-blue-500 transition-all duration-150 ease-out"
+        className="h-1 bg-gradient-to-r from-blue-400/70 to-purple-400/70 dark:from-blue-500/50 dark:to-purple-500/50 transition-all duration-150 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>
