@@ -74,11 +74,9 @@ const mdxComponents = {
   },
   pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
     return (
-      <div className="notion-code-block my-6">
-        <pre className="p-4 m-0 bg-transparent" {...props}>
-          {children}
-        </pre>
-      </div>
+      <pre {...props}>
+        {children}
+      </pre>
     );
   },
 };

@@ -87,101 +87,8 @@ a {
 
 /* 노션 스타일 인라인 코드 */
 @layer utilities {
-  .prose :where(code):not(:where([class~="not-prose"] *)) {
-    @apply px-1 py-0.5 rounded text-sm font-mono;
-    background-color: #23272f;
-    color: #fff;
-    border: none;
-    box-shadow: none;
-  }
-  
-  .dark .prose :where(code):not(:where([class~="not-prose"] *)) {
-    background-color: #f6f6f7;
-    color: #23272f;
-  }
-  
-  /* 인라인 코드 스타일 (노션 스타일) */
-  .notion-inline-code {
-    @apply px-1 py-0.5 rounded text-sm font-mono;
-    background-color: #23272f;
-    color: #fff;
-    border: none;
-    box-shadow: none;
+  pre, code {
     font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-    line-height: 1.4;
-  }
-  
-  .dark .notion-inline-code {
-    background-color: #f6f6f7;
-    color: #23272f;
-  }
-  
-  /* 코드 블록 스타일 (노션 스타일) */
-  .notion-code-block {
-    @apply p-2.5 m-0 rounded-xl;
-    background-color: var(--background);
-    color: #f6f6f7;
-  }
-  
-  .dark .notion-code-block {
-    background-color: #f6f6f7;
-    color: #23272f;
-  }
-  
-  .notion-code-block pre,
-  .notion-code-block code {
-    background: none !important;
-    background-color: inherit !important;
-    color: inherit;
-    font-size: 0.95rem;
-    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-    line-height: 1.75;
-  }
-  
-  @media (min-width: 640px) {
-    .notion-code-block pre,
-    .notion-code-block code {
-      font-size: 1.05rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .notion-code-block pre,
-    .notion-code-block code {
-      font-size: 1.15rem;
-    }
-  }
-  
-  .notion-code-header {
-    @apply flex items-center justify-between px-1 py-0.5 mb-1;
-    background: none;
-    border: none;
-    color: inherit;
-  }
-  
-  .notion-code-language {
-    background: none;
-    border: none;
-    color: inherit;
-    @apply px-2 py-1 text-xs font-medium;
-  }
-  
-  .notion-code-actions {
-    @apply flex items-center space-x-1;
-    background: none;
-    border: none;
-    color: inherit;
-  }
-  
-  .notion-code-button {
-    background: none;
-    border: none;
-    color: inherit;
-    @apply p-1.5 text-[20px];
-  }
-  
-  .notion-code-block pre {
-    @apply p-0 m-0 overflow-x-auto;
   }
 }
 
@@ -276,25 +183,6 @@ a {
 
 .dark .loading-line {
   background: linear-gradient(90deg, transparent, #fff, transparent);
-}
-
-.dark .notion-code-block pre, .dark .notion-code-block code {
-  background-color: #f6f6f7 !important;
-}
-
-/* 모바일 코드블럭/인라인코드 폰트 크기 축소 및 연속 코드블럭 간격 */
-@media (max-width: 480px) {
-  .notion-code-block pre,
-  .notion-code-block code {
-    font-size: 0.8rem;
-  }
-  .notion-inline-code {
-    font-size: 0.75rem;
-  }
-}
-
-.notion-code-block + .notion-code-block {
-  margin-top: 1.25rem;
 }
 
 /* 드래그 영역 스타일 */
