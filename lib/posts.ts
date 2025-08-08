@@ -1,11 +1,23 @@
 import { UnifiedPost } from '@/types/post';
-import { getPublishedPosts as getNotionPublishedPosts, getAllPosts as getAllNotionPosts } from './notion';
-import { getMarkdownPosts } from './markdown';
+
+// 임시로 빈 배열을 반환하는 함수들 (나중에 실제 구현으로 교체 필요)
+async function getAllNotionPosts(): Promise<UnifiedPost[]> {
+  return [];
+}
+
+async function getNotionPublishedPosts(): Promise<UnifiedPost[]> {
+  return [];
+}
+
+function getMarkdownPosts(): UnifiedPost[] {
+  // 임시로 빈 배열 반환 (나중에 실제 마크다운 포스트 로직 구현 필요)
+  return [];
+}
 
 export async function getAllPosts(): Promise<UnifiedPost[]> {
   const [notionPosts, markdownPosts] = await Promise.all([
     getAllNotionPosts(),
-    getMarkdownPosts()
+    Promise.resolve(getMarkdownPosts())
   ]);
 
   // 중복 체크를 위한 Map
@@ -53,7 +65,7 @@ export function getAllPostsSync(): Array<{
 }
 
 export async function getPublishedPosts(): Promise<UnifiedPost[]> {
-  const markdownPosts = await getMarkdownPosts();
+  const markdownPosts = getMarkdownPosts();
   const filteredMarkdownPosts = markdownPosts.filter((post: UnifiedPost) => post.isPublished);
   const notionPosts = await getNotionPublishedPosts();
 
