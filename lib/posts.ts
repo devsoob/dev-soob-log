@@ -1,17 +1,213 @@
 import { UnifiedPost } from '@/types/post';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { Client } from '@notionhq/client';
 
-// 임시로 빈 배열을 반환하는 함수들 (나중에 실제 구현으로 교체 필요)
+// Notion 클라이언트 초기화
+const notion = process.env.NOTION_API_KEY ? new Client({
+  auth: process.env.NOTION_API_KEY,
+}) : null;
+
+const DATABASE_ID = process.env.NOTION_DATABASE_ID;
+
+// Notion API에서 포스트 가져오기
 async function getAllNotionPosts(): Promise<UnifiedPost[]> {
-  return [];
+  if (!notion || !DATABASE_ID) {
+    console.warn('Notion API not configured. Set NOTION_API_KEY and NOTION_DATABASE_ID in .env.local');
+    return [];
+  }
+
+  try {
+    const response = await notion.databases.query({
+      database_id: DATABASE_ID,
+      sorts: [
+        {
+          property: 'Date',
+          direction: 'descending',
+        },
+      ],
+    });
+
+    const posts: UnifiedPost[] = [];
+
+    for (const page of response.results) {
+      if ('properties' in page) {
+        const properties = page.properties;
+        
+        // 필수 속성 확인
+        const title = properties.Title?.type === 'title' && Array.isArray(properties.Title.title) ? 
+          properties.Title.title[0]?.plain_text || '' : '';
+        const date = properties.Date?.type === 'date' ? 
+          properties.Date.date?.start || '' : '';
+        
+        if (!title || !date) {
+          console.warn(`Skipping Notion page ${page.id}: missing required fields`);
+          continue;
+        }
+
+        // 다른 속성들 추출
+        const status = properties.Status?.type === 'status' && properties.Status.status && 'name' in properties.Status.status ? 
+          properties.Status.status.name || 'Draft' : 'Draft';
+        const category = properties.Category?.type === 'select' && properties.Category.select && 'name' in properties.Category.select ? 
+          properties.Category.select.name || 'Uncategorized' : 'Uncategorized';
+        const tags = properties.Tags?.type === 'multi_select' && Array.isArray(properties.Tags.multi_select) ? 
+          properties.Tags.multi_select.map((tag: any) => tag.name) : [];
+        const description = properties.Description?.type === 'rich_text' && Array.isArray(properties.Description.rich_text) ? 
+          properties.Description.rich_text[0]?.plain_text || '' : '';
+        const isPublished = properties.Published?.type === 'checkbox' ? 
+          Boolean(properties.Published.checkbox) : false;
+
+        // 페이지 내용 가져오기
+        const content = await getNotionPageContent(page.id);
+        
+        // slug 생성 (제목을 기반으로)
+        const slug = title
+          .toLowerCase()
+          .replace(/[^a-z0-9가-힣]/gi, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-|-$/g, '');
+
+        const post: UnifiedPost = {
+          id: page.id,
+          slug: `notion-${slug}`,
+          title,
+          date,
+          lastModified: 'last_edited_time' in page ? page.last_edited_time : date,
+          category,
+          tags,
+          content,
+          status,
+          isPublished,
+          description
+        };
+
+        posts.push(post);
+      }
+    }
+
+    return posts;
+  } catch (error) {
+    console.error('Error fetching Notion posts:', error);
+    return [];
+  }
+}
+
+// Notion 페이지 내용 가져오기
+async function getNotionPageContent(pageId: string): Promise<string> {
+  if (!notion) return '';
+
+  try {
+    const blocks = await notion.blocks.children.list({
+      block_id: pageId,
+    });
+
+    // 간단한 블록 텍스트 추출 (실제로는 더 복잡한 변환이 필요)
+    let content = '';
+    for (const block of blocks.results) {
+      if ('type' in block) {
+        switch (block.type) {
+          case 'paragraph':
+            if (block.paragraph?.rich_text) {
+              content += block.paragraph.rich_text.map(text => text.plain_text).join('') + '\n\n';
+            }
+            break;
+          case 'heading_1':
+            if (block.heading_1?.rich_text) {
+              content += '# ' + block.heading_1.rich_text.map(text => text.plain_text).join('') + '\n\n';
+            }
+            break;
+          case 'heading_2':
+            if (block.heading_2?.rich_text) {
+              content += '## ' + block.heading_2.rich_text.map(text => text.plain_text).join('') + '\n\n';
+            }
+            break;
+          case 'heading_3':
+            if (block.heading_3?.rich_text) {
+              content += '### ' + block.heading_3.rich_text.map(text => text.plain_text).join('') + '\n\n';
+            }
+            break;
+          case 'bulleted_list_item':
+            if (block.bulleted_list_item?.rich_text) {
+              content += '- ' + block.bulleted_list_item.rich_text.map(text => text.plain_text).join('') + '\n';
+            }
+            break;
+          case 'numbered_list_item':
+            if (block.numbered_list_item?.rich_text) {
+              content += '1. ' + block.numbered_list_item.rich_text.map(text => text.plain_text).join('') + '\n';
+            }
+            break;
+          case 'code':
+            if (block.code?.rich_text) {
+              const language = block.code.language || '';
+              const code = block.code.rich_text.map(text => text.plain_text).join('');
+              content += '```' + language + '\n' + code + '\n```\n\n';
+            }
+            break;
+        }
+      }
+    }
+
+    return content;
+  } catch (error) {
+    console.error(`Error fetching content for page ${pageId}:`, error);
+    return '';
+  }
 }
 
 async function getNotionPublishedPosts(): Promise<UnifiedPost[]> {
-  return [];
+  const allPosts = await getAllNotionPosts();
+  return allPosts.filter(post => post.isPublished);
 }
 
 function getMarkdownPosts(): UnifiedPost[] {
-  // 임시로 빈 배열 반환 (나중에 실제 마크다운 포스트 로직 구현 필요)
-  return [];
+  const postsDirectory = path.join(process.cwd(), 'posts');
+  
+  // posts 디렉토리가 존재하지 않으면 빈 배열 반환
+  if (!fs.existsSync(postsDirectory)) {
+    return [];
+  }
+
+  const fileNames = fs.readdirSync(postsDirectory);
+  const posts: UnifiedPost[] = [];
+
+  for (const fileName of fileNames) {
+    // .md 파일만 처리
+    if (!fileName.endsWith('.md')) {
+      continue;
+    }
+
+    const fullPath = path.join(postsDirectory, fileName);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data, content } = matter(fileContents);
+
+    // 필수 필드 검증
+    if (!data.title || !data.date) {
+      console.warn(`Skipping ${fileName}: missing required fields (title or date)`);
+      continue;
+    }
+
+    // slug 생성 (파일명에서 .md 제거)
+    const slug = fileName.replace(/\.md$/, '');
+
+    const post: UnifiedPost = {
+      id: slug, // slug를 id로 사용
+      slug,
+      title: data.title,
+      date: data.date,
+      lastModified: data.lastModified || data.date,
+      category: data.category || 'Uncategorized',
+      tags: data.tags || [],
+      content,
+      status: data.status || 'published',
+      isPublished: data.isPublished !== false && data.status !== 'draft', // 기본값은 true
+      description: data.description || ''
+    };
+
+    posts.push(post);
+  }
+
+  return posts;
 }
 
 export async function getAllPosts(): Promise<UnifiedPost[]> {
