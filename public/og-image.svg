@@ -1,0 +1,92 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 그라데이션 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d2d2d;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- 배경 -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- 배경 패턴 (코드 라인) -->
+  <g opacity="0.1">
+    <text x="50" y="80" font-family="monospace" font-size="14" fill="#ffffff">const blog = {</text>
+    <text x="70" y="110" font-family="monospace" font-size="14" fill="#3b82f6">title: "Dev Soob Log",</text>
+    <text x="70" y="140" font-family="monospace" font-size="14" fill="#8b5cf6">author: "Choi Soobin",</text>
+    <text x="70" y="170" font-family="monospace" font-size="14" fill="#10b981">focus: "Flutter & Web Dev"</text>
+    <text x="50" y="200" font-family="monospace" font-size="14" fill="#ffffff">};</text>
+    
+    <text x="50" y="250" font-family="monospace" font-size="14" fill="#ffffff">function createPost() {</text>
+    <text x="70" y="280" font-family="monospace" font-size="14" fill="#f59e0b">return knowledge + experience;</text>
+    <text x="50" y="310" font-family="monospace" font-size="14" fill="#ffffff">}</text>
+  </g>
+  
+  <!-- 메인 로고 영역 -->
+  <g transform="translate(100, 150)">
+    <!-- 로고 배경 원 -->
+    <circle cx="60" cy="60" r="60" fill="url(#accentGradient)" filter="url(#glow)"/>
+    
+    <!-- 로고 텍스트 -->
+    <text x="60" y="75" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#ffffff">DS</text>
+    
+    <!-- 작은 아이콘들 -->
+    <g transform="translate(140, 20)">
+      <!-- React 아이콘 -->
+      <circle cx="20" cy="20" r="15" fill="#61dafb" opacity="0.8"/>
+      <text x="20" y="28" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff" font-weight="bold">R</text>
+      
+      <!-- Flutter 아이콘 -->
+      <circle cx="50" cy="20" r="15" fill="#02569b" opacity="0.8"/>
+      <text x="50" y="28" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff" font-weight="bold">F</text>
+      
+      <!-- Node.js 아이콘 -->
+      <circle cx="80" cy="20" r="15" fill="#339933" opacity="0.8"/>
+      <text x="80" y="28" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff" font-weight="bold">N</text>
+    </g>
+  </g>
+  
+  <!-- 메인 타이틀 -->
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#ffffff">Dev Soob Log</text>
+  
+  <!-- 서브 타이틀 -->
+  <text x="600" y="330" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#9ca3af">개발 경험과 지식을 공유하는 블로그</text>
+  
+  <!-- 기술 스택 표시 -->
+  <g transform="translate(600, 400)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#6b7280">Flutter • React • Next.js • TypeScript</text>
+  </g>
+  
+  <!-- 하단 장식 요소 -->
+  <g transform="translate(600, 550)">
+    <rect x="-100" y="0" width="200" height="3" fill="url(#accentGradient)" rx="1.5"/>
+  </g>
+  
+  <!-- 우측 상단 코너 장식 -->
+  <g transform="translate(1100, 50)">
+    <circle cx="0" cy="0" r="8" fill="#3b82f6" opacity="0.6"/>
+    <circle cx="25" cy="0" r="6" fill="#8b5cf6" opacity="0.6"/>
+    <circle cx="45" cy="0" r="4" fill="#10b981" opacity="0.6"/>
+  </g>
+  
+  <!-- 좌측 하단 코너 장식 -->
+  <g transform="translate(100, 580)">
+    <rect x="0" y="0" width="4" height="30" fill="url(#accentGradient)" rx="2"/>
+    <rect x="10" y="0" width="4" height="20" fill="url(#accentGradient)" rx="2"/>
+    <rect x="20" y="0" width="4" height="35" fill="url(#accentGradient)" rx="2"/>
+  </g>
+</svg> 
