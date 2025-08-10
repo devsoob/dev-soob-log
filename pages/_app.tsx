@@ -119,7 +119,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <DefaultSeo
         title="Dev Soob Log"
-        titleTemplate="%s | Dev Soob Log"
+        titleTemplate="%s"
         description={process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '개발 경험과 지식을 공유하는 개발 블로그'}
         canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}
         openGraph={{
