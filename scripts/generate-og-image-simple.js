@@ -11,10 +11,10 @@ async function generateOGImage() {
     const canvas = createCanvas(1200, 630);
     const ctx = canvas.getContext('2d');
     
-    // 배경 그라데이션 생성
+    // 배경 그라데이션 생성 (슬레이트 그레이)
     const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
-    gradient.addColorStop(0, '#1a1a1a');
-    gradient.addColorStop(1, '#2d2d2d');
+    gradient.addColorStop(0, '#0f172a');
+    gradient.addColorStop(1, '#1e293b');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 1200, 630);
     
@@ -23,10 +23,41 @@ async function generateOGImage() {
     accentGradient.addColorStop(0, '#3b82f6');
     accentGradient.addColorStop(1, '#8b5cf6');
     
-    // 로고 원 그리기
-    ctx.beginPath();
-    ctx.arc(160, 210, 60, 0, 2 * Math.PI);
+    // 좌측 상단 장식 원
     ctx.fillStyle = accentGradient;
+    ctx.globalAlpha = 0.1;
+    ctx.beginPath();
+    ctx.arc(100, 100, 80, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.globalAlpha = 0.2;
+    ctx.beginPath();
+    ctx.arc(100, 100, 60, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // 우측 하단 장식 원
+    ctx.globalAlpha = 0.1;
+    ctx.beginPath();
+    ctx.arc(1100, 530, 100, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.globalAlpha = 0.15;
+    ctx.beginPath();
+    ctx.arc(1100, 530, 70, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    
+    // 로고 (둥근 사각형)
+    ctx.fillStyle = accentGradient;
+    ctx.beginPath();
+    ctx.moveTo(420, 195);
+    ctx.lineTo(460, 195);
+    ctx.quadraticCurveTo(480, 195, 480, 215);
+    ctx.lineTo(480, 255);
+    ctx.quadraticCurveTo(480, 275, 460, 275);
+    ctx.lineTo(420, 275);
+    ctx.quadraticCurveTo(400, 275, 400, 255);
+    ctx.lineTo(400, 215);
+    ctx.quadraticCurveTo(400, 195, 420, 195);
+    ctx.closePath();
     ctx.fill();
     
     // 로고 텍스트
@@ -34,73 +65,49 @@ async function generateOGImage() {
     ctx.font = 'bold 24px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('DS', 160, 210);
+    ctx.fillText('DS', 440, 235);
     
-    // 기술 스택 아이콘들
-    const techIcons = [
-      { x: 240, y: 170, color: '#61dafb', text: 'R' },
-      { x: 270, y: 170, color: '#02569b', text: 'F' },
-      { x: 300, y: 170, color: '#339933', text: 'N' }
-    ];
-    
-    techIcons.forEach(icon => {
-      ctx.beginPath();
-      ctx.arc(icon.x, icon.y, 15, 0, 2 * Math.PI);
-      ctx.fillStyle = icon.color;
-      ctx.globalAlpha = 0.8;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 12px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(icon.text, icon.x, icon.y);
-    });
-    
-    // 메인 타이틀
+    // 메인 타이틀 (더 큰 폰트)
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 48px Arial';
+    ctx.font = 'bold 56px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('Dev Soob Log', 600, 280);
+    ctx.fillText('Dev Soob Log', 600, 315);
     
     // 서브 타이틀
-    ctx.fillStyle = '#9ca3af';
-    ctx.font = '24px Arial';
-    ctx.fillText('개발 경험과 지식을 공유하는 블로그', 600, 330);
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '28px Arial';
+    ctx.fillText('개발 경험과 지식을 공유하는 블로그', 600, 375);
     
     // 기술 스택
-    ctx.fillStyle = '#6b7280';
-    ctx.font = '18px Arial';
-    ctx.fillText('Flutter • React • Next.js • TypeScript', 600, 400);
+    ctx.fillStyle = '#64748b';
+    ctx.font = '20px Arial';
+    ctx.fillText('Flutter • React • Next.js • TypeScript', 600, 435);
     
     // 하단 장식선
     ctx.fillStyle = accentGradient;
-    ctx.fillRect(500, 550, 200, 3);
+    ctx.fillRect(450, 580, 300, 2);
     
-    // 코너 장식
+    // 우측 상단 작은 장식
     ctx.fillStyle = '#3b82f6';
     ctx.globalAlpha = 0.6;
     ctx.beginPath();
-    ctx.arc(1100, 50, 8, 0, 2 * Math.PI);
+    ctx.arc(1100, 80, 4, 0, 2 * Math.PI);
     ctx.fill();
-    
     ctx.fillStyle = '#8b5cf6';
     ctx.beginPath();
-    ctx.arc(1125, 50, 6, 0, 2 * Math.PI);
+    ctx.arc(1120, 80, 3, 0, 2 * Math.PI);
     ctx.fill();
-    
     ctx.fillStyle = '#10b981';
     ctx.beginPath();
-    ctx.arc(1145, 50, 4, 0, 2 * Math.PI);
+    ctx.arc(1135, 80, 2, 0, 2 * Math.PI);
     ctx.fill();
     ctx.globalAlpha = 1;
     
-    // 좌측 하단 장식
+    // 좌측 하단 작은 장식
     ctx.fillStyle = accentGradient;
-    ctx.fillRect(100, 580, 4, 30);
-    ctx.fillRect(110, 580, 4, 20);
-    ctx.fillRect(120, 580, 4, 35);
+    ctx.fillRect(120, 550, 3, 20);
+    ctx.fillRect(128, 550, 3, 15);
+    ctx.fillRect(136, 550, 3, 25);
     
     // PNG로 저장
     const buffer = canvas.toBuffer('image/png');
