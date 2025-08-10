@@ -127,12 +127,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           locale: 'ko_KR',
           url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app',
           siteName: "Dev Soob Log",
+          title: "Dev Soob Log",
+          description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '개발 경험과 지식을 공유하는 개발 블로그',
           images: [
             {
               url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/og-image.png`,
               width: 1200,
               height: 630,
               alt: "Dev Soob Log",
+              type: 'image/png',
             },
           ],
         }}
@@ -173,6 +176,40 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           {
             name: 'apple-mobile-web-app-status-bar-style',
             content: 'black',
+          },
+          // 추가 OG 메타 태그
+          {
+            property: 'og:image',
+            content: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/og-image.png`,
+          },
+          {
+            property: 'og:image:width',
+            content: '1200',
+          },
+          {
+            property: 'og:image:height',
+            content: '630',
+          },
+          {
+            property: 'og:image:type',
+            content: 'image/png',
+          },
+          {
+            property: 'og:image:alt',
+            content: 'Dev Soob Log',
+          },
+          // Twitter 카드 메타 태그
+          {
+            name: 'twitter:card',
+            content: 'summary_large_image',
+          },
+          {
+            name: 'twitter:image',
+            content: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/og-image.png`,
+          },
+          {
+            name: 'twitter:image:alt',
+            content: 'Dev Soob Log',
           },
         ]}
         additionalLinkTags={[
