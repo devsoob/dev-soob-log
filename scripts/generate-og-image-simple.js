@@ -23,50 +23,6 @@ async function generateOGImage() {
     accentGradient.addColorStop(0, '#3b82f6');
     accentGradient.addColorStop(1, '#8b5cf6');
     
-    // 좌측 상단 장식 원
-    ctx.fillStyle = accentGradient;
-    ctx.globalAlpha = 0.1;
-    ctx.beginPath();
-    ctx.arc(100, 100, 80, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.globalAlpha = 0.2;
-    ctx.beginPath();
-    ctx.arc(100, 100, 60, 0, 2 * Math.PI);
-    ctx.fill();
-    
-    // 우측 하단 장식 원
-    ctx.globalAlpha = 0.1;
-    ctx.beginPath();
-    ctx.arc(1100, 530, 100, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.globalAlpha = 0.15;
-    ctx.beginPath();
-    ctx.arc(1100, 530, 70, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    
-    // 로고 (둥근 사각형)
-    ctx.fillStyle = accentGradient;
-    ctx.beginPath();
-    ctx.moveTo(420, 195);
-    ctx.lineTo(460, 195);
-    ctx.quadraticCurveTo(480, 195, 480, 215);
-    ctx.lineTo(480, 255);
-    ctx.quadraticCurveTo(480, 275, 460, 275);
-    ctx.lineTo(420, 275);
-    ctx.quadraticCurveTo(400, 275, 400, 255);
-    ctx.lineTo(400, 215);
-    ctx.quadraticCurveTo(400, 195, 420, 195);
-    ctx.closePath();
-    ctx.fill();
-    
-    // 로고 텍스트
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 24px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('DS', 440, 235);
-    
     // 메인 타이틀 (더 큰 폰트)
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 56px Arial';
@@ -77,37 +33,6 @@ async function generateOGImage() {
     ctx.fillStyle = '#94a3b8';
     ctx.font = '28px Arial';
     ctx.fillText('개발 경험과 지식을 공유하는 블로그', 600, 375);
-    
-    // 기술 스택
-    ctx.fillStyle = '#64748b';
-    ctx.font = '20px Arial';
-    ctx.fillText('Flutter • React • Next.js • TypeScript', 600, 435);
-    
-    // 하단 장식선
-    ctx.fillStyle = accentGradient;
-    ctx.fillRect(450, 580, 300, 2);
-    
-    // 우측 상단 작은 장식
-    ctx.fillStyle = '#3b82f6';
-    ctx.globalAlpha = 0.6;
-    ctx.beginPath();
-    ctx.arc(1100, 80, 4, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.fillStyle = '#8b5cf6';
-    ctx.beginPath();
-    ctx.arc(1120, 80, 3, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.fillStyle = '#10b981';
-    ctx.beginPath();
-    ctx.arc(1135, 80, 2, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    
-    // 좌측 하단 작은 장식
-    ctx.fillStyle = accentGradient;
-    ctx.fillRect(120, 550, 3, 20);
-    ctx.fillRect(128, 550, 3, 15);
-    ctx.fillRect(136, 550, 3, 25);
     
     // PNG로 저장
     const buffer = canvas.toBuffer('image/png');
