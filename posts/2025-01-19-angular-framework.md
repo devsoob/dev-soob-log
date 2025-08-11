@@ -2,10 +2,11 @@
 title: "Angular 프레임워크: 엔터프라이즈급 SPA 개발"
 date: "2025-01-19"
 category: "Frontend"
-tags: ["Angular","TypeScript","SPA","Frontend Framework"]
+tags: ["Angular", "TypeScript", "SPA", "Frontend Framework"]
 status: "published"
-isPublished: true
-description: "Angular를 사용하여 대규모 엔터프라이즈 애플리케이션을 개발합니다."
+isPublished: "true"
+description: "Angular를 사용하여 엔터프라이즈급 프론트엔드 애플리케이션을 구축하는 방법을 알아봅니다. 컴포넌트, 서비스, 라우팅, 상태 관리 등 Angular 핵심 개념을 실습과 함께 학습하세요."
+keywords: ["Angular", "프론트엔드", "TypeScript", "컴포넌트", "서비스", "의존성 주입", "라우팅", "폼", "RxJS", "NgRx"]
 ---
 
 # Angular 프레임워크: 엔터프라이즈급 SPA 개발

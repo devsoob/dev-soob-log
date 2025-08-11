@@ -2,10 +2,11 @@
 title: "GraphQL API 설계: 효율적인 데이터 요청"
 date: "2025-01-13"
 category: "Backend"
-tags: ["GraphQL","API","Backend","Data Fetching"]
+tags: ["GraphQL", "API", "Backend", "Data Fetching"]
 status: "published"
-isPublished: true
-description: "GraphQL을 사용하여 효율적이고 유연한 API를 설계하는 방법을 알아봅니다."
+isPublished: "true"
+description: "GraphQL을 사용하여 효율적이고 유연한 API를 설계하는 방법을 알아봅니다. 스키마 설계, 리졸버 구현, 실시간 데이터 처리 등 GraphQL 핵심 개념을 실습과 함께 학습하세요."
+keywords: ["GraphQL", "API", "쿼리 언어", "스키마", "리졸버", "타입 시스템", "실시간", "Subscription", "Apollo", "Relay"]
 ---
 
 # GraphQL API 설계: 효율적인 데이터 요청

@@ -2,10 +2,11 @@
 title: "Webpack 모듈 번들러: 현대적 빌드 도구"
 date: "2025-01-15"
 category: "Frontend"
-tags: ["Webpack","Module Bundler","Build Tool","Frontend"]
+tags: ["Webpack", "Module Bundler", "Build Tool", "Frontend"]
 status: "published"
-isPublished: true
-description: "Webpack을 사용하여 모던 JavaScript 애플리케이션을 번들링하고 최적화합니다."
+isPublished: "true"
+description: "Webpack을 사용하여 JavaScript 모듈을 번들링하고 최적화하는 방법을 알아봅니다. 로더, 플러그인, 코드 스플리팅, 트리 쉐이킹 등 Webpack 고급 기능을 학습하세요."
+keywords: ["Webpack", "모듈 번들러", "빌드 도구", "JavaScript", "번들링", "최적화", "로더", "플러그인", "코드 스플리팅", "트리 쉐이킹"]
 ---
 
 # Webpack 모듈 번들러: 현대적 빌드 도구

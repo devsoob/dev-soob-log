@@ -2,10 +2,11 @@
 title: "Elasticsearch 검색 엔진: 실시간 검색 구현"
 date: "2025-01-18"
 category: "Search"
-tags: ["Elasticsearch","Search Engine","Full-Text Search","Analytics"]
+tags: ["Elasticsearch", "Search Engine", "Full-Text Search", "Analytics"]
 status: "published"
-isPublished: true
-description: "Elasticsearch를 사용하여 강력한 검색 기능과 데이터 분석을 구현합니다."
+isPublished: "true"
+description: "Elasticsearch를 사용하여 강력한 검색 기능과 로그 분석 시스템을 구축하는 방법을 알아봅니다. 인덱싱, 쿼리 최적화, 애그리게이션, ELK 스택 활용법을 학습하세요."
+keywords: ["Elasticsearch", "검색 엔진", "분산 검색", "인덱싱", "쿼리", "애그리게이션", "로그 분석", "ELK Stack", "Kibana", "Logstash"]
 ---
 
 # Elasticsearch 검색 엔진: 실시간 검색 구현

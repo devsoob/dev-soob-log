@@ -2,10 +2,11 @@
 title: "React Native 모바일 개발: 크로스 플랫폼 앱"
 date: "2025-01-21"
 category: "Mobile"
-tags: ["React Native","Mobile Development","Cross Platform","JavaScript"]
+tags: ["React Native", "Mobile Development", "Cross Platform", "JavaScript"]
 status: "published"
-isPublished: true
-description: "React Native를 사용하여 iOS와 Android 앱을 동시에 개발합니다."
+isPublished: "true"
+description: "React Native를 사용하여 iOS와 Android에서 동작하는 모바일 애플리케이션을 개발하는 방법을 알아봅니다. 컴포넌트, 네비게이션, 네이티브 모듈 등 React Native 핵심 개념을 학습하세요."
+keywords: ["React Native", "모바일 앱", "크로스 플랫폼", "JavaScript", "네이티브", "하이브리드 앱", "iOS", "Android", "컴포넌트", "네비게이션"]
 ---
 
 # React Native 모바일 개발: 크로스 플랫폼 앱

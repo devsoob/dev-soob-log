@@ -3,9 +3,10 @@ title: "TypeScript 기초: JavaScript의 슈퍼셋"
 date: "2025-01-02"
 category: "Programming"
 tags: ["TypeScript", "JavaScript", "Programming", "Tutorial"]
+keywords: ["TypeScript", "JavaScript", "타입 시스템", "정적 타입", "개발 도구", "코드 품질", "IDE 지원", "타입 안전성", "인터페이스", "제네릭", "클래스"]
 status: "published"
 isPublished: true
-description: "TypeScript의 기본 문법과 타입 시스템을 통해 더 안전한 코드를 작성하는 방법을 알아봅니다."
+description: "TypeScript의 기본 문법과 타입 시스템을 통해 더 안전하고 유지보수하기 쉬운 코드를 작성하는 방법을 알아봅니다. 인터페이스, 제네릭, 클래스 등 핵심 개념을 실습과 함께 학습하세요."
 ---
 
 # TypeScript 기초: JavaScript의 슈퍼셋

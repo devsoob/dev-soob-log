@@ -2,10 +2,11 @@
 title: "Python 웹 스크래핑: BeautifulSoup과 Scrapy"
 date: "2025-01-20"
 category: "Data Science"
-tags: ["Python","Web Scraping","BeautifulSoup","Scrapy"]
+tags: ["Python", "Web Scraping", "BeautifulSoup", "Scrapy"]
 status: "published"
-isPublished: true
-description: "Python을 사용하여 웹사이트에서 데이터를 수집하고 분석하는 방법을 학습합니다."
+isPublished: "true"
+description: "Python을 사용하여 웹에서 데이터를 수집하고 처리하는 방법을 알아봅니다. BeautifulSoup, Scrapy, Selenium 등 다양한 스크래핑 도구와 기법을 실습과 함께 학습하세요."
+keywords: ["Python", "웹 스크래핑", "BeautifulSoup", "Scrapy", "Selenium", "데이터 수집", "크롤링", "API", "자동화", "데이터 처리"]
 ---
 
 # Python 웹 스크래핑: BeautifulSoup과 Scrapy

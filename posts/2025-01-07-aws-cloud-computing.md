@@ -3,9 +3,10 @@ title: "AWS 클라우드 컴퓨팅: 서버리스 아키텍처"
 date: "2025-01-07"
 category: "Cloud"
 tags: ["AWS","Cloud Computing","Serverless","Lambda"]
+keywords: ["AWS", "클라우드 컴퓨팅", "Amazon Web Services", "서버리스", "Lambda", "API Gateway", "S3", "DynamoDB", "클라우드 인프라", "마이크로서비스"]
 status: "published"
 isPublished: true
-description: "AWS의 서버리스 서비스를 활용하여 확장 가능한 애플리케이션을 구축합니다."
+description: "AWS의 서버리스 서비스를 활용하여 확장 가능한 애플리케이션을 구축합니다. Lambda, API Gateway, S3, DynamoDB 등 서버리스 서비스 활용법과 아키텍처 설계까지 실무에서 바로 적용할 수 있는 AWS 가이드입니다."
 ---
 
 # AWS 클라우드 컴퓨팅: 서버리스 아키텍처

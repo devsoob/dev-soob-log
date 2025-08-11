@@ -3,9 +3,10 @@ title: "Node.js 백엔드 개발: Express.js로 REST API 구축하기"
 date: "2025-01-03"
 category: "Backend"
 tags: ["Node.js", "Express.js", "Backend", "API", "JavaScript"]
+keywords: ["Node.js", "Express.js", "백엔드 개발", "REST API", "서버 개발", "미들웨어", "라우팅", "데이터베이스", "인증", "보안"]
 status: "published"
 isPublished: true
-description: "Node.js와 Express.js를 사용하여 RESTful API를 구축하는 방법을 단계별로 알아봅니다."
+description: "Node.js와 Express.js를 사용하여 RESTful API를 구축하는 방법을 단계별로 알아봅니다. 서버 설정, 라우팅, 미들웨어, 데이터베이스 연동, 보안 설정까지 실무에서 바로 사용할 수 있는 백엔드 개발 가이드입니다."
 ---
 
 # Node.js 백엔드 개발: Express.js로 REST API 구축하기

@@ -2,10 +2,11 @@
 title: "MongoDB NoSQL 데이터베이스: 문서 기반 저장소"
 date: "2025-01-17"
 category: "Database"
-tags: ["MongoDB","NoSQL","Document Database","Database"]
+tags: ["MongoDB", "NoSQL", "Document Database", "Database"]
 status: "published"
-isPublished: true
-description: "MongoDB의 문서 기반 데이터 모델과 쿼리 최적화 방법을 학습합니다."
+isPublished: "true"
+description: "MongoDB를 사용하여 유연하고 확장 가능한 NoSQL 데이터베이스를 구축하는 방법을 알아봅니다. 문서 모델링, 집계 파이프라인, 인덱싱, 샤딩 등 MongoDB 핵심 개념을 학습하세요."
+keywords: ["MongoDB", "NoSQL", "문서 데이터베이스", "JSON", "스키마리스", "집계", "인덱싱", "샤딩", "복제", "클러스터링"]
 ---
 
 # MongoDB NoSQL 데이터베이스: 문서 기반 저장소

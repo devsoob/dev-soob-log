@@ -2,10 +2,11 @@
 title: "PostgreSQL 데이터베이스: 관계형 DB의 강자"
 date: "2025-01-11"
 category: "Database"
-tags: ["PostgreSQL","Database","SQL","RDBMS"]
+tags: ["PostgreSQL", "Database", "SQL", "RDBMS"]
 status: "published"
-isPublished: true
-description: "PostgreSQL의 고급 기능과 성능 최적화 방법을 학습합니다."
+isPublished: "true"
+description: "PostgreSQL을 사용하여 강력하고 확장 가능한 데이터베이스를 구축하는 방법을 알아봅니다. 쿼리 최적화, 인덱싱, 트랜잭션 관리 등 실무에서 바로 적용할 수 있는 PostgreSQL 가이드입니다."
+keywords: ["PostgreSQL", "데이터베이스", "SQL", "관계형 데이터베이스", "RDBMS", "쿼리 최적화", "인덱싱", "트랜잭션", "백업", "복구"]
 ---
 
 # PostgreSQL 데이터베이스: 관계형 DB의 강자

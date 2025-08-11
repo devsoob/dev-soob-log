@@ -2,10 +2,11 @@
 title: "블록체인 기초: 분산 원장 기술의 이해"
 date: "2025-01-23"
 category: "Blockchain"
-tags: ["Blockchain","Cryptocurrency","Distributed Ledger","Smart Contracts"]
+tags: ["Blockchain", "Cryptocurrency", "Distributed Ledger", "Smart Contracts"]
 status: "published"
-isPublished: true
-description: "블록체인의 기본 개념과 암호화폐, 스마트 컨트랙트에 대해 알아봅니다."
+isPublished: "true"
+description: "블록체인의 기본 개념과 작동 원리를 이해하고, 스마트 컨트랙트 개발 방법을 알아봅니다. 분산원장, 합의 알고리즘, 이더리움, Solidity 등 블록체인 핵심 개념을 학습하세요."
+keywords: ["블록체인", "Blockchain", "암호화폐", "스마트 컨트랙트", "분산원장", "합의 알고리즘", "이더리움", "Solidity", "DeFi", "NFT"]
 ---
 
 # 블록체인 기초: 분산 원장 기술의 이해

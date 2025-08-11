@@ -2,10 +2,11 @@
 title: "Vue.js 프론트엔드 프레임워크: 반응형 UI 구축"
 date: "2025-01-10"
 category: "Frontend"
-tags: ["Vue.js","JavaScript","Frontend","Framework"]
+tags: ["Vue.js", "JavaScript", "Frontend", "Framework"]
 status: "published"
-isPublished: true
-description: "Vue.js를 사용하여 반응형 사용자 인터페이스를 구축하는 방법을 알아봅니다."
+isPublished: "true"
+description: "Vue.js를 사용하여 현대적인 프론트엔드 애플리케이션을 구축하는 방법을 알아봅니다. 컴포넌트 기반 개발, 반응형 데이터 바인딩, 라우팅 등 Vue.js 핵심 개념을 실습과 함께 학습하세요."
+keywords: ["Vue.js", "Vue", "프론트엔드", "JavaScript", "컴포넌트", "반응형", "싱글 페이지 애플리케이션", "SPA", "Composition API", "Options API"]
 ---
 
 # Vue.js 프론트엔드 프레임워크: 반응형 UI 구축

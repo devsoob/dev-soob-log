@@ -2,10 +2,11 @@
 title: "Jest 테스팅 프레임워크: JavaScript 테스트 자동화"
 date: "2025-01-14"
 category: "Testing"
-tags: ["Jest","Testing","JavaScript","Unit Testing"]
+tags: ["Jest", "Testing", "JavaScript", "Unit Testing"]
 status: "published"
-isPublished: true
-description: "Jest를 사용하여 JavaScript 코드의 단위 테스트와 통합 테스트를 작성합니다."
+isPublished: "true"
+description: "Jest를 사용하여 JavaScript 애플리케이션의 테스트를 작성하고 실행하는 방법을 알아봅니다. 단위 테스트, 통합 테스트, 모킹, 코드 커버리지 등 테스트 작성 기법을 학습하세요."
+keywords: ["Jest", "테스팅", "JavaScript", "단위 테스트", "통합 테스트", "모킹", "코버리지", "TDD", "BDD", "테스트 자동화"]
 ---
 
 # Jest 테스팅 프레임워크: JavaScript 테스트 자동화

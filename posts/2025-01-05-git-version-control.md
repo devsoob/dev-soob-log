@@ -3,9 +3,10 @@ title: "Git 버전 관리: 협업을 위한 필수 도구"
 date: "2025-01-05"
 category: "Development"
 tags: ["Git","Version Control","Collaboration"]
+keywords: ["Git", "버전 관리", "소스 관리", "협업", "브랜치", "머지", "커밋", "GitHub", "GitLab", "워크플로우"]
 status: "published"
 isPublished: true
-description: "Git을 사용한 버전 관리와 팀 협업 방법을 단계별로 학습합니다."
+description: "Git을 사용한 버전 관리와 팀 협업 방법을 단계별로 학습합니다. 브랜치 전략, 머지 전략, Git 워크플로우 등 실무에서 바로 사용할 수 있는 Git 가이드입니다."
 ---
 
 # Git 버전 관리: 협업을 위한 필수 도구

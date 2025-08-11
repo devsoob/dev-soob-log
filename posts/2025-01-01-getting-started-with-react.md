@@ -3,9 +3,10 @@ title: "React 시작하기: 기초부터 실전까지"
 date: "2025-01-01"
 category: "Frontend"
 tags: ["React", "JavaScript", "Frontend", "Tutorial"]
+keywords: ["React", "React.js", "JavaScript", "Frontend", "웹 개발", "컴포넌트", "JSX", "Hooks", "상태 관리", "UI 개발"]
 status: "published"
 isPublished: true
-description: "React의 기본 개념부터 실제 프로젝트에 적용하는 방법까지 단계별로 알아봅니다."
+description: "React의 기본 개념부터 실제 프로젝트에 적용하는 방법까지 단계별로 알아봅니다. 컴포넌트, JSX, Hooks, 상태 관리 등 React 핵심 개념을 실습 예제와 함께 학습하세요."
 ---
 
 # React 시작하기: 기초부터 실전까지

@@ -2,10 +2,11 @@
 title: "Nginx 웹 서버: 고성능 리버스 프록시"
 date: "2025-01-16"
 category: "DevOps"
-tags: ["Nginx","Web Server","Reverse Proxy","Load Balancing"]
+tags: ["Nginx", "Web Server", "Reverse Proxy", "Load Balancing"]
 status: "published"
-isPublished: true
-description: "Nginx를 사용하여 웹 서버 설정과 로드 밸런싱을 구성합니다."
+isPublished: "true"
+description: "Nginx를 사용하여 고성능 웹 서버와 리버스 프록시를 구성하는 방법을 알아봅니다. 로드 밸런싱, SSL 설정, 캐싱, 성능 최적화 등 실무에서 바로 적용할 수 있는 Nginx 가이드입니다."
+keywords: ["Nginx", "웹 서버", "리버스 프록시", "로드 밸런싱", "캐싱", "SSL", "HTTPS", "성능 최적화", "고가용성", "마이크로서비스"]
 ---
 
 # Nginx 웹 서버: 고성능 리버스 프록시

@@ -3,9 +3,10 @@ title: "Python 데이터 분석: Pandas와 NumPy 활용"
 date: "2025-01-06"
 category: "Data Science"
 tags: ["Python","Pandas","NumPy","Data Analysis"]
+keywords: ["Python", "데이터 분석", "Pandas", "NumPy", "데이터 시각화", "통계 분석", "머신러닝", "데이터 처리", "Jupyter", "Matplotlib"]
 status: "published"
 isPublished: true
-description: "Python의 Pandas와 NumPy를 사용하여 데이터 분석을 수행하는 방법을 알아봅니다."
+description: "Python의 Pandas와 NumPy를 사용하여 데이터 분석을 수행하는 방법을 알아봅니다. 데이터 전처리, 시각화, 통계 분석 등 실무에서 바로 사용할 수 있는 데이터 분석 기법을 학습하세요."
 ---
 
 # Python 데이터 분석: Pandas와 NumPy 활용

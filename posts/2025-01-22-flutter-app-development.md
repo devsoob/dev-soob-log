@@ -2,10 +2,11 @@
 title: "Flutter 앱 개발: Dart 기반 UI 프레임워크"
 date: "2025-01-22"
 category: "Mobile"
-tags: ["Flutter","Dart","Mobile Development","Cross Platform"]
+tags: ["Flutter", "Dart", "Mobile Development", "Cross Platform"]
 status: "published"
-isPublished: true
-description: "Flutter를 사용하여 네이티브 성능의 크로스 플랫폼 모바일 앱을 개발합니다."
+isPublished: "true"
+description: "Flutter를 사용하여 아름답고 성능 좋은 모바일 애플리케이션을 개발하는 방법을 알아봅니다. 위젯, 상태 관리, 네비게이션, 플랫폼 채널 등 Flutter 핵심 개념을 실습과 함께 학습하세요."
+keywords: ["Flutter", "모바일 앱", "크로스 플랫폼", "Dart", "위젯", "Material Design", "Cupertino", "상태 관리", "네비게이션", "플랫폼 채널"]
 ---
 
 # Flutter 앱 개발: Dart 기반 UI 프레임워크

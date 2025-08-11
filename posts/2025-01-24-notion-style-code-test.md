@@ -4,8 +4,9 @@ date: "2025-01-24"
 category: "Frontend"
 tags: ["Next.js", "MDX", "Styling", "Code"]
 status: "published"
-isPublished: true
-description: "노션과 유사한 스타일의 인라인 코드와 코드 블록을 테스트해보는 글입니다."
+isPublished: "true"
+description: "Notion을 사용하여 개발 프로젝트를 문서화하고 관리하는 방법을 알아봅니다. 코드 블록, 데이터베이스, API 연동, 워크플로우 등 Notion의 개발 도구 활용법을 학습하세요."
+keywords: ["Notion", "코드 블록", "문서화", "개발 도구", "마크다운", "API", "데이터베이스", "워크플로우", "협업", "지식 관리"]
 ---
 
 # 노션 스타일 코드 블록 테스트

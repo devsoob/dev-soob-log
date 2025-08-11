@@ -3,9 +3,10 @@ title: "머신러닝 기초: 지도학습과 비지도학습"
 date: "2025-01-08"
 category: "AI/ML"
 tags: ["Machine Learning","AI","Supervised Learning","Unsupervised Learning"]
+keywords: ["머신러닝", "Machine Learning", "AI", "인공지능", "지도학습", "비지도학습", "알고리즘", "모델링", "예측", "분류", "클러스터링"]
 status: "published"
 isPublished: true
-description: "머신러닝의 기본 개념과 주요 알고리즘들을 소개합니다."
+description: "머신러닝의 기본 개념과 주요 알고리즘들을 소개합니다. 지도학습, 비지도학습, 모델 평가 등 머신러닝 핵심 개념을 실습과 함께 학습하세요."
 ---
 
 # 머신러닝 기초: 지도학습과 비지도학습

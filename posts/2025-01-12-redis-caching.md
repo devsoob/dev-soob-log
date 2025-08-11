@@ -2,10 +2,11 @@
 title: "Redis 캐싱: 고성능 인메모리 데이터 저장소"
 date: "2025-01-12"
 category: "Database"
-tags: ["Redis","Caching","In-Memory","Performance"]
+tags: ["Redis", "Caching", "In-Memory", "Performance"]
 status: "published"
-isPublished: true
-description: "Redis를 사용하여 애플리케이션 성능을 향상시키는 캐싱 전략을 구현합니다."
+isPublished: "true"
+description: "Redis를 사용하여 애플리케이션 성능을 향상시키는 캐싱 전략을 구현하는 방법을 알아봅니다. 인메모리 캐싱, 세션 관리, 실시간 데이터 처리 등 Redis 활용법을 학습하세요."
+keywords: ["Redis", "캐싱", "인메모리 데이터베이스", "NoSQL", "성능 최적화", "세션 관리", "실시간 처리", "Pub/Sub", "클러스터링"]
 ---
 
 # Redis 캐싱: 고성능 인메모리 데이터 저장소

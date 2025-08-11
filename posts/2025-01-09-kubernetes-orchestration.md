@@ -3,9 +3,10 @@ title: "Kubernetes 오케스트레이션: 컨테이너 관리의 표준"
 date: "2025-01-09"
 category: "DevOps"
 tags: ["Kubernetes","Container Orchestration","DevOps"]
+keywords: ["Kubernetes", "K8s", "컨테이너 오케스트레이션", "DevOps", "마이크로서비스", "Pod", "Deployment", "Service", "Ingress", "Helm"]
 status: "published"
 isPublished: true
-description: "Kubernetes를 사용하여 컨테이너 기반 애플리케이션을 관리하는 방법을 학습합니다."
+description: "Kubernetes를 사용하여 컨테이너 기반 애플리케이션을 관리하는 방법을 학습합니다. Pod, Deployment, Service, Ingress 등 핵심 개념과 실무에서 바로 적용할 수 있는 Kubernetes 가이드입니다."
 ---
 
 # Kubernetes 오케스트레이션: 컨테이너 관리의 표준

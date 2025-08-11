@@ -3,9 +3,10 @@ title: "Docker 컨테이너화: 애플리케이션 배포의 혁신"
 date: "2025-01-04"
 category: "DevOps"
 tags: ["Docker","Container","DevOps","Deployment"]
+keywords: ["Docker", "컨테이너", "가상화", "DevOps", "배포", "Dockerfile", "Docker Compose", "이미지", "오케스트레이션", "마이크로서비스"]
 status: "published"
 isPublished: true
-description: "Docker를 사용하여 애플리케이션을 컨테이너화하고 배포하는 방법을 알아봅니다."
+description: "Docker를 사용하여 애플리케이션을 컨테이너화하고 배포하는 방법을 알아봅니다. Dockerfile 작성, Docker Compose 설정, 컨테이너 오케스트레이션까지 실무에서 바로 적용할 수 있는 Docker 가이드입니다."
 ---
 
 # Docker 컨테이너화: 애플리케이션 배포의 혁신
