@@ -2,8 +2,16 @@
 User-agent: *
 Allow: /
 
+# Disallow admin and private areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
 # Host
 Host: https://dev-soob-log.vercel.app
 
 # Sitemaps
 Sitemap: https://dev-soob-log.vercel.app/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
