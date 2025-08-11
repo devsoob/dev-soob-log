@@ -13,7 +13,7 @@ async function generateRssFeed() {
     id: siteURL,
     link: siteURL,
     language: 'ko',
-    image: `${siteURL}/images/og-image.png`,
+    image: `${siteURL}/og-image.png`,
     favicon: `${siteURL}/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}`,
     updated: date,

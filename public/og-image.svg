@@ -2,72 +2,24 @@
   <!-- 배경 그라데이션 -->
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d2d2d;stop-opacity:1" />
     </linearGradient>
     
-    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
-    </linearGradient>
-    
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-      <feMerge> 
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.3"/>
     </filter>
   </defs>
   
   <!-- 배경 -->
   <rect width="1200" height="630" fill="url(#bgGradient)"/>
   
-  <!-- 좌측 상단 장식 원 -->
-  <circle cx="100" cy="100" r="80" fill="url(#accentGradient)" opacity="0.1"/>
-  <circle cx="100" cy="100" r="60" fill="url(#accentGradient)" opacity="0.2"/>
-  
-  <!-- 우측 하단 장식 원 -->
-  <circle cx="1100" cy="530" r="100" fill="url(#accentGradient)" opacity="0.1"/>
-  <circle cx="1100" cy="530" r="70" fill="url(#accentGradient)" opacity="0.15"/>
-  
   <!-- 메인 콘텐츠 영역 -->
   <g transform="translate(600, 315)">
-    <!-- 로고 영역 -->
-    <g transform="translate(-200, -120)">
-      <!-- 로고 배경 -->
-      <rect x="0" y="0" width="80" height="80" rx="20" fill="url(#accentGradient)" filter="url(#glow)"/>
-      
-      <!-- 로고 텍스트 -->
-      <text x="40" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#ffffff">DS</text>
-    </g>
-    
     <!-- 메인 타이틀 -->
-    <text x="0" y="0" font-family="Arial, sans-serif" font-size="56" font-weight="bold" text-anchor="middle" fill="#ffffff">Dev Soob Log</text>
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" fill="#ffffff" filter="url(#shadow)">Dev Soob Log</text>
     
     <!-- 서브 타이틀 -->
-    <text x="0" y="60" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" fill="#94a3b8">개발 경험과 지식을 공유하는 블로그</text>
-    
-    <!-- 기술 스택 -->
-    <text x="0" y="120" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="#64748b">Flutter • React • Next.js • TypeScript</text>
-  </g>
-  
-  <!-- 하단 장식선 -->
-  <g transform="translate(600, 580)">
-    <rect x="-150" y="0" width="300" height="2" fill="url(#accentGradient)" rx="1"/>
-  </g>
-  
-  <!-- 우측 상단 작은 장식 -->
-  <g transform="translate(1100, 80)">
-    <circle cx="0" cy="0" r="4" fill="#3b82f6" opacity="0.6"/>
-    <circle cx="20" cy="0" r="3" fill="#8b5cf6" opacity="0.6"/>
-    <circle cx="35" cy="0" r="2" fill="#10b981" opacity="0.6"/>
-  </g>
-  
-  <!-- 좌측 하단 작은 장식 -->
-  <g transform="translate(120, 550)">
-    <rect x="0" y="0" width="3" height="20" fill="url(#accentGradient)" rx="1.5"/>
-    <rect x="8" y="0" width="3" height="15" fill="url(#accentGradient)" rx="1.5"/>
-    <rect x="16" y="0" width="3" height="25" fill="url(#accentGradient)" rx="1.5"/>
+    <text x="0" y="40" font-family="Arial, sans-serif" font-size="36" text-anchor="middle" fill="#ffffff" filter="url(#shadow)">개발 경험과 지식을 공유하는 블로그</text>
   </g>
 </svg> 
