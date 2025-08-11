@@ -76,6 +76,7 @@ async function getAllNotionPosts(): Promise<UnifiedPost[]> {
           lastModified: 'last_edited_time' in page ? page.last_edited_time : date,
           category,
           tags,
+          keywords: tags, // Notion에서는 tags를 keywords로도 사용
           content,
           status,
           isPublished,
@@ -198,6 +199,7 @@ function getMarkdownPosts(): UnifiedPost[] {
       lastModified: data.lastModified || data.date,
       category: data.category || 'Uncategorized',
       tags: data.tags || [],
+      keywords: data.keywords || data.tags || [],
       content,
       status: data.status || 'published',
       isPublished: data.isPublished !== false && data.status !== 'draft', // 기본값은 true

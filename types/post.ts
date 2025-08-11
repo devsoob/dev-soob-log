@@ -7,6 +7,7 @@ export interface UnifiedPost {
   category: string;
   excerpt?: string;
   tags: string[];
+  keywords?: string[];
   status: string;
   isPublished: boolean;
   lastModified: string;
