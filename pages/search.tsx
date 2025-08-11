@@ -3,6 +3,7 @@ import { UnifiedPost } from '@/types/post';
 import SearchIcon from '@/components/icons/SearchIcon';
 import PostCard from '@/components/PostCard';
 import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import Pagination from '@/components/Pagination';
 import { useRouter } from 'next/router';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -66,10 +67,23 @@ export default function SearchPage() {
 
   return (
     <>
-      <Head>
-        <title>검색 - Dev Soob Log</title>
-        <meta name="description" content="Dev Soob Log 블로그 글 검색" />
-      </Head>
+      <NextSeo
+        title="검색 - Dev Soob Log"
+        description="Dev Soob Log 블로그에서 프로그래밍, 웹 개발, 백엔드, 프론트엔드 등 다양한 기술 관련 글을 검색하세요."
+        canonical={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/search`}
+        openGraph={{
+          title: "검색 - Dev Soob Log",
+          description: "Dev Soob Log 블로그에서 프로그래밍, 웹 개발, 백엔드, 프론트엔드 등 다양한 기술 관련 글을 검색하세요.",
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/search`,
+          type: 'website',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: '검색, 블로그 검색, 개발 블로그, 프로그래밍, 웹 개발',
+          },
+        ]}
+      />
       <div className="min-h-screen bg-white dark:bg-[#1a1a1a]">
         <Header />
         <main className="flex-1 max-w-4xl mx-auto px-4 pt-20 pb-8 w-full">

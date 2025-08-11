@@ -3,6 +3,7 @@ import { UnifiedPost } from "@/types/post";
 import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Head from "next/head";
+import { NextSeo } from 'next-seo';
 import { useMemo, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,6 +12,7 @@ import { useRouter } from 'next/router';
 import Sidebar from "@/components/Sidebar";
 import TagTabs from "@/components/TagTabs";
 import MobileCategoryDrawer from "@/components/MobileCategoryDrawer";
+import Script from 'next/script';
 
 interface Props {
   posts: UnifiedPost[];
@@ -58,15 +60,73 @@ export default function Home({ posts, categories, tags }: Props) {
 
   return (
     <>
-      <Head>
-        <title>Dev Soob Log</title>
-        <meta name="description" content="A developer's blog about programming, technology, and more." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Dev Soob Log" />
-        <meta property="og:description" content="A developer's blog about programming, technology, and more." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <NextSeo
+        title="Dev Soob Log - 개발자의 기술 블로그"
+        description="프로그래밍, 웹 개발, 백엔드, 프론트엔드, DevOps 등 다양한 개발 기술과 경험을 공유하는 개발자 블로그입니다. React, Node.js, TypeScript, Docker 등 최신 기술 트렌드를 다룹니다."
+        canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}
+        openGraph={{
+          title: "Dev Soob Log - 개발자의 기술 블로그",
+          description: "프로그래밍, 웹 개발, 백엔드, 프론트엔드, DevOps 등 다양한 개발 기술과 경험을 공유하는 개발자 블로그입니다.",
+          url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app',
+          type: 'website',
+          images: [
+            {
+              url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Dev Soob Log",
+              type: 'image/png',
+            },
+          ],
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: '개발, 프로그래밍, 웹 개발, React, Node.js, TypeScript, JavaScript, 백엔드, 프론트엔드, DevOps, Docker, Git',
+          },
+          {
+            name: 'author',
+            content: process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Choi Soobin',
+          },
+        ]}
+      />
+      
+      {/* JSON-LD 구조화 데이터 */}
+      <Script
+        id="website-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Dev Soob Log",
+            "description": "프로그래밍, 웹 개발, 백엔드, 프론트엔드, DevOps 등 다양한 개발 기술과 경험을 공유하는 개발자 블로그",
+            "url": process.env.NEXT_PUBLIC_SITE_URL || "https://dev-soob-log.vercel.app",
+            "author": {
+              "@type": "Person",
+              "name": process.env.NEXT_PUBLIC_SITE_AUTHOR || "Choi Soobin"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Dev Soob Log"
+            },
+            "inLanguage": "ko-KR",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/search?q={search_term_string}`
+              },
+              "query-input": "required name=search_term_string"
+            }
+          })
+        }}
+      />
 
       <div className="min-h-screen bg-white dark:bg-[#1a1a1a] flex flex-col">
         <Header />

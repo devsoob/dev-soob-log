@@ -4,6 +4,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import { getPublishedPosts } from '@/lib/posts';
 import { UnifiedPost } from '@/types/post';
 import Header from '@/components/Header';
@@ -19,6 +20,7 @@ import RelatedPosts from '@/components/RelatedPosts';
 import { findRelatedPosts, findRelatedPostsByCategory } from '@/lib/relatedPosts';
 import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState } from 'react';
+import Script from 'next/script';
 
 // MDX 컴포넌트 정의
 const mdxComponents = {
@@ -131,10 +133,95 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#1a1a1a] flex flex-col">
-      <Head>
-        <title>{post.title} | Dev Log&apos;s</title>
-        <meta name="description" content={post.description} />
-      </Head>
+      <NextSeo
+        title={`${post.title} | Dev Soob Log`}
+        description={post.description}
+        canonical={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/posts/${post.slug}`}
+        openGraph={{
+          title: post.title,
+          description: post.description,
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/posts/${post.slug}`,
+          type: 'article',
+          article: {
+            publishedTime: post.date,
+            modifiedTime: post.date,
+            authors: [process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Choi Soobin'],
+            tags: post.tags || [],
+          },
+          images: [
+            {
+              url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: post.title,
+              type: 'image/png',
+            },
+          ],
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: post.keywords ? post.keywords.join(', ') : (post.tags ? post.tags.join(', ') : 'development, programming, web development'),
+          },
+          {
+            name: 'author',
+            content: process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Choi Soobin',
+          },
+          {
+            property: 'article:published_time',
+            content: post.date,
+          },
+          {
+            property: 'article:modified_time',
+            content: post.date,
+          },
+          {
+            property: 'article:author',
+            content: process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Choi Soobin',
+          },
+          ...(post.tags ? post.tags.map(tag => ({
+            property: 'article:tag',
+            content: tag,
+          })) : []),
+        ]}
+      />
+      
+      {/* JSON-LD 구조화 데이터 */}
+      <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.description,
+            "author": {
+              "@type": "Person",
+              "name": process.env.NEXT_PUBLIC_SITE_AUTHOR || "Choi Soobin"
+            },
+            "datePublished": post.date,
+            "dateModified": post.lastModified || post.date,
+            "publisher": {
+              "@type": "Organization",
+              "name": "Dev Soob Log",
+              "url": process.env.NEXT_PUBLIC_SITE_URL || "https://dev-soob-log.vercel.app"
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}/posts/${post.slug}`
+            },
+            "keywords": post.keywords ? post.keywords.join(', ') : (post.tags ? post.tags.join(', ') : ''),
+            "articleSection": post.category,
+            "inLanguage": "ko-KR"
+          })
+        }}
+      />
 
       <Header />
       
