@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -243,9 +243,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             --font-pretendard: ${pretendard.style.fontFamily};
           }
         `}</style>
-        <main className={`${pretendard.variable} font-sans`}>
+        <main className={`${pretendard.variable} font-sans`} id="main-content">
           {isLoading && <div className="loading-line" />}
-          <Component {...pageProps} />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Component {...pageProps} />
+          </Suspense>
         </main>
       </div>
     </MDXProvider>

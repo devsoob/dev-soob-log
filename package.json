@@ -11,7 +11,9 @@
     "commit": "cz",
     "post:new": "node scripts/newPost.js",
     "generate-rss": "ts-node scripts/generate-rss.ts",
-    "generate-og": "node scripts/generate-og-image-simple.js"
+    "generate-og": "node scripts/generate-og-image-simple.js",
+    "analyze": "ANALYZE=true npm run build",
+    "lighthouse": "npx lighthouse https://dev-soob-log.vercel.app --output=json --output-path=./lighthouse-report.json"
   },
   "config": {
     "commitizen": {
