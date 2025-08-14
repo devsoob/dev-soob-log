@@ -4,7 +4,7 @@ import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Head from "next/head";
 import { NextSeo } from 'next-seo';
-import { useMemo, useState } from "react";
+import { useMemo, useState, Suspense, lazy } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Pagination from "@/components/Pagination";
@@ -13,6 +13,10 @@ import Sidebar from "@/components/Sidebar";
 import TagTabs from "@/components/TagTabs";
 import MobileCategoryDrawer from "@/components/MobileCategoryDrawer";
 import Script from 'next/script';
+import LoadingSpinner from "@/components/LoadingSpinner";
+
+// 지연 로딩 컴포넌트
+const LazyMobileCategoryDrawer = lazy(() => import("@/components/MobileCategoryDrawer"));
 
 interface Props {
   posts: UnifiedPost[];
@@ -180,11 +184,13 @@ export default function Home({ posts, categories, tags }: Props) {
         </button>
 
         {/* 모바일 카테고리 드로어 */}
-        <MobileCategoryDrawer
-          categories={categories}
-          isOpen={isCategoryDrawerOpen}
-          onClose={() => setIsCategoryDrawerOpen(false)}
-        />
+        <Suspense fallback={<LoadingSpinner />}>
+          <LazyMobileCategoryDrawer
+            categories={categories}
+            isOpen={isCategoryDrawerOpen}
+            onClose={() => setIsCategoryDrawerOpen(false)}
+          />
+        </Suspense>
       </div>
     </>
   );

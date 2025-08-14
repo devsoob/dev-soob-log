@@ -72,6 +72,12 @@ export default function Document() {
         {/* Microsoft Tiles */}
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="msapplication-TileImage" content="/icons/mstile-144x144.png" />
+        
+        {/* 성능 모니터링 스크립트 */}
+        <script
+          src="/scripts/performance-monitor.js"
+          async
+        />
       </Head>
       <body>
         <Main />

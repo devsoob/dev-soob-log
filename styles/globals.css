@@ -90,6 +90,61 @@ a {
   pre, code {
     font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   }
+  
+  /* 성능 최적화를 위한 CSS */
+  .loading-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+    z-index: 9999;
+    animation: loading 1s ease-in-out infinite;
+  }
+  
+  @keyframes loading {
+    0% {
+      width: 0%;
+      left: 0;
+    }
+    50% {
+      width: 70%;
+      left: 15%;
+    }
+    100% {
+      width: 100%;
+      left: 100%;
+    }
+  }
+  
+  /* 이미지 최적화 */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* 스크롤 최적화 */
+  .toc-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  }
+  
+  .toc-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .toc-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .toc-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 2px;
+  }
+  
+  .toc-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(156, 163, 175, 0.7);
+  }
 }
 
 /* 관련 포스트 카드 스타일 */

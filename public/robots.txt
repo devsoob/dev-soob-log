@@ -6,6 +6,13 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
+Disallow: /scripts/
+Disallow: /node_modules/
+
+# Allow important resources
+Allow: /fonts/
+Allow: /icons/
+Allow: /images/
 
 # Host
 Host: https://dev-soob-log.vercel.app
@@ -15,3 +22,13 @@ Sitemap: https://dev-soob-log.vercel.app/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1
+
+# Additional directives for better SEO
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

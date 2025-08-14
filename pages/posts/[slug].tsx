@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import { getPublishedPosts } from '@/lib/posts';
@@ -19,22 +20,30 @@ import ShareButtons from '@/components/ShareButtons';
 import RelatedPosts from '@/components/RelatedPosts';
 import { findRelatedPosts, findRelatedPostsByCategory } from '@/lib/relatedPosts';
 import { useGestureNavigation } from '@/lib/useGestureNavigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import Script from 'next/script';
+import LoadingSpinner from '@/components/LoadingSpinner';
+
+// 지연 로딩 컴포넌트
+const LazyGiscusComments = lazy(() => import('@/components/GiscusComments'));
+const LazyRelatedPosts = lazy(() => import('@/components/RelatedPosts'));
 
 // MDX 컴포넌트 정의
 const mdxComponents = {
-  img: ({ src, alt, ...props }: any) => (
-    <div className="relative w-full">
-      <img
+  img: ({ src, alt, width, height, ...props }: any) => (
+    <div className="relative w-full my-4">
+      <Image
         src={src}
         alt={alt || ''}
+        width={width || 800}
+        height={height || 600}
         className="rounded-lg"
-        loading="lazy"
+        priority={false}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         {...props}
       />
       {alt && (
-        <span className="sr-only">{alt}</span>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center">{alt}</p>
       )}
     </div>
   ),
@@ -306,7 +315,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                 </div>
 
                 {/* 댓글 섹션 */}
-                <GiscusComments postSlug={post.slug} postTitle={post.title} />
+                <Suspense fallback={<div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">댓글 로딩 중...</div>}>
+                  <LazyGiscusComments postSlug={post.slug} postTitle={post.title} />
+                </Suspense>
 
                 {/* 이전/다음 글 네비게이션 */}
                 {(prevPost || nextPost) && (
@@ -362,7 +373,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                 )}
 
                 {/* 관련 포스트 섹션 */}
-                <RelatedPosts posts={relatedPosts} />
+                <Suspense fallback={<div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">관련 포스트 로딩 중...</div>}>
+                  <LazyRelatedPosts posts={relatedPosts} />
+                </Suspense>
               </article>
             </div>
             
