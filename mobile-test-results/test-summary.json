@@ -1,0 +1,142 @@
+{
+  "timestamp": "2025-08-16T13:03:03.388Z",
+  "tests": {
+    "mobileResponsive": {
+      "name": "모바일 반응형 테스트",
+      "status": "completed",
+      "results": []
+    },
+    "responsiveIssues": {
+      "name": "반응형 문제점 감지",
+      "status": "completed",
+      "results": [
+        {
+          "device": "Mobile",
+          "page": "메인 페이지",
+          "path": "/",
+          "viewport": "375×667",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:16.693Z"
+        },
+        {
+          "device": "Mobile",
+          "page": "포스트 목록",
+          "path": "/posts",
+          "viewport": "375×667",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:22.042Z"
+        },
+        {
+          "device": "Mobile",
+          "page": "소개 페이지",
+          "path": "/about",
+          "viewport": "375×667",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:27.381Z"
+        },
+        {
+          "device": "Tablet",
+          "page": "메인 페이지",
+          "path": "/",
+          "viewport": "768×1024",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:32.688Z"
+        },
+        {
+          "device": "Tablet",
+          "page": "포스트 목록",
+          "path": "/posts",
+          "viewport": "768×1024",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:38.002Z"
+        },
+        {
+          "device": "Tablet",
+          "page": "소개 페이지",
+          "path": "/about",
+          "viewport": "768×1024",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:42.973Z"
+        },
+        {
+          "device": "Desktop",
+          "page": "메인 페이지",
+          "path": "/",
+          "viewport": "1920×1080",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:47.879Z"
+        },
+        {
+          "device": "Desktop",
+          "page": "포스트 목록",
+          "path": "/posts",
+          "viewport": "1920×1080",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:53.190Z"
+        },
+        {
+          "device": "Desktop",
+          "page": "소개 페이지",
+          "path": "/about",
+          "viewport": "1920×1080",
+          "issues": [
+            {
+              "type": "media-queries",
+              "description": "미디어 쿼리 사용 확인",
+              "details": "미디어 쿼리가 사용되지 않았습니다."
+            }
+          ],
+          "timestamp": "2025-08-16T13:02:58.168Z"
+        }
+      ]
+    }
+  }
+}

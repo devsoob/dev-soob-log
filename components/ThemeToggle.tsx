@@ -39,10 +39,10 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-1.5 xs:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200"
+      className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
       aria-label="Toggle theme"
     >
-      <div className={`relative w-5 h-5 xs:w-6 xs:h-6 transition-transform duration-500 ${isAnimating ? 'rotate-180' : ''}`}>
+      <div className={`relative w-6 h-6 transition-transform duration-500 ${isAnimating ? 'rotate-180' : ''}`}>
         {theme === 'light' ? (
           // Crescent moon icon for light mode
           <svg

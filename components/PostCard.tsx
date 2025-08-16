@@ -21,7 +21,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           pathname: `/posts/${post.slug}`,
           query: { from_page: currentPage }
         }}
-        className="group block"
+        className="group block min-h-[44px] min-w-[44px] p-2 -m-2"
         aria-labelledby={`post-title-${post.slug}`}
       >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
@@ -31,7 +31,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             </div>
           </div>
           <div className="md:col-span-8">
-            <span className="inline-block text-xs xs:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 md:mb-3" 
+            <span className="inline-block text-base xs:text-lg font-medium text-gray-500 dark:text-gray-400 mb-2 md:mb-3" 
               role="text" 
               aria-label={`Category: ${post.category}`}
             >
@@ -43,11 +43,11 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             >
               {post.title}
             </h2>
-            <p className="text-sm xs:text-base text-gray-600 dark:text-gray-300 mb-3 md:mb-4 line-clamp-2">
+            <p className="text-base xs:text-lg text-gray-600 dark:text-gray-300 mb-3 md:mb-4 line-clamp-2">
               {post.description}
             </p>
             <time 
-              className="text-xs xs:text-sm text-gray-500 dark:text-gray-400" 
+              className="text-sm xs:text-base text-gray-500 dark:text-gray-400" 
               dateTime={post.date}
             >
               {formatDate(post.date)}

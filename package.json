@@ -13,7 +13,12 @@
     "generate-rss": "ts-node scripts/generate-rss.ts",
     "generate-og": "node scripts/generate-og-image-simple.js",
     "analyze": "ANALYZE=true npm run build",
-    "lighthouse": "npx lighthouse https://dev-soob-log.vercel.app --output=json --output-path=./lighthouse-report.json"
+    "lighthouse": "npx lighthouse https://dev-soob-log.vercel.app --output=json --output-path=./lighthouse-report.json",
+    "test:mobile": "node scripts/mobile-responsive-test.js",
+    "test:mobile:dev": "npm run dev & sleep 10 && npm run test:mobile && pkill -f 'next dev'",
+    "test:responsive-issues": "node scripts/check-responsive-issues.js",
+    "test:responsive-issues:dev": "npm run dev & sleep 10 && npm run test:responsive-issues && pkill -f 'next dev'",
+    "test:mobile:all": "node scripts/run-mobile-tests.js"
   },
   "config": {
     "commitizen": {

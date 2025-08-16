@@ -24,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ categories }) => {
             <li>
               <Link
                 href="/"
-                className={`block px-3 py-2 rounded-md transition-colors ${
+                className={`block px-4 py-3 rounded-md transition-colors min-h-[44px] flex items-center ${
                   !currentCategory
                     ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
@@ -37,15 +37,15 @@ const Sidebar: React.FC<SidebarProps> = ({ categories }) => {
               <li key={category.name}>
                 <Link
                   href={`/?category=${category.name}`}
-                  className={`block px-3 py-2 rounded-md transition-colors ${
+                  className={`block px-4 py-3 rounded-md transition-colors min-h-[44px] flex items-center ${
                     currentCategory === category.name
                       ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                 >
-                  <span className="flex justify-between items-center">
-                    <span>{category.name}</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">{category.count}</span>
+                  <span className="flex justify-between items-center w-full">
+                    <span className="text-base">{category.name}</span>
+                    <span className="text-base text-gray-500 dark:text-gray-400">{category.count}</span>
                   </span>
                 </Link>
               </li>

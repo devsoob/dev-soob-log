@@ -27,7 +27,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+          className={`px-4 py-3 text-base font-medium rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
             currentPage === 1
               ? 'text-gray-400 cursor-not-allowed'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
@@ -43,7 +43,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           <button
             key={index}
             onClick={() => onPageChange(page)}
-            className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+            className={`px-4 py-3 text-base font-medium rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
               currentPage === page
                 ? 'bg-blue-600 text-white'
                 : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
@@ -59,7 +59,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+          className={`px-4 py-3 text-base font-medium rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
             currentPage === totalPages
               ? 'text-gray-400 cursor-not-allowed'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
