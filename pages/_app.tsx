@@ -87,17 +87,25 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
+    let loadingTimer: ReturnType<typeof setTimeout> | null = null;
+
     const handleStart = () => {
-      setIsLoading(true);
+      if (loadingTimer) clearTimeout(loadingTimer);
+      loadingTimer = setTimeout(() => {
+        setIsLoading(true);
+      }, 200);
     };
 
-    const handleComplete = () => {
+    const clearLoading = () => {
+      if (loadingTimer) {
+        clearTimeout(loadingTimer);
+        loadingTimer = null;
+      }
       setIsLoading(false);
     };
 
-    const handleError = () => {
-      setIsLoading(false);
-    };
+    const handleComplete = clearLoading;
+    const handleError = clearLoading;
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
@@ -107,6 +115,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       router.events.off('routeChangeStart', handleStart);
       router.events.off('routeChangeComplete', handleComplete);
       router.events.off('routeChangeError', handleError);
+      if (loadingTimer) clearTimeout(loadingTimer);
     };
   }, [router]);
 
@@ -243,8 +252,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             --font-pretendard: ${pretendard.style.fontFamily};
           }
         `}</style>
-        <main className={`${pretendard.variable} font-sans`} id="main-content">
-          {isLoading && <div className="loading-line" />}
+                  <main className={`${pretendard.variable} font-sans`} id="main-content" aria-busy={isLoading ? 'true' : 'false'} aria-live="polite">
+                      {isLoading && <div className="loading-line" role="progressbar" aria-label="페이지 로딩 중" />}
           <Suspense fallback={<LoadingSpinner />}>
             <Component {...pageProps} />
           </Suspense>
