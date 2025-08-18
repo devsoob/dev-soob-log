@@ -24,12 +24,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const cacheKey = searchTerm;
     const cachedResult = searchCache.get(cacheKey);
     if (cachedResult && cachedResult.timestamp > Date.now() - CACHE_DURATION) {
+      res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300');
       return res.status(200).json(cachedResult.data);
     }
 
     // 모든 게시물 가져오기 (노션 + 마크다운)
     const allPosts = await getPublishedPosts();
     
+    // 엣지/브라우저 캐시 헤더 설정 (5분)
+    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=59');
+
     // 검색어로 필터링 (제목과 설명만)
     const searchResults = allPosts
       .filter(post => {

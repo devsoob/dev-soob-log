@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { UnifiedPost } from '@/types/post';
 import SearchIcon from '@/components/icons/SearchIcon';
 import PostCard from '@/components/PostCard';
@@ -16,9 +16,18 @@ export default function SearchPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const abortRef = useRef<AbortController | null>(null);
   
   const currentPage = Number(router.query.page) || 1;
   const POSTS_PER_PAGE = 6;
+
+  useEffect(() => {
+    return () => {
+      if (abortRef.current) {
+        abortRef.current.abort();
+      }
+    };
+  }, []);
 
   const handleSearch = async (term: string) => {
     // 검색어가 없을 때는 검색하지 않음
@@ -27,18 +36,29 @@ export default function SearchPage() {
       setHasSearched(false);
       return;
     }
-    
+
+    // 이전 요청 취소
+    if (abortRef.current) {
+      abortRef.current.abort();
+    }
+
     setIsSearching(true);
     setHasSearched(true);
-    
+
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(term.trim())}`);
+      const response = await fetch(`/api/search?q=${encodeURIComponent(term.trim())}`,
+        { signal: controller.signal, headers: { 'Accept': 'application/json' } });
       if (!response.ok) throw new Error('Search failed');
       const data = await response.json();
       setSearchResults(data);
-    } catch (error) {
-      console.error('Search error:', error);
-      setSearchResults([]);
+    } catch (error: any) {
+      if (error?.name !== 'AbortError') {
+        console.error('Search error:', error);
+        setSearchResults([]);
+      }
     } finally {
       setIsSearching(false);
     }
@@ -117,13 +137,23 @@ export default function SearchPage() {
             </div>
           </div>
 
-          {/* 검색 중 상태 */}
+          {/* 검색 중 상태 - 스켈레톤 (PostCard 레이아웃 매칭) */}
           {isSearching && (
-            <div className="flex flex-col items-center justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-white mb-4"></div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                '{searchTerm}' 검색 중...
-              </p>
+            <div className="space-y-8" aria-busy="true" aria-live="polite">
+              {[...Array(6)].map((_, idx) => (
+                <article key={idx} className="border-b border-gray-200 dark:border-gray-800 last:border-0 pb-8 last:pb-0">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 animate-pulse">
+                    <div className="relative h-40 sm:h-64 md:h-full md:col-span-4 overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800" />
+                    <div className="md:col-span-8">
+                      <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded mb-2 md:mb-3" />
+                      <div className="h-7 w-3/4 bg-gray-200 dark:bg-gray-700 rounded mb-2 md:mb-3" />
+                      <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                      <div className="h-4 w-2/3 bg-gray-200 dark:bg-gray-700 rounded mb-4" />
+                      <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded" />
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
           )}
 
