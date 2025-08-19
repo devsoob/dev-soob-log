@@ -1,7 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
-import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -14,10 +13,8 @@ import TableOfContents, { TocItem } from '@/components/TableOfContents';
 import MobileTableOfContents from '@/components/MobileTableOfContents';
 import GestureIndicator from '@/components/GestureIndicator';
 import GestureHelp from '@/components/GestureHelp';
-import GiscusComments from '@/components/GiscusComments';
 import ReadingProgress from '@/components/ReadingProgress';
 import ShareButtons from '@/components/ShareButtons';
-import RelatedPosts from '@/components/RelatedPosts';
 import { findRelatedPosts, findRelatedPostsByCategory } from '@/lib/relatedPosts';
 import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState, Suspense, lazy } from 'react';
@@ -104,9 +101,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
     const items: TocItem[] = [];
 
     headings.forEach((heading, index) => {
-      const id = heading.id || `heading-${index}`;
-      if (!heading.id) {
-        heading.id = id;
+      const id = (heading as HTMLElement).id || `heading-${index}`;
+      if (!(heading as HTMLElement).id) {
+        (heading as HTMLElement).id = id;
       }
 
       items.push({
@@ -315,7 +312,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                 </div>
 
                 {/* 댓글 섹션 */}
-                <Suspense fallback={<div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">댓글 로딩 중...</div>}>
+                <Suspense fallback={<div className="mt-8 flex justify-center"><LoadingSpinner /></div>}>
                   <LazyGiscusComments postSlug={post.slug} postTitle={post.title} />
                 </Suspense>
 
@@ -373,7 +370,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                 )}
 
                 {/* 관련 포스트 섹션 */}
-                <Suspense fallback={<div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">관련 포스트 로딩 중...</div>}>
+                <Suspense fallback={<div className="mt-8 flex justify-center"><LoadingSpinner /></div>}>
                   <LazyRelatedPosts posts={relatedPosts} />
                 </Suspense>
               </article>
