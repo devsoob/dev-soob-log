@@ -236,9 +236,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
 
       <main className="flex-1 w-full pt-20 pb-8">
         <div className="max-w-6xl mx-auto px-4">
-          <div className={tocItems.length > 0 ? "lg:flex lg:justify-between lg:gap-8" : ""}>
+          <div className={tocItems.length > 0 ? "md:flex md:items-start md:justify-between md:gap-8" : ""}>
             {/* 메인 콘텐츠 */}
-            <div className={tocItems.length > 0 ? "w-full lg:flex-1 lg:max-w-none" : "w-full max-w-4xl mx-auto"}>
+            <div className={tocItems.length > 0 ? "w-full md:flex-1 md:max-w-none md:pr-72" : "w-full max-w-4xl mx-auto"}>
               <article className="min-w-0">
                 {/* 네비게이션 버튼들 */}
                 <div className="mb-6 flex items-center justify-between">
@@ -378,8 +378,11 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
             
             {/* 데스크톱 목차 */}
             {tocItems.length > 0 && (
-              <aside className="hidden lg:block lg:sticky lg:top-24 w-64 flex-shrink-0 ml-8 h-[calc(100vh-8rem)]">
-                <div className="overflow-y-auto h-full pr-4 toc-scrollbar">
+              <aside
+                className="hidden md:block w-64 flex-shrink-0 ml-8 md:ml-0 md:fixed md:top-24 z-30"
+                style={{ right: 'max(calc((100vw - 72rem) / 2), 1rem)' }}
+              >
+                <div className="max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 toc-scrollbar">
                   <TableOfContents tocItems={tocItems} />
                 </div>
               </aside>
@@ -390,7 +393,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
       
       {/* 모바일 목차 */}
       {tocItems.length > 0 && (
-        <div className="block lg:hidden">
+        <div className="block md:hidden">
           <MobileTableOfContents tocItems={tocItems} />
         </div>
       )}
