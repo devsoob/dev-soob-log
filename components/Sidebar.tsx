@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import ProfileCard from './ProfileCard';
 
 interface Category {
   name: string;
@@ -17,10 +18,12 @@ const Sidebar: React.FC<SidebarProps> = ({ categories }) => {
 
   return (
     <aside className="w-64 shrink-0 hidden md:block">
-      <div className="sticky top-24 p-6 bg-white dark:bg-[#1a1a1a] rounded-lg border border-gray-200 dark:border-gray-800">
-        <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Categories</h2>
-        <nav>
-          <ul className="space-y-2">
+      <div className="sticky top-24">
+        <ProfileCard />
+        <div className="p-6 bg-white dark:bg-[#1a1a1a] rounded-lg border border-gray-200 dark:border-gray-800">
+          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Categories</h2>
+          <nav>
+            <ul className="space-y-2">
             <li>
               <Link
                 href="/"
@@ -52,6 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ categories }) => {
             ))}
           </ul>
         </nav>
+        </div>
       </div>
     </aside>
   );

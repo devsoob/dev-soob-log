@@ -14,6 +14,7 @@ import TagTabs from "@/components/TagTabs";
 import MobileCategoryDrawer from "@/components/MobileCategoryDrawer";
 import Script from 'next/script';
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ProfileCard from "@/components/ProfileCard";
 
 // 지연 로딩 컴포넌트
 const LazyMobileCategoryDrawer = lazy(() => import("@/components/MobileCategoryDrawer"));
@@ -136,6 +137,10 @@ export default function Home({ posts, categories, tags }: Props) {
         <Header />
         <main className="flex-1 w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
+            {/* 모바일에서도 프로필 노출 */}
+            <div className="md:hidden mb-6">
+              <ProfileCard />
+            </div>
             <div className="flex gap-8">
               <Sidebar categories={categories} />
               <div className="flex-1 min-w-0">
