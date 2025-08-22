@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function ProfileCard() {
   const [avatarSrc, setAvatarSrc] = useState("/images/soob-profile.png");
-  const email = "cholong@naver.com";
+  const email = "cholong56@naver.com";
 
   return (
     <div className="relative p-5 bg-white dark:bg-[#1a1a1a] rounded-xl border border-gray-200 dark:border-gray-800 mb-6 shadow-sm">
