@@ -136,14 +136,14 @@ export default function Home({ posts, categories, tags }: Props) {
       <div className="min-h-screen bg-white dark:bg-[#1a1a1a] flex flex-col">
         <Header />
         <main className="flex-1 w-full">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8 mobile-container overflow-hidden">
             {/* 모바일에서도 프로필 노출 */}
             <div className="md:hidden mb-6">
               <ProfileCard />
             </div>
             <div className="flex gap-8">
               <Sidebar categories={categories} />
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 mobile-text-safe overflow-hidden">
                 <TagTabs tags={tags} />
                 <section className="space-y-12">
                   {paginatedPosts.map((post) => (
