@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ categories }) => {
 
   return (
     <aside className="w-64 shrink-0 hidden md:block">
-      <div className="sticky top-24">
+      <div className="sticky top-0">
         <ProfileCard />
         <div className="p-6 bg-white dark:bg-[#1a1a1a] rounded-lg border border-gray-200 dark:border-gray-800">
           <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Categories</h2>
