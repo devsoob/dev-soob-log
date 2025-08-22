@@ -215,21 +215,166 @@ const responsiveIssues = [
       
       return null;
     }
+  },
+  {
+    name: 'clickable-elements',
+    description: '클릭 가능한 요소 접근성 확인',
+    check: async (page) => {
+      const clickableIssues = await page.evaluate(() => {
+        const clickableElements = document.querySelectorAll('button, a, input[type="button"], input[type="submit"], [role="button"]');
+        const issues = [];
+        
+        clickableElements.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          const style = window.getComputedStyle(element);
+          
+          // 화면 밖으로 나간 요소 확인
+          if (rect.right < 0 || rect.bottom < 0 || rect.left > window.innerWidth || rect.top > window.innerHeight) {
+            issues.push({
+              element: element.tagName + (element.className ? '.' + element.className.split(' ')[0] : ''),
+              issue: '화면 밖으로 나간 클릭 가능한 요소',
+              position: `left: ${Math.round(rect.left)}, top: ${Math.round(rect.top)}`
+            });
+          }
+          
+          // 투명하거나 보이지 않는 요소 확인
+          if (style.opacity === '0' || style.visibility === 'hidden' || style.display === 'none') {
+            issues.push({
+              element: element.tagName + (element.className ? '.' + element.className.split(' ')[0] : ''),
+              issue: '보이지 않는 클릭 가능한 요소',
+              opacity: style.opacity,
+              visibility: style.visibility,
+              display: style.display
+            });
+          }
+        });
+        
+        return issues;
+      });
+      
+      return clickableIssues.length > 0 ? 
+        `${clickableIssues.length}개의 클릭 가능한 요소에 접근성 문제가 있습니다: ${JSON.stringify(clickableIssues.slice(0, 3))}` : null;
+    }
+  },
+  {
+    name: 'navigation-menu',
+    description: '네비게이션 메뉴 반응형 확인',
+    check: async (page) => {
+      const navIssues = await page.evaluate(() => {
+        const navs = document.querySelectorAll('nav, [role="navigation"]');
+        const issues = [];
+        
+        navs.forEach((nav) => {
+          const rect = nav.getBoundingClientRect();
+          const style = window.getComputedStyle(nav);
+          
+          // 모바일에서 네비게이션이 너무 작은 경우
+          if (window.innerWidth <= 768 && rect.height < 50) {
+            issues.push({
+              element: nav.tagName + (nav.className ? '.' + nav.className.split(' ')[0] : ''),
+              issue: '모바일에서 네비게이션 높이가 너무 작음',
+              height: `${Math.round(rect.height)}px`
+            });
+          }
+          
+          // 네비게이션 내부 링크들이 겹치는 경우
+          const navLinks = nav.querySelectorAll('a, button');
+          navLinks.forEach((link, index) => {
+            const linkRect = link.getBoundingClientRect();
+            navLinks.forEach((otherLink, otherIndex) => {
+              if (index !== otherIndex) {
+                const otherRect = otherLink.getBoundingClientRect();
+                if (linkRect.left < otherRect.right && linkRect.right > otherRect.left &&
+                    linkRect.top < otherRect.bottom && linkRect.bottom > otherRect.top) {
+                  issues.push({
+                    element: '네비게이션 링크',
+                    issue: '네비게이션 링크들이 겹침',
+                    link1: link.textContent?.trim().substring(0, 20),
+                    link2: otherLink.textContent?.trim().substring(0, 20)
+                  });
+                }
+              }
+            });
+          });
+        });
+        
+        return issues;
+      });
+      
+      return navIssues.length > 0 ? 
+        `${navIssues.length}개의 네비게이션 문제가 발견되었습니다: ${JSON.stringify(navIssues.slice(0, 3))}` : null;
+    }
+  },
+  {
+    name: 'content-overflow',
+    description: '콘텐츠 오버플로우 확인',
+    check: async (page) => {
+      const overflowIssues = await page.evaluate(() => {
+        const elements = document.querySelectorAll('*');
+        const issues = [];
+        
+        elements.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          const style = window.getComputedStyle(element);
+          
+          // 부모 요소보다 큰 자식 요소 확인
+          if (element.parentElement) {
+            const parentRect = element.parentElement.getBoundingClientRect();
+            if (rect.width > parentRect.width && style.overflow !== 'hidden') {
+              issues.push({
+                element: element.tagName + (element.className ? '.' + element.className.split(' ')[0] : ''),
+                issue: '부모 요소보다 큰 자식 요소',
+                childWidth: `${Math.round(rect.width)}px`,
+                parentWidth: `${Math.round(parentRect.width)}px`
+              });
+            }
+          }
+          
+          // 긴 텍스트가 컨테이너를 벗어나는 경우
+          if (element.textContent && element.textContent.length > 100) {
+            const textWidth = element.scrollWidth;
+            if (textWidth > rect.width) {
+              issues.push({
+                element: element.tagName + (element.className ? '.' + element.className.split(' ')[0] : ''),
+                issue: '긴 텍스트가 컨테이너를 벗어남',
+                textLength: element.textContent.length,
+                containerWidth: `${Math.round(rect.width)}px`,
+                textWidth: `${Math.round(textWidth)}px`
+              });
+            }
+          }
+        });
+        
+        return issues;
+      });
+      
+      return overflowIssues.length > 0 ? 
+        `${overflowIssues.length}개의 콘텐츠 오버플로우 문제가 발견되었습니다: ${JSON.stringify(overflowIssues.slice(0, 3))}` : null;
+    }
   }
 ];
 
 // 테스트할 디바이스 설정 (간소화)
 const testDevices = [
-  { name: 'Mobile', width: 375, height: 667 },
-  { name: 'Tablet', width: 768, height: 1024 },
-  { name: 'Desktop', width: 1920, height: 1080 }
+  { name: 'Mobile Small', width: 320, height: 568 },
+  { name: 'Mobile Medium', width: 375, height: 667 },
+  { name: 'Mobile Large', width: 414, height: 896 },
+  { name: 'Tablet Small', width: 768, height: 1024 },
+  { name: 'Tablet Large', width: 1024, height: 1366 },
+  { name: 'Desktop Small', width: 1280, height: 720 },
+  { name: 'Desktop Medium', width: 1440, height: 900 },
+  { name: 'Desktop Large', width: 1920, height: 1080 }
 ];
 
 // 테스트할 페이지들
 const testPages = [
   { path: '/', name: '메인 페이지' },
   { path: '/posts', name: '포스트 목록' },
-  { path: '/about', name: '소개 페이지' }
+  { path: '/about', name: '소개 페이지' },
+  { path: '/posts/getting-started-with-react', name: 'React 시작하기 포스트' },
+  { path: '/posts/typescript-basics', name: 'TypeScript 기초 포스트' },
+  { path: '/posts/nodejs-backend-development', name: 'Node.js 백엔드 개발 포스트' },
+  { path: '/posts/notion-style-code-test', name: 'Notion 스타일 코드 테스트 포스트' }
 ];
 
 async function checkResponsiveIssues() {
