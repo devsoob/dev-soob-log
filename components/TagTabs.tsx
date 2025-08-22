@@ -14,11 +14,35 @@ interface TagTabsProps {
 const TagTabs: React.FC<TagTabsProps> = ({ tags }) => {
   const router = useRouter();
   const currentTag = router.query.tag as string;
+  const navRef = React.useRef<HTMLElement>(null);
+
+  // 마우스 휠로 가로 스크롤 처리 (태블릿/웹에서만)
+  React.useEffect(() => {
+    const element = navRef.current;
+    if (!element) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // 모바일에서는 터치 스크롤 사용, 데스크톱에서만 마우스 휠 스크롤
+      if (window.innerWidth >= 768) {
+        e.preventDefault();
+        element.scrollLeft += e.deltaY * 0.5;
+      }
+    };
+
+    element.addEventListener('wheel', handleWheel, { passive: false });
+    return () => element.removeEventListener('wheel', handleWheel);
+  }, []);
 
   return (
     <div className="mb-8">
       <div className="border-b border-gray-200 dark:border-gray-800">
-        <nav className="-mb-px flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
+        <nav 
+          ref={navRef}
+          className="-mb-px flex space-x-4 overflow-x-auto pb-2 scrollbar-hide"
+          style={{ 
+            WebkitOverflowScrolling: 'touch'
+          }}
+        >
           <Link
             href="/"
             className={`whitespace-nowrap px-4 py-3 border-b-2 font-medium text-base min-h-[44px] flex items-center ${
@@ -48,15 +72,4 @@ const TagTabs: React.FC<TagTabsProps> = ({ tags }) => {
   );
 };
 
-export default TagTabs;
-
-// Add this to your global CSS or a new style module
-const styles = `
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
-}
-`; 
+export default TagTabs; 
