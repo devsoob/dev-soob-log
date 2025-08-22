@@ -176,6 +176,8 @@ export default function SearchPage() {
                         currentPage={currentPage}
                         totalPages={totalPages}
                         onPageChange={handlePageChange}
+                        maxVisiblePages={5}
+                        enableChunkNav
                       />
                     </div>
                   )}
