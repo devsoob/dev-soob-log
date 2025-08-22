@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TocItem } from './TableOfContents';
 
 interface MobileTableOfContentsProps {
@@ -12,51 +12,28 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    const handleScroll = () => {
+      const headings = document.querySelectorAll('h1, h2, h3');
+      let current = '';
 
-    return () => {
-      document.body.style.overflow = 'auto';
+      headings.forEach((heading) => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 100) {
+          current = heading.id;
+        }
+      });
+
+      setActiveId(current);
     };
-  }, [isOpen]);
 
-  useEffect(() => {
-    if (tocItems.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-20% 0px -35% 0px',
-        threshold: 0
-      }
-    );
-
-    tocItems.forEach((item) => {
-      const element = document.getElementById(item.id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, [tocItems]);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      element.scrollIntoView({ behavior: 'smooth' });
       setIsOpen(false);
     }
   };
@@ -70,7 +47,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
       {/* 모바일 목차 버튼 */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[60] bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors duration-200"
+        className="fixed bottom-6 right-6 z-[60] bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="목차 열기"
         aria-expanded={isOpen}
         aria-controls="mobile-toc-modal"
@@ -88,28 +65,22 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
       {/* 모바일 목차 모달 */}
       {isOpen && (
         <div 
-          className="fixed inset-0 z-[70] bg-black bg-opacity-50 flex items-end"
-          role="dialog"
-          aria-modal="true"
-          id="mobile-toc-modal"
-          aria-labelledby="mobile-toc-title"
+          className="fixed inset-0 z-[70] bg-black bg-opacity-50 flex items-end justify-center sm:items-center p-4"
+          onClick={() => setIsOpen(false)}
         >
           <div 
-            className="bg-white dark:bg-[#1a1a1a] w-full max-h-[80vh] rounded-t-lg shadow-lg"
-            role="document"
+            className="bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-2xl w-full max-w-md max-h-[80vh] overflow-hidden shadow-xl"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h2 id="mobile-toc-title" className="text-lg font-semibold text-black dark:text-white">
-                목차
-              </h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">목차</h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="목차 닫기"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -119,7 +90,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
                   <li key={item.id} role="listitem">
                     <button
                       onClick={() => scrollToHeading(item.id)}
-                      className={`text-left w-full px-2 py-2 rounded text-sm transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 ${
+                      className={`text-left w-full px-2 py-2 rounded text-sm transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 min-h-[44px] flex items-center ${
                         activeId === item.id
                           ? 'text-blue-600 dark:text-blue-400 font-medium bg-blue-50 dark:bg-blue-900/20'
                           : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
