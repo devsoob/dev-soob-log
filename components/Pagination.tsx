@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface PaginationProps {
   currentPage: number;
@@ -6,14 +6,45 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
   // 한 번에 보여줄 페이지 수 (예: 5개씩 1-5, 6-10)
   maxVisiblePages?: number;
-  // <<, >> 처럼 덩어리 단위 점프 허용
-  enableChunkNav?: boolean;
+  // 첫 페이지, 마지막 페이지로 이동하는 버튼 표시
+  enableFirstLastNav?: boolean;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, maxVisiblePages, enableChunkNav = false }) => {
+const Pagination: React.FC<PaginationProps> = ({ 
+  currentPage, 
+  totalPages, 
+  onPageChange, 
+  maxVisiblePages, 
+  enableFirstLastNav = false 
+}) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    
+    const checkIsMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 768);
+      }
+    };
+
+    // 초기 체크
+    checkIsMobile();
+
+    // 리사이즈 이벤트 리스너
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', checkIsMobile);
+      return () => window.removeEventListener('resize', checkIsMobile);
+    }
+  }, []);
+
   const getVisiblePages = () => {
+    // SSR에서는 기본값 사용, 클라이언트에서는 모바일 감지
+    const effectiveMaxVisiblePages = isClient && isMobile ? 3 : (maxVisiblePages || 5);
+    
     // 최대 표시 개수가 없으면 전체 페이지 노출 (기존 동작 유지)
-    if (!maxVisiblePages || maxVisiblePages <= 0) {
+    if (!effectiveMaxVisiblePages || effectiveMaxVisiblePages <= 0) {
       const allPages = [];
       for (let i = 1; i <= totalPages; i++) {
         allPages.push(i);
@@ -22,7 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     }
 
     // 현재 페이지 기준으로 윈도우(덩어리) 계산
-    const chunkSize = maxVisiblePages;
+    const chunkSize = effectiveMaxVisiblePages;
     const chunkIndex = Math.floor((currentPage - 1) / chunkSize);
     const start = chunkIndex * chunkSize + 1;
     const end = Math.min(totalPages, start + chunkSize - 1);
@@ -36,28 +67,24 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
   if (totalPages <= 1) return null;
 
   const visiblePages = getVisiblePages();
-  const chunkSize = maxVisiblePages && maxVisiblePages > 0 ? maxVisiblePages : totalPages;
-  const canGoPrevChunk = currentPage > 1;
-  const canGoNextChunk = currentPage < totalPages;
-  const goPrevChunk = () => onPageChange(Math.max(1, currentPage - chunkSize));
-  const goNextChunk = () => onPageChange(Math.min(totalPages, currentPage + chunkSize));
 
   return (
     <nav aria-label="페이지 네비게이션" className="mt-8">
       <div className="flex justify-center items-center space-x-2">
-        {enableChunkNav && (
+        {/* 첫 페이지로 이동 버튼 */}
+        {enableFirstLastNav && (
           <button
-            onClick={goPrevChunk}
-            disabled={!canGoPrevChunk}
+            onClick={() => onPageChange(1)}
+            disabled={currentPage === 1}
             className={`px-3 py-3 rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
-              !canGoPrevChunk
+              currentPage === 1
                 ? 'text-gray-400 cursor-not-allowed'
                 : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
             }`}
-            aria-label={`${chunkSize} 페이지 이전으로`}
-            aria-disabled={!canGoPrevChunk}
+            aria-label="첫 페이지로"
+            aria-disabled={currentPage === 1}
           >
-            <span className="flex items-center -space-x-3">
+            <span className="flex items-center -space-x-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
@@ -119,17 +146,18 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           </svg>
         </button>
 
-        {enableChunkNav && (
+        {/* 마지막 페이지로 이동 버튼 */}
+        {enableFirstLastNav && (
           <button
-            onClick={goNextChunk}
-            disabled={!canGoNextChunk}
+            onClick={() => onPageChange(totalPages)}
+            disabled={currentPage === totalPages}
             className={`px-3 py-3 rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
-              !canGoNextChunk
+              currentPage === totalPages
                 ? 'text-gray-400 cursor-not-allowed'
                 : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
             }`}
-            aria-label={`${chunkSize} 페이지 앞으로`}
-            aria-disabled={!canGoNextChunk}
+            aria-label="마지막 페이지로"
+            aria-disabled={currentPage === totalPages}
           >
             <span className="flex items-center -space-x-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="w-5 h-5">

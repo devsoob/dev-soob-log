@@ -157,7 +157,7 @@ export default function Home({ posts, categories, tags }: Props) {
                         totalPages={totalPages}
                         onPageChange={handlePageChange}
                         maxVisiblePages={5}
-                        enableChunkNav
+                        enableFirstLastNav
                       />
                     </div>
                   )}
