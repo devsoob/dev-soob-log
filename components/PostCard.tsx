@@ -15,7 +15,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const text = post.tags && post.tags.length > 0 ? post.tags[0].replace(/[#\s]/g, '') : post.category;
 
   return (
-    <article className="border-b border-gray-200 dark:border-gray-800 last:border-0 pb-8 last:pb-0">
+    <article className="border-b border-primary last:border-0 pb-8 last:pb-0">
       <Link
         href={{
           pathname: `/posts/${post.slug}`,
@@ -31,7 +31,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             </div>
           </div>
           <div className="md:col-span-8">
-            <span className="inline-block text-base xs:text-lg font-medium text-gray-500 dark:text-gray-400 mb-2 md:mb-3" 
+            <span className="inline-block text-base xs:text-lg font-medium text-tertiary mb-2 md:mb-3" 
               role="text" 
               aria-label={`Category: ${post.category}`}
             >
@@ -39,15 +39,15 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             </span>
             <h2 
               id={`post-title-${post.slug}`} 
-              className="text-lg xs:text-xl sm:text-2xl font-bold mb-2 md:mb-3 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+              className="text-lg xs:text-xl sm:text-2xl font-bold mb-2 md:mb-3 text-primary group-hover:text-link transition-colors"
             >
               {post.title}
             </h2>
-            <p className="text-base xs:text-lg text-gray-600 dark:text-gray-300 mb-3 md:mb-4 line-clamp-2">
+            <p className="text-base xs:text-lg text-secondary mb-3 md:mb-4 line-clamp-2">
               {post.description}
             </p>
             <time 
-              className="text-sm xs:text-base text-gray-500 dark:text-gray-400" 
+              className="text-sm xs:text-base text-tertiary" 
               dateTime={post.date}
             >
               {formatDate(post.date)}

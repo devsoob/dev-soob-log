@@ -76,10 +76,10 @@ export default function TableOfContents({ className = '', tocItems }: TableOfCon
           <li key={item.id} role="listitem">
             <button
               onClick={() => scrollToHeading(item.id)}
-              className={`text-left w-full whitespace-normal break-words px-2 py-1 rounded text-sm transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 ${
+              className={`text-left w-full whitespace-normal break-words px-2 py-1 rounded text-sm transition-colors duration-200 hover:bg-tertiary ${
                 activeId === item.id
-                  ? 'text-blue-600 dark:text-blue-400 font-medium bg-blue-50 dark:bg-blue-900/20'
-                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  ? 'text-link font-medium bg-accent'
+                  : 'text-secondary hover:text-primary'
               }`}
               style={{
                 paddingLeft: `${(item.level - 1) * 12 + 8}px`

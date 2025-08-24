@@ -47,7 +47,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
       {/* 모바일 목차 버튼 */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[60] bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-[60] btn-primary p-3 rounded-full shadow-lg transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="목차 열기"
         aria-expanded={isOpen}
         aria-controls="mobile-toc-modal"
@@ -90,7 +90,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
                   <li key={item.id} role="listitem">
                     <button
                       onClick={() => scrollToHeading(item.id)}
-                      className={`text-left w-full px-2 py-2 rounded text-sm transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 min-h-[44px] flex items-center ${
+                      className={`text-left w-full px-2 py-2 rounded text-sm transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 min-h-[44px] flex items-center ${
                         activeId === item.id
                           ? 'text-blue-600 dark:text-blue-400 font-medium bg-blue-50 dark:bg-blue-900/20'
                           : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'

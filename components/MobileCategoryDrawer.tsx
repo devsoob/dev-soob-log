@@ -69,8 +69,8 @@ const MobileCategoryDrawer: React.FC<MobileCategoryDrawerProps> = ({
                 href="/"
                 className={`block px-4 py-2.5 rounded-lg transition-colors ${
                   !currentCategory
-                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    ? 'bg-accent text-link'
+                    : 'text-secondary hover:bg-tertiary'
                 }`}
                 onClick={handleCategoryClick}
               >
@@ -83,14 +83,14 @@ const MobileCategoryDrawer: React.FC<MobileCategoryDrawerProps> = ({
                   href={`/?category=${category.name}`}
                   className={`block px-4 py-2.5 rounded-lg transition-colors ${
                     currentCategory === category.name
-                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'bg-accent text-link'
+                      : 'text-secondary hover:bg-tertiary'
                   }`}
                   onClick={handleCategoryClick}
                 >
                   <span className="flex justify-between items-center">
                     <span>{category.name}</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className="text-sm text-tertiary">
                       {category.count}
                     </span>
                   </span>

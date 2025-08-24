@@ -31,7 +31,7 @@ export default function Header() {
           {isHomePage && (
             <Link
               href="/search"
-              className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center hover:scale-105"
               aria-label="검색 페이지로 이동"
             >
               <SearchIcon className="text-black dark:text-white w-5 h-5" aria-hidden="true" />
@@ -40,7 +40,7 @@ export default function Header() {
           <ThemeToggle />
           <Link
             href="/rss.xml"
-            className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center hover:scale-105"
             aria-label="RSS Feed"
             target="_blank"
             rel="noopener noreferrer"

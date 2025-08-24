@@ -171,7 +171,7 @@ export default function Home({ posts, categories, tags }: Props) {
         {/* 모바일 카테고리 플로팅 버튼 */}
         <button
           onClick={() => setIsCategoryDrawerOpen(true)}
-          className="fixed right-4 bottom-4 w-12 h-12 bg-blue-500 dark:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center md:hidden hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors z-30 min-w-[44px] min-h-[44px]"
+          className="fixed right-4 bottom-4 w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center md:hidden transition-colors duration-200 z-30 min-w-[44px] min-h-[44px]"
           aria-label="Open categories"
         >
           <svg

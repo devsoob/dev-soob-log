@@ -51,7 +51,7 @@ html {
 
 @layer base {
   body {
-    @apply bg-white dark:bg-[#4d4d4d] text-black dark:text-white;
+    @apply bg-white dark:bg-[#1a1a1a] text-black dark:text-white;
     font-feature-settings: "rlig" 1, "calt" 1;
     overscroll-behavior: none;
     font-size: 16px; /* 모바일에서 최소 16px 폰트 크기 보장 */
@@ -208,7 +208,79 @@ a {
   color: white;
 }
 
-/* 접근성을 위한 색상 대비 개선 */
+/* 7. 일관된 컬러 시스템 정의 */
+@layer base {
+  /* 기본 텍스트 색상 계층 */
+  .text-primary {
+    @apply text-gray-900 dark:text-white;
+  }
+  
+  .text-secondary {
+    @apply text-gray-600 dark:text-gray-300;
+  }
+  
+  .text-tertiary {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .text-muted {
+    @apply text-gray-400 dark:text-gray-500;
+  }
+
+  /* 링크 색상 - 일관된 파란색 계열 */
+  .text-link {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+  
+  .text-link-hover {
+    @apply text-blue-700 dark:text-blue-300;
+  }
+
+  /* 버튼 색상 - 일관된 파란색 계열 */
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300;
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300;
+  }
+
+  /* 배경색 계층 */
+  .bg-primary {
+    @apply bg-white dark:bg-[#1a1a1a];
+  }
+  
+  .bg-secondary {
+    @apply bg-gray-50 dark:bg-[#262626];
+  }
+  
+  .bg-tertiary {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+  
+  .bg-accent {
+    @apply bg-blue-50 dark:bg-blue-900/20;
+  }
+
+  /* 보더 색상 */
+  .border-primary {
+    @apply border-gray-200 dark:border-gray-800;
+  }
+  
+  .border-secondary {
+    @apply border-gray-300 dark:border-gray-700;
+  }
+  
+  .border-accent {
+    @apply border-blue-200 dark:border-blue-800;
+  }
+}
+
+/* 8. 기존 접근성 색상 대비 개선 (호환성 유지) */
 @layer base {
   /* 기본 텍스트 색상 */
   .text-gray-600 {
@@ -311,12 +383,23 @@ a {
   border-radius: 3px;
 }
 
-.dark .toc-scrollbar {
-  scrollbar-color: #4B5563 transparent;
+.dark .toc-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #64748B;
 }
 
-.dark .toc-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #4B5563;
+/* 9. 일관된 호버 효과 */
+@layer utilities {
+  .hover-lift {
+    @apply transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+  
+  .hover-brighten {
+    @apply transition-colors duration-200 hover:brightness-110;
+  }
+  
+  .hover-darken {
+    @apply transition-colors duration-200 hover:brightness-90;
+  }
 }
 
 /* 반응형 테이블 스타일링 */

@@ -240,34 +240,18 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
             {/* 메인 콘텐츠 */}
             <div className={tocItems.length > 0 ? "w-full md:flex-1 md:max-w-none md:pr-72" : "w-full max-w-4xl mx-auto"}>
               <article className="min-w-0">
-                {/* 네비게이션 버튼들 */}
-                <div className="mb-6 flex items-center justify-between">
-                  <button
-                    onClick={handleBackToList}
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200"
-                  >
-                    <svg 
-                      className="w-4 h-4 mr-2" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    목록으로
-                  </button>
-                </div>
+
 
                 {/* 포스트 헤더 */}
                 <header className="mb-8">
-                  <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4" style={{ lineHeight: '1.3' }}>
+                  <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-primary mb-4" style={{ lineHeight: '1.3' }}>
                     {post.title}
                   </h1>
-                  <div className="flex flex-col gap-3 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex flex-col gap-3 text-xs xs:text-sm sm:text-base text-tertiary">
                     {/* 첫 번째 줄: 날짜와 카테고리 */}
-                    <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex flex-wrap items-center gap-2 xs:gap-4">
                       <div className="flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3 xs:w-4 xs:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         <time dateTime={post.date}>
@@ -280,7 +264,7 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                       </div>
                       {post.category && (
                         <div className="flex items-center">
-                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 xs:w-4 xs:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                           </svg>
                           <span>{post.category}</span>
@@ -290,15 +274,15 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                     
                     {/* 두 번째 줄: 태그들 */}
                     {post.tags && post.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 items-center">
+                      <div className="flex flex-wrap gap-1 xs:gap-2 items-center">
                         {post.tags.map((tag) => (
-                          <span key={tag} className="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-300">#{tag}</span>
+                          <span key={tag} className="px-1.5 xs:px-2 py-0.5 rounded bg-tertiary text-xs text-secondary">#{tag}</span>
                         ))}
                       </div>
                     )}
                   </div>
                   {post.description && (
-                    <p className="text-lg text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">
+                    <p className="text-lg text-secondary mt-4 leading-relaxed">
                       {post.description}
                     </p>
                   )}
@@ -318,22 +302,22 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
 
                 {/* 이전/다음 글 네비게이션 */}
                 {(prevPost || nextPost) && (
-                  <nav className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                  <nav className="mt-12 pt-8 border-t border-primary">
                     <div className="flex flex-col sm:flex-row justify-between gap-4">
                       {prevPost ? (
                         <Link 
                           href={`/posts/${prevPost.slug}`}
-                          className="group flex-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                          className="group flex-1 p-4 rounded-lg border border-primary hover:border-secondary transition-colors"
                         >
                           <div className="flex items-center">
-                            <div className="mr-3 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                            <div className="mr-3 text-muted group-hover:text-secondary transition-colors">
                               ←
                             </div>
                             <div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                                이전 글
-                              </div>
-                              <div className="text-base font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                          <div className="text-sm text-tertiary mb-1">
+                              이전 글
+                            </div>
+                            <div className="text-base font-medium text-primary group-hover:text-link transition-colors">
                                 {prevPost.title}
                               </div>
                             </div>
@@ -346,18 +330,18 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                       {nextPost ? (
                         <Link 
                           href={`/posts/${nextPost.slug}`}
-                          className="group flex-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                          className="group flex-1 p-4 rounded-lg border border-primary hover:border-secondary transition-colors"
                         >
                           <div className="flex items-center justify-end">
                             <div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1 text-right">
+                              <div className="text-sm text-tertiary mb-1 text-right">
                                 다음 글
                               </div>
-                              <div className="text-base font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                              <div className="text-base font-medium text-primary group-hover:text-link transition-colors">
                                 {nextPost.title}
                               </div>
                             </div>
-                            <div className="ml-3 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                            <div className="ml-3 text-muted group-hover:text-secondary transition-colors">
                               →
                             </div>
                           </div>
@@ -408,32 +392,12 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
       <GestureHelp />
       
       {/* 플로팅 액션 버튼들 */}
-      <div className="fixed bottom-6 left-6 z-40 flex flex-col gap-3">
-        {/* 목록으로 가기 버튼 */}
-        <button
-          onClick={() => router.push('/')}
-          className="p-3 rounded-full bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
-          aria-label="목록으로 이동"
-        >
-          <svg 
-            width="20" 
-            height="20" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-            className="w-5 h-5 lg:w-6 lg:h-6"
-          >
-            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-        </button>
-        
+      {/* 데스크톱/태블릿: 오른쪽에 배치 */}
+      <div className="hidden md:flex fixed bottom-8 right-6 z-40 flex-col gap-4" style={{ right: 'max(calc(50% - 36rem - 4rem), 2rem)' }}>
         {/* 스크롤 to top 버튼 */}
         <button
           onClick={scrollToTop}
-          className={`p-3 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
+          className={`p-3 rounded-full bg-gray-700 hover:bg-gray-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
             showScrollToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
           }`}
           aria-label="최상단으로 이동"
@@ -450,6 +414,95 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
             className="w-5 h-5 lg:w-6 lg:h-6"
           >
             <path d="m18 15-6-6-6 6"/>
+          </svg>
+        </button>
+        
+        {/* 홈으로 가기 버튼 */}
+        <button
+          onClick={() => router.push('/')}
+          className="p-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-colors duration-200"
+          aria-label="홈으로 이동"
+        >
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="w-5 h-5 lg:w-6 lg:h-6"
+          >
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+        </button>
+      </div>
+
+      {/* 모바일: 하단에 배치 */}
+      <div className="md:hidden fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+        {/* 스크롤 to top 버튼 */}
+        <button
+          onClick={scrollToTop}
+          className={`p-3 rounded-full bg-gray-700 hover:bg-gray-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
+            showScrollToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+          }`}
+          aria-label="최상단으로 이동"
+        >
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="w-5 h-5 lg:w-6 lg:h-6"
+          >
+            <path d="m18 15-6-6-6 6"/>
+          </svg>
+        </button>
+        
+        {/* 홈으로 가기 버튼 */}
+        <button
+          onClick={() => router.push('/')}
+          className="p-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-colors duration-200"
+          aria-label="홈으로 이동"
+        >
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="w-5 h-5 lg:w-6 lg:h-6"
+          >
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+        </button>
+        
+        {/* 목록으로 가기 버튼 */}
+        <button
+          onClick={() => router.push('/')}
+          className="p-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg hover:shadow-xl transition-colors duration-200"
+          aria-label="목록으로 이동"
+        >
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="w-5 h-5 lg:w-6 lg:h-6"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
       </div>

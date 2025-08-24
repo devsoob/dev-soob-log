@@ -101,8 +101,8 @@ const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === 1}
           className={`px-3 py-3 rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
             currentPage === 1
-              ? 'text-gray-400 cursor-not-allowed'
-              : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+              ? 'text-muted cursor-not-allowed'
+              : 'text-secondary hover:bg-tertiary'
           }`}
           aria-label="이전 페이지"
           aria-disabled={currentPage === 1}
@@ -119,8 +119,8 @@ const Pagination: React.FC<PaginationProps> = ({
             onClick={() => onPageChange(page)}
             className={`px-4 py-3 text-base font-medium rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
               currentPage === page
-                ? 'bg-blue-600 text-white'
-                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                ? 'bg-accent text-link font-semibold'
+                : 'text-secondary hover:bg-tertiary'
             }`}
             aria-label={`${page} 페이지`}
             aria-current={currentPage === page ? 'page' : undefined}
@@ -135,8 +135,8 @@ const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === totalPages}
           className={`px-3 py-3 rounded-md transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
             currentPage === totalPages
-              ? 'text-gray-400 cursor-not-allowed'
-              : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+              ? 'text-muted cursor-not-allowed'
+              : 'text-secondary hover:bg-tertiary'
           }`}
           aria-label="다음 페이지"
           aria-disabled={currentPage === totalPages}

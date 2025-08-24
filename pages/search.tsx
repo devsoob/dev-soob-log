@@ -111,7 +111,7 @@ export default function SearchPage() {
           <div className="mb-8 flex items-center">
             <button
               onClick={() => router.push('/')}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center"
+              className="text-tertiary hover:text-secondary flex items-center"
             >
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -129,7 +129,7 @@ export default function SearchPage() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="block w-full pl-10 pr-3 py-3 bg-gray-50 dark:bg-[#262626] border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-gray-400 dark:focus:border-gray-500 transition-colors duration-200"
+                className="block w-full pl-10 pr-3 py-3 bg-secondary border border-primary rounded-lg text-primary placeholder-tertiary focus:outline-none focus:border-secondary transition-colors duration-200"
                 placeholder="검색어를 입력하세요..."
                 aria-label="검색어 입력"
                 autoFocus
@@ -162,7 +162,7 @@ export default function SearchPage() {
             <>
               {searchResults.length > 0 ? (
                 <>
-                  <div className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="mb-6 text-sm text-tertiary">
                     '{searchTerm}' 검색 결과 {searchResults.length}개
                   </div>
                   <div className="space-y-8">
@@ -184,7 +184,7 @@ export default function SearchPage() {
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center py-16">
-                  <p className="text-gray-500 dark:text-gray-400 mb-4">
+                  <p className="text-tertiary mb-4">
                     '{searchTerm}'에 대한 검색 결과가 없습니다.
                   </p>
                   <div className="flex items-center space-x-4">
@@ -193,14 +193,14 @@ export default function SearchPage() {
                         setSearchTerm('');
                         setHasSearched(false);
                       }}
-                      className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                      className="text-link hover:text-link-hover font-medium"
                     >
                       다시 검색하기
                     </button>
                     <span className="text-gray-300 dark:text-gray-600">|</span>
                     <button
                       onClick={() => router.push('/')}
-                      className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                      className="text-link hover:text-link-hover font-medium"
                     >
                       전체 글 보기
                     </button>
@@ -213,7 +213,7 @@ export default function SearchPage() {
           {/* 검색 결과가 없고 검색 중이 아닐 때 최근 글 표시 */}
           {!isSearching && !hasSearched && (
             <div className="mt-12 text-center">
-              <p className="text-gray-500 dark:text-gray-400 mb-8">
+              <p className="text-tertiary mb-8">
                 제목, 설명, 태그로 검색할 수 있습니다.
               </p>
             </div>

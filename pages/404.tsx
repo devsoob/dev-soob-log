@@ -63,7 +63,7 @@ export default function Custom404() {
             <div className="flex justify-center items-center mb-12">
               <Link
                 href="/"
-                className="inline-flex items-center px-6 py-3 bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 dark:focus:ring-offset-gray-900 min-w-[160px] justify-center"
+                className="inline-flex items-center px-6 py-3 btn-secondary font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 dark:focus:ring-offset-gray-900 min-w-[160px] justify-center"
               >
                 홈으로 돌아가기
               </Link>

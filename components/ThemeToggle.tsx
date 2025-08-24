@@ -39,7 +39,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#262626] transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+      className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center hover:scale-105"
       aria-label="Toggle theme"
     >
       <div className={`relative w-6 h-6 transition-transform duration-500 ${isAnimating ? 'rotate-180' : ''}`}>
