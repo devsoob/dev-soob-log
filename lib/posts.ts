@@ -4,6 +4,25 @@ import path from 'path';
 import matter from 'gray-matter';
 import { Client } from '@notionhq/client';
 
+// In-memory TTL cache for posts to avoid redundant Notion/FS reads
+type CacheEntry<T> = { data: T; timestamp: number };
+const postsCache: Map<string, CacheEntry<any>> = new Map();
+const POSTS_CACHE_TTL_MS = 1000 * 60 * 5; // 5 minutes
+
+function readCache<T>(key: string): T | null {
+  const entry = postsCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.timestamp > POSTS_CACHE_TTL_MS) {
+    postsCache.delete(key);
+    return null;
+  }
+  return entry.data as T;
+}
+
+function writeCache<T>(key: string, data: T): void {
+  postsCache.set(key, { data, timestamp: Date.now() });
+}
+
 // Notion 클라이언트 초기화
 const notion = process.env.NOTION_API_KEY ? new Client({
   auth: process.env.NOTION_API_KEY,
@@ -215,6 +234,9 @@ function getMarkdownPosts(): UnifiedPost[] {
 }
 
 export async function getAllPosts(): Promise<UnifiedPost[]> {
+  const cached = readCache<UnifiedPost[]>('allPosts');
+  if (cached) return cached;
+
   const [notionPosts, markdownPosts] = await Promise.all([
     getAllNotionPosts(),
     Promise.resolve(getMarkdownPosts())
@@ -237,8 +259,11 @@ export async function getAllPosts(): Promise<UnifiedPost[]> {
   });
 
   // Map을 배열로 변환하고 날짜순으로 정렬
-  return Array.from(postMap.values())
+  const result = Array.from(postMap.values())
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  writeCache('allPosts', result);
+  return result;
 }
 
 // RSS 생성용 동기 버전 (마크다운 포스트만)
@@ -265,6 +290,9 @@ export function getAllPostsSync(): Array<{
 }
 
 export async function getPublishedPosts(): Promise<UnifiedPost[]> {
+  const cached = readCache<UnifiedPost[]>('publishedPosts');
+  if (cached) return cached;
+
   const markdownPosts = getMarkdownPosts();
   const filteredMarkdownPosts = markdownPosts.filter((post: UnifiedPost) => post.isPublished);
   const notionPosts = await getNotionPublishedPosts();
@@ -284,8 +312,11 @@ export async function getPublishedPosts(): Promise<UnifiedPost[]> {
     }
   });
 
-  return Array.from(postMap.values())
+  const result = Array.from(postMap.values())
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  writeCache('publishedPosts', result);
+  return result;
 }
 
 export function checkDuplicates(posts: UnifiedPost[]): void {
