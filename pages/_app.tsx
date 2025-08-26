@@ -10,7 +10,7 @@ import InlineCode from "@/components/InlineCode";
 import localFont from 'next/font/local';
 import "../styles/globals.css";
 import Head from "next/head";
-import { ThemeProvider } from 'next-themes';
+// Removed unused ThemeProvider import
 
 const pretendard = localFont({
   src: [
@@ -84,7 +84,6 @@ const mdxComponents = {
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     let loadingTimer: ReturnType<typeof setTimeout> | null = null;
@@ -162,10 +161,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             name: 'naver-site-verification',
             content: '01f879679eb5dd93ae99dc948742910e33135369',
           },
-          {
-            name: 'google-site-verification',
-            content: 'YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE',
-          },
+          // Removed placeholder google-site-verification to avoid leaking dummy values
           {
             name: 'author',
             content: process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Author Name',

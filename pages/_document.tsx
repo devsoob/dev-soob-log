@@ -4,21 +4,6 @@ export default function Document() {
   return (
     <Html lang="ko">
       <Head>
-        {/* Google tag (gtag.js) */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-L05TQ4EJMT"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-L05TQ4EJMT');
-            `,
-          }}
-        />
         {/* DNS Prefetch */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -40,6 +25,20 @@ export default function Document() {
         <link
           rel="preload"
           href="/fonts/Pretendard-Bold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Pretendard-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Pretendard-SemiBold.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

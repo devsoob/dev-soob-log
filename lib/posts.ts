@@ -38,7 +38,7 @@ async function getAllNotionPosts(): Promise<UnifiedPost[]> {
   }
 
   try {
-    console.log('Fetching Notion posts...');
+    if (process.env.DEBUG === 'true') console.log('Fetching Notion posts...');
     const response = await notion.databases.query({
       database_id: DATABASE_ID,
       sorts: [
@@ -48,7 +48,7 @@ async function getAllNotionPosts(): Promise<UnifiedPost[]> {
         },
       ],
     });
-    console.log('Notion API response received');
+    if (process.env.DEBUG === 'true') console.log('Notion API response received');
 
     const posts: UnifiedPost[] = [];
 

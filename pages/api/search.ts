@@ -2,7 +2,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getPublishedPosts } from '@/lib/posts';
 
 // 검색 결과를 캐시하기 위한 Map
-const searchCache = new Map();
+type SearchResult = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  category: string;
+  tags: string[];
+};
+
+const searchCache: Map<string, { data: SearchResult[]; timestamp: number }> = new Map();
 const CACHE_DURATION = 1000 * 60 * 5; // 5분
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

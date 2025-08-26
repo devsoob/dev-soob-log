@@ -12,5 +12,5 @@ export function cleanSlug(slug: string) {
     .replace(/^\/+/, '')
     .replace(/\s+/g, '-')
     .toLowerCase()
-    .replace(/\.$/g, '');
+    .replace(/\.+$/g, '');
 } 

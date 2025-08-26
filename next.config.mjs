@@ -1,9 +1,8 @@
 // next.config.mjs
-import pkg from "@mdx-js/loader";
-const { createLoader } = pkg;
+// Removed unused MDX loader import
 
 const nextConfig = {
-  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  pageExtensions: ["ts", "tsx", "js", "jsx"],
   reactStrictMode: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -32,13 +31,14 @@ const nextConfig = {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
           },
+          // Prefer CSP frame-ancestors over deprecated X-XSS-Protection
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'none'",
+          },
           {
             key: 'X-Frame-Options',
             value: 'DENY',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
           },
           {
             key: 'Referrer-Policy',
