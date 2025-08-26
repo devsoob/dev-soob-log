@@ -69,7 +69,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
           onClick={() => setIsOpen(false)}
         >
           <div 
-            className="bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-2xl w-full max-w-md max-h-[80vh] overflow-hidden shadow-xl"
+            className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md max-h-[80vh] overflow-hidden shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">

@@ -4,7 +4,7 @@ import { getPublishedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Head from "next/head";
 import { NextSeo } from 'next-seo';
-import { useMemo, useState, Suspense, lazy } from "react";
+import { useMemo, useState, Suspense, lazy, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Pagination from "@/components/Pagination";
@@ -38,12 +38,21 @@ export default function Home({ posts, categories, tags }: Props) {
   // 필터링된 포스트
   const filteredPosts = useMemo(() => {
     let filtered = [...posts];
-    if (currentCategory) {
+    
+    // 카테고리 필터링
+    if (currentCategory && currentCategory !== '') {
+      console.log('Filtering by category:', currentCategory);
       filtered = filtered.filter(post => post.category === currentCategory);
+      console.log('Filtered posts count:', filtered.length);
     }
-    if (currentTag) {
+    
+    // 태그 필터링
+    if (currentTag && currentTag !== '') {
+      console.log('Filtering by tag:', currentTag);
       filtered = filtered.filter(post => post.tags?.includes(currentTag));
+      console.log('Filtered posts count:', filtered.length);
     }
+    
     return filtered;
   }, [posts, currentCategory, currentTag]);
 
@@ -56,9 +65,22 @@ export default function Home({ posts, categories, tags }: Props) {
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
+  // 카테고리나 태그가 변경될 때 페이지를 1로 리셋
+  useEffect(() => {
+    if (currentPage > 1 && totalPages < currentPage) {
+      const query = { ...router.query };
+      delete query.page;
+      router.push({ query }, undefined, { shallow: true });
+    }
+  }, [currentCategory, currentTag, currentPage, totalPages, router]);
+
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
     const query = { ...router.query, page };
+    // 카테고리나 태그가 변경되면 페이지를 1로 리셋
+    if (page === 1) {
+      delete query.page;
+    }
     router.push({ query }, undefined, { shallow: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
