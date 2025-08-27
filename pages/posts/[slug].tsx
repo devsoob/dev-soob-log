@@ -20,6 +20,7 @@ import { useGestureNavigation } from '@/lib/useGestureNavigation';
 import { useEffect, useState, Suspense, lazy } from 'react';
 import Script from 'next/script';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { useTableOfContents } from '@/hooks/useTableOfContents';
 
 // 지연 로딩 컴포넌트
 const LazyGiscusComments = lazy(() => import('@/components/GiscusComments'));
@@ -85,6 +86,9 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
   const [showGestureIndicator, setShowGestureIndicator] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
+  // 공통 목차 훅 사용 (tocItems가 있을 때만)
+  const { activeId, scrollToHeading, updateActiveId } = useTableOfContents(tocItems.length > 0 ? tocItems : []);
+
   // 제스처 네비게이션 훅 사용
   useGestureNavigation({
     prevPost,
@@ -96,24 +100,29 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
   });
 
   useEffect(() => {
-    // .prose 클래스 내부의 h1, h2, h3 태그를 찾아서 목차 생성
-    const headings = document.querySelectorAll('#main-content h1, #main-content h2, #main-content h3');
-    const items: TocItem[] = [];
+    // MDX 콘텐츠가 렌더링된 후 목차 생성
+    const timeoutId = setTimeout(() => {
+      // article 내부의 h1, h2, h3 태그를 찾아서 목차 생성
+      const headings = document.querySelectorAll('article h1, article h2, article h3');
+      const items: TocItem[] = [];
 
-    headings.forEach((heading, index) => {
-      const id = (heading as HTMLElement).id || `heading-${index}`;
-      if (!(heading as HTMLElement).id) {
-        (heading as HTMLElement).id = id;
-      }
+      headings.forEach((heading, index) => {
+        const id = (heading as HTMLElement).id || `heading-${index}`;
+        if (!(heading as HTMLElement).id) {
+          (heading as HTMLElement).id = id;
+        }
 
-      items.push({
-        id,
-        text: heading.textContent || '',
-        level: parseInt(heading.tagName.charAt(1))
+        items.push({
+          id,
+          text: heading.textContent || '',
+          level: parseInt(heading.tagName.charAt(1))
+        });
       });
-    });
 
-    setTocItems(items);
+      setTocItems(items);
+    }, 500); // MDX 렌더링 완료 후 목차 생성
+
+    return () => clearTimeout(timeoutId);
   }, [mdxSource]); // mdxSource가 변경될 때마다 목차를 다시 생성합니다.
 
   // 스크롤 이벤트 리스너 추가
@@ -367,7 +376,11 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
                 style={{ right: 'max(calc((100vw - 72rem) / 2), 1rem)' }}
               >
                 <div className="max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 toc-scrollbar">
-                  <TableOfContents tocItems={tocItems} />
+                  <TableOfContents 
+                    tocItems={tocItems} 
+                    activeId={activeId}
+                    onHeadingClick={scrollToHeading}
+                  />
                 </div>
               </aside>
             )}
@@ -378,7 +391,12 @@ export default function PostPage({ post, mdxSource, prevPost, nextPost, relatedP
       {/* 모바일 목차 */}
       {tocItems.length > 0 && (
         <div className="block md:hidden">
-          <MobileTableOfContents tocItems={tocItems} />
+          <MobileTableOfContents 
+            tocItems={tocItems} 
+            activeId={activeId}
+            onHeadingClick={scrollToHeading}
+            onUpdateActiveId={updateActiveId}
+          />
         </div>
       )}
       

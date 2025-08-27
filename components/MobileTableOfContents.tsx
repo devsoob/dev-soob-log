@@ -5,36 +5,99 @@ import { TocItem } from './TableOfContents';
 
 interface MobileTableOfContentsProps {
   tocItems: TocItem[];
+  activeId?: string;
+  onHeadingClick?: (id: string) => void;
+  onUpdateActiveId?: (id: string) => void;
 }
 
-export default function MobileTableOfContents({ tocItems }: MobileTableOfContentsProps) {
+export default function MobileTableOfContents({ 
+  tocItems, 
+  activeId: propActiveId, 
+  onHeadingClick,
+  onUpdateActiveId
+}: MobileTableOfContentsProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string>('');
+  const [headerHeight, setHeaderHeight] = useState(100);
 
+  // props로 받은 activeId를 우선 사용
+  const activeId = propActiveId !== undefined ? propActiveId : '';
+
+  // 헤더 높이 설정
   useEffect(() => {
-    const handleScroll = () => {
-      const headings = document.querySelectorAll('h1, h2, h3');
-      let current = '';
+    const header = document.querySelector('header');
+    if (header) {
+      setHeaderHeight(header.clientHeight + 24);
+    }
+  }, []);
 
-      headings.forEach((heading) => {
-        const rect = heading.getBoundingClientRect();
-        if (rect.top <= 100) {
-          current = heading.id;
-        }
-      });
-
-      setActiveId(current);
+  // 모달 열림/닫힘에 따라 body 스크롤 제어
+  useEffect(() => {
+    const handleResize = () => {
+      // 화면 크기가 md 이상이 되면 모달을 닫고 스크롤 복원
+      if (window.innerWidth >= 768 && isOpen) {
+        setIsOpen(false);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    if (isOpen) {
+      // 모달 열림 시 스크롤 방지 (더 안전한 방법)
+      const scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${scrollY}px`;
+      
+      // 모달이 열린 후 선택된 목차가 보이도록 스크롤
+      setTimeout(() => {
+        const activeElement = document.querySelector(`[data-toc-id="${activeId}"]`);
+        if (activeElement) {
+          activeElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }
+      }, 100);
+    } else {
+      // 모달 닫힘 시 스크롤 복원
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+
+    // 화면 크기 변경 감지
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트 언마운트 시 스크롤 복원
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    };
+  }, [isOpen]); // activeId 의존성 제거
 
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // 모달을 먼저 닫고 스크롤 복원
       setIsOpen(false);
+      
+      // 스크롤 복원 후 목차로 이동
+      setTimeout(() => {
+        if (onHeadingClick) {
+          onHeadingClick(id);
+        }
+      }, 300); // 모달 닫힘 애니메이션 완료 후
     }
   };
 
@@ -46,7 +109,59 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
     <>
       {/* 모바일 목차 버튼 */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          // 현재 스크롤 위치 저장
+          const currentScrollY = window.scrollY;
+          
+          // 모달을 열기 전에 현재 스크롤 위치에서 가장 가까운 헤딩 찾기
+          const headings = document.querySelectorAll('h1, h2, h3');
+          let currentHeading = '';
+          
+          // 실제 헤더 높이 측정
+          const header = document.querySelector('header');
+          const headerHeight = header ? header.clientHeight : 80;
+          const visibleThreshold = headerHeight + 20; // 헤더 아래 20px 여백
+          
+          // 현재 화면에 보이는 헤딩 중에서 가장 위에 있는 것을 찾기
+          for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i];
+            const rect = heading.getBoundingClientRect();
+            
+            // 헤딩이 실제로 보이는 영역(헤더 아래)에 있는 경우
+            if (rect.top <= visibleThreshold && rect.bottom > visibleThreshold) {
+              currentHeading = heading.id;
+              break;
+            }
+          }
+          
+          // 위에서 찾지 못했다면, 스크롤 위치를 기준으로 가장 가까운 헤딩 찾기
+          if (!currentHeading) {
+            let closestHeading = '';
+            let minDistance = Infinity;
+            
+            headings.forEach((heading) => {
+              const rect = heading.getBoundingClientRect();
+              const distance = Math.abs(rect.top - visibleThreshold);
+              if (distance < minDistance) {
+                minDistance = distance;
+                closestHeading = heading.id;
+              }
+            });
+            
+            currentHeading = closestHeading;
+          }
+
+          // 현재 스크롤 위치에 해당하는 헤딩이 있으면 activeId 업데이트
+          if (currentHeading && currentHeading !== activeId) {
+            // 부모 컴포넌트의 activeId를 업데이트하기 위해 onUpdateActiveId 호출
+            if (onUpdateActiveId) {
+              onUpdateActiveId(currentHeading);
+            }
+          }
+
+          // 모달 열기
+          setIsOpen(true);
+        }}
         className="fixed bottom-6 right-6 z-[60] btn-primary p-3 rounded-full shadow-lg transition-colors duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="목차 열기"
         aria-expanded={isOpen}
@@ -98,6 +213,7 @@ export default function MobileTableOfContents({ tocItems }: MobileTableOfContent
                       style={{
                         paddingLeft: `${(item.level - 1) * 12 + 8}px`
                       }}
+                      data-toc-id={item.id}
                       aria-current={activeId === item.id ? 'true' : undefined}
                       aria-label={`${item.text}로 이동`}
                     >

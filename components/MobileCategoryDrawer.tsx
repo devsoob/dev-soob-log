@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -20,6 +20,50 @@ const MobileCategoryDrawer: React.FC<MobileCategoryDrawerProps> = ({
 }) => {
   const router = useRouter();
   const currentCategory = router.query.category as string;
+
+  // 모달 열림/닫힘에 따라 body 스크롤 제어
+  useEffect(() => {
+    const handleResize = () => {
+      // 화면 크기가 md 이상이 되면 모달을 닫고 스크롤 복원
+      if (window.innerWidth >= 768 && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      // 모달 열림 시 스크롤 방지
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
+    } else {
+      // 모달 닫힘 시 스크롤 복원
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+
+    // 화면 크기 변경 감지
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트 언마운트 시 스크롤 복원
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    };
+  }, [isOpen, onClose]);
 
   // 카테고리 선택 시 드로어를 닫습니다
   const handleCategoryClick = () => {

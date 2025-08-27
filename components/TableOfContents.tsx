@@ -11,57 +11,22 @@ export interface TocItem {
 interface TableOfContentsProps {
   className?: string;
   tocItems: TocItem[];
+  activeId?: string;
+  onHeadingClick?: (id: string) => void;
 }
 
-export default function TableOfContents({ className = '', tocItems }: TableOfContentsProps) {
-  const [activeId, setActiveId] = useState<string>('');
-  const [headerHeight, setHeaderHeight] = useState(100);
-
-  useEffect(() => {
-    const header = document.querySelector('header');
-    if (header) {
-      setHeaderHeight(header.clientHeight + 24);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (tocItems.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: `-${headerHeight}px 0px -80% 0px`,
-        threshold: 0
-      }
-    );
-
-    tocItems.forEach((item) => {
-      const element = document.getElementById(item.id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, [tocItems, headerHeight]);
+export default function TableOfContents({ 
+  className = '', 
+  tocItems, 
+  activeId: propActiveId, 
+  onHeadingClick 
+}: TableOfContentsProps) {
+  // props로 받은 activeId를 우선 사용, 없으면 내부 상태 사용
+  const activeId = propActiveId !== undefined ? propActiveId : '';
 
   const scrollToHeading = (id: string) => {
-    setActiveId(id);
-    const element = document.getElementById(id);
-    if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    if (onHeadingClick) {
+      onHeadingClick(id);
     }
   };
 
