@@ -41,16 +41,12 @@ export default function Home({ posts, categories, tags }: Props) {
     
     // 카테고리 필터링
     if (currentCategory && currentCategory !== '') {
-      console.log('Filtering by category:', currentCategory);
       filtered = filtered.filter(post => post.category === currentCategory);
-      console.log('Filtered posts count:', filtered.length);
     }
     
     // 태그 필터링
     if (currentTag && currentTag !== '') {
-      console.log('Filtering by tag:', currentTag);
       filtered = filtered.filter(post => post.tags?.includes(currentTag));
-      console.log('Filtered posts count:', filtered.length);
     }
     
     return filtered;
@@ -69,19 +65,22 @@ export default function Home({ posts, categories, tags }: Props) {
   useEffect(() => {
     if (currentPage > 1 && totalPages < currentPage) {
       const query = { ...router.query };
-      delete query.page;
-      router.push({ query }, undefined, { shallow: true });
+      const { page: _, ...queryWithoutPage } = query;
+      router.push({ query: queryWithoutPage }, undefined, { shallow: true });
     }
   }, [currentCategory, currentTag, currentPage, totalPages, router]);
 
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
-    const query = { ...router.query, page };
-    // 카테고리나 태그가 변경되면 페이지를 1로 리셋
+    const query = { ...router.query };
     if (page === 1) {
-      delete query.page;
+      // page가 1이면 query에서 page 속성을 제거
+      const { page: _, ...queryWithoutPage } = query;
+      router.push({ query: queryWithoutPage }, undefined, { shallow: true });
+    } else {
+      query.page = page.toString();
+      router.push({ query }, undefined, { shallow: true });
     }
-    router.push({ query }, undefined, { shallow: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
