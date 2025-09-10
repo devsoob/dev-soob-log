@@ -3,16 +3,18 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { Client } from '@notionhq/client';
+import { NotionToMarkdown } from 'notion-to-md';
 
 // In-memory TTL cache for posts to avoid redundant Notion/FS reads
 type CacheEntry<T> = { data: T; timestamp: number };
 const postsCache: Map<string, CacheEntry<any>> = new Map();
-const POSTS_CACHE_TTL_MS = 1000 * 60 * 5; // 5 minutes
+// Disable cache to reflect Notion changes immediately in all envs
+const POSTS_CACHE_TTL_MS = 0;
 
 function readCache<T>(key: string): T | null {
   const entry = postsCache.get(key);
   if (!entry) return null;
-  if (Date.now() - entry.timestamp > POSTS_CACHE_TTL_MS) {
+  if (POSTS_CACHE_TTL_MS === 0 || Date.now() - entry.timestamp > POSTS_CACHE_TTL_MS) {
     postsCache.delete(key);
     return null;
   }
@@ -20,6 +22,7 @@ function readCache<T>(key: string): T | null {
 }
 
 function writeCache<T>(key: string, data: T): void {
+  if (POSTS_CACHE_TTL_MS === 0) return; // don't cache in dev
   postsCache.set(key, { data, timestamp: Date.now() });
 }
 
@@ -28,10 +31,24 @@ const notion = process.env.NOTION_API_KEY ? new Client({
   auth: process.env.NOTION_API_KEY,
 }) : null;
 
+const n2m = notion ? new NotionToMarkdown({ notionClient: notion }) : null;
+
+// Customize callout to render as dedicated HTML container to style separately from blockquote
+if (n2m) {
+  try {
+    // @ts-ignore - method exists in notion-to-md
+    n2m.setCustomTransformer('callout', async (block: any) => {
+      const icon = (block.callout && block.callout.icon && block.callout.icon.type === 'emoji') ? block.callout.icon.emoji : '';
+      const richTexts = (block.callout && Array.isArray(block.callout.rich_text)) ? block.callout.rich_text.map((t: any) => t.plain_text).join('') : '';
+      return `<div class="notion-callout"><div class="notion-callout-icon">${icon || ''}</div><div class="notion-callout-content">${richTexts}</div></div>`;
+    });
+  } catch {}
+}
+
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
 // Notion API에서 포스트 가져오기
-async function getAllNotionPosts(): Promise<UnifiedPost[]> {
+async function getAllNotionPosts(includeContent: boolean = true): Promise<UnifiedPost[]> {
   if (!notion || !DATABASE_ID) {
     console.warn('Notion API not configured. Set NOTION_API_KEY and NOTION_DATABASE_ID in .env.local');
     return [];
@@ -54,6 +71,10 @@ async function getAllNotionPosts(): Promise<UnifiedPost[]> {
 
     for (const page of response.results) {
       if ('properties' in page) {
+        // Skip archived pages (deleted/archived in Notion)
+        if ('archived' in page && page.archived) {
+          continue;
+        }
         const properties = page.properties;
         
         // 필수 속성 확인
@@ -117,58 +138,23 @@ async function getAllNotionPosts(): Promise<UnifiedPost[]> {
 
 // Notion 페이지 내용 가져오기
 async function getNotionPageContent(pageId: string): Promise<string> {
-  if (!notion) return '';
-
+  if (!notion || !n2m) return '';
   try {
-    const blocks = await notion.blocks.children.list({
-      block_id: pageId,
-    });
+    const mdBlocks = await n2m.pageToMarkdown(pageId);
+    const mdString = n2m.toMarkdownString(mdBlocks);
+    let content = mdString.parent || '';
 
-    // 간단한 블록 텍스트 추출 (실제로는 더 복잡한 변환이 필요)
-    let content = '';
-    for (const block of blocks.results) {
-      if ('type' in block) {
-        switch (block.type) {
-          case 'paragraph':
-            if (block.paragraph?.rich_text) {
-              content += block.paragraph.rich_text.map(text => text.plain_text).join('') + '\n\n';
-            }
-            break;
-          case 'heading_1':
-            if (block.heading_1?.rich_text) {
-              content += '# ' + block.heading_1.rich_text.map(text => text.plain_text).join('') + '\n\n';
-            }
-            break;
-          case 'heading_2':
-            if (block.heading_2?.rich_text) {
-              content += '## ' + block.heading_2.rich_text.map(text => text.plain_text).join('') + '\n\n';
-            }
-            break;
-          case 'heading_3':
-            if (block.heading_3?.rich_text) {
-              content += '### ' + block.heading_3.rich_text.map(text => text.plain_text).join('') + '\n\n';
-            }
-            break;
-          case 'bulleted_list_item':
-            if (block.bulleted_list_item?.rich_text) {
-              content += '- ' + block.bulleted_list_item.rich_text.map(text => text.plain_text).join('') + '\n';
-            }
-            break;
-          case 'numbered_list_item':
-            if (block.numbered_list_item?.rich_text) {
-              content += '1. ' + block.numbered_list_item.rich_text.map(text => text.plain_text).join('') + '\n';
-            }
-            break;
-          case 'code':
-            if (block.code?.rich_text) {
-              const language = block.code.language || '';
-              const code = block.code.rich_text.map(text => text.plain_text).join('');
-              content += '```' + language + '\n' + code + '\n```\n\n';
-            }
-            break;
-        }
-      }
-    }
+    // Cleanup: remove wrapping quotes that notion-to-md may add around callouts/quotes
+    content = content.replace(/^"\s*|\s*"$/gm, '');
+
+    // Fix task list having extra bullet before checkbox
+    content = content.replace(/^\s*[-*]\s*\[(x| )\]/gim, match => match.replace(/^\s*[-*]\s*/, ''));
+
+    // Ensure each task appears on its own line
+    content = content.replace(/\s+(- \[(?: |x)\]\s+)/g, '\n$1');
+
+    // Ensure toggle content is indented under its summary
+    content = content.replace(/(<details>\s*<summary>[^<]+<\/summary>)\n([^<])/g, (_m, a, b) => `${a}\n\t${b}`);
 
     return content;
   } catch (error) {
@@ -177,8 +163,13 @@ async function getNotionPageContent(pageId: string): Promise<string> {
   }
 }
 
-async function getNotionPublishedPosts(): Promise<UnifiedPost[]> {
-  const allPosts = await getAllNotionPosts();
+// 외부에서 특정 Notion 페이지의 콘텐츠만 필요할 때 사용
+export async function getNotionContentById(pageId: string): Promise<string> {
+  return getNotionPageContent(pageId);
+}
+
+async function getNotionPublishedPosts(includeContent: boolean = true): Promise<UnifiedPost[]> {
+  const allPosts = await getAllNotionPosts(true);
   return allPosts.filter(post => post.isPublished);
 }
 
@@ -238,7 +229,7 @@ export async function getAllPosts(): Promise<UnifiedPost[]> {
   if (cached) return cached;
 
   const [notionPosts, markdownPosts] = await Promise.all([
-    getAllNotionPosts(),
+    getAllNotionPosts(true),
     Promise.resolve(getMarkdownPosts())
   ]);
 
@@ -295,7 +286,8 @@ export async function getPublishedPosts(): Promise<UnifiedPost[]> {
 
   const markdownPosts = getMarkdownPosts();
   const filteredMarkdownPosts = markdownPosts.filter((post: UnifiedPost) => post.isPublished);
-  const notionPosts = await getNotionPublishedPosts();
+  // 목록에서도 기존처럼 전체 콘텐츠를 포함해 가져옵니다 (요청에 따라 롤백)
+  const notionPosts = await getNotionPublishedPosts(true);
 
   const postMap = new Map<string, UnifiedPost>();
 
