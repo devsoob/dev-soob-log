@@ -116,6 +116,83 @@ a {
   }
 }
 
+/* Notion-like markdown rendering tweaks */
+@layer components {
+  /* Remove bullet for task list items */
+  .prose ul li:has(> input[type="checkbox"]) {
+    list-style: none;
+  }
+  .prose :where(ul > li) > input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+
+  /* Ensure each task item occupies its own line */
+  .prose li.task-list-item {
+    display: list-item;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Blockquote: remove decorative quotes */
+  .prose blockquote {
+    quotes: none;
+  }
+  .prose blockquote p::before,
+  .prose blockquote p::after {
+    content: none !important;
+  }
+
+  /* Toggle spacing and indent for children; keep default marker visible */
+  .prose details {
+    padding: 0.25rem 0.5rem;
+  }
+  .prose details > summary {
+    cursor: pointer;
+  }
+  .prose details > *:not(summary) {
+    margin-left: 1rem;
+  }
+
+  /* Revert default blockquote to theme defaults */
+  .prose blockquote {
+    background: none;
+    border-left: 0.25rem solid rgba(0,0,0,0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+  }
+  .dark .prose blockquote {
+    border-left-color: rgba(255,255,255,0.15);
+  }
+
+  /* Dedicated Notion callout box (not blockquote) */
+  .prose .notion-callout {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: #f3f4f6; /* neutral light gray */
+  }
+  .prose .notion-callout-icon { flex: 0 0 auto; }
+  .prose .notion-callout-content { flex: 1 1 auto; }
+  .dark .prose .notion-callout {
+    background: #262626; /* subtle gray in dark */
+  }
+}
+
+/* Tighter paragraph spacing in article content */
+@layer components {
+  .prose p {
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
+  }
+
+  @media (max-width: 768px) {
+    .prose p {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
 /* 노션 스타일 인라인 코드 */
 @layer utilities {
   .notion-code {
