@@ -1,11 +1,12 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
-import { getPublishedPosts } from '@/lib/posts';
+import { getPublishedPosts, getNotionContentById } from '@/lib/posts';
 import { UnifiedPost } from '@/types/post';
 import Header from '@/components/Header';
 import Footer from "@/components/Footer";
@@ -576,8 +577,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   // 제목과 설명 제거
-  const strippedContent = stripTitleAndDescription(post.content, post.title, post.description);
-  const mdxSource = await serialize(strippedContent);
+  // 상세 페이지에 들어왔을 때, Notion 글이라면 최신 본문을 실시간으로 로드
+  let fullContent = post.content;
+  if (post.slug.startsWith('notion-') && !fullContent) {
+    fullContent = await getNotionContentById(post.id);
+  }
+
+  const strippedContent = stripTitleAndDescription(fullContent, post.title, post.description);
+  const mdxSource = await serialize(strippedContent, {
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+    },
+  });
 
   return {
     props: {
