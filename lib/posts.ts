@@ -8,8 +8,8 @@ import { NotionToMarkdown } from 'notion-to-md';
 // In-memory TTL cache for posts to avoid redundant Notion/FS reads
 type CacheEntry<T> = { data: T; timestamp: number };
 const postsCache: Map<string, CacheEntry<any>> = new Map();
-// Disable cache to reflect Notion changes immediately in all envs
-const POSTS_CACHE_TTL_MS = 0;
+// Short TTL cache to reduce repeated Notion calls and speed up navigation
+const POSTS_CACHE_TTL_MS = 60 * 1000; // 1 minute
 
 function readCache<T>(key: string): T | null {
   const entry = postsCache.get(key);
@@ -100,8 +100,8 @@ async function getAllNotionPosts(includeContent: boolean = true): Promise<Unifie
         const isPublished = properties.Published?.type === 'checkbox' ? 
           Boolean(properties.Published.checkbox) : false;
 
-        // 페이지 내용 가져오기
-        const content = await getNotionPageContent(page.id);
+        // 페이지 내용 가져오기 (목록에서는 생략 가능)
+        const content = includeContent ? await getNotionPageContent(page.id) : '';
         
         // slug 생성 (제목을 기반으로)
         const slug = title
@@ -140,6 +140,10 @@ async function getAllNotionPosts(includeContent: boolean = true): Promise<Unifie
 async function getNotionPageContent(pageId: string): Promise<string> {
   if (!notion || !n2m) return '';
   try {
+    const cacheKey = `notionContent:${pageId}`;
+    const cached = readCache<string>(cacheKey);
+    if (cached) return cached;
+
     const mdBlocks = await n2m.pageToMarkdown(pageId);
     const mdString = n2m.toMarkdownString(mdBlocks);
     let content = mdString.parent || '';
@@ -156,6 +160,7 @@ async function getNotionPageContent(pageId: string): Promise<string> {
     // Ensure toggle content is indented under its summary
     content = content.replace(/(<details>\s*<summary>[^<]+<\/summary>)\n([^<])/g, (_m, a, b) => `${a}\n\t${b}`);
 
+    writeCache(cacheKey, content);
     return content;
   } catch (error) {
     console.error(`Error fetching content for page ${pageId}:`, error);
@@ -169,7 +174,7 @@ export async function getNotionContentById(pageId: string): Promise<string> {
 }
 
 async function getNotionPublishedPosts(includeContent: boolean = true): Promise<UnifiedPost[]> {
-  const allPosts = await getAllNotionPosts(true);
+  const allPosts = await getAllNotionPosts(includeContent);
   return allPosts.filter(post => post.isPublished);
 }
 
@@ -229,7 +234,7 @@ export async function getAllPosts(): Promise<UnifiedPost[]> {
   if (cached) return cached;
 
   const [notionPosts, markdownPosts] = await Promise.all([
-    getAllNotionPosts(true),
+    getAllNotionPosts(false),
     Promise.resolve(getMarkdownPosts())
   ]);
 
@@ -286,8 +291,8 @@ export async function getPublishedPosts(): Promise<UnifiedPost[]> {
 
   const markdownPosts = getMarkdownPosts();
   const filteredMarkdownPosts = markdownPosts.filter((post: UnifiedPost) => post.isPublished);
-  // 목록에서도 기존처럼 전체 콘텐츠를 포함해 가져옵니다 (요청에 따라 롤백)
-  const notionPosts = await getNotionPublishedPosts(true);
+  // 목록에서는 Notion 본문을 불러오지 않음
+  const notionPosts = await getNotionPublishedPosts(false);
 
   const postMap = new Map<string, UnifiedPost>();
 
