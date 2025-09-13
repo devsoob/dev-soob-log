@@ -29,10 +29,6 @@ async function generateOGImage() {
     ctx.textAlign = 'center';
     ctx.fillText('Dev Soob Log', 600, 315);
     
-    // 서브 타이틀
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '28px Arial';
-    ctx.fillText('개발 경험과 지식을 공유하는 블로그', 600, 375);
     
     // PNG로 저장
     const buffer = canvas.toBuffer('image/png');

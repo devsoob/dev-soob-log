@@ -87,11 +87,11 @@ export default function Home({ posts, categories, tags }: Props) {
   return (
     <>
       <NextSeo
-        title="Dev Soob Log - 개발자의 기술 블로그"
+        title="Dev Soob Log"
         description="프로그래밍, 웹 개발, 백엔드, 프론트엔드, DevOps 등 다양한 개발 기술과 경험을 공유하는 개발자 블로그입니다. React, Node.js, TypeScript, Docker 등 최신 기술 트렌드를 다룹니다."
         canonical={process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app'}
         openGraph={{
-          title: "Dev Soob Log - 개발자의 기술 블로그",
+          title: "Dev Soob Log",
           description: "프로그래밍, 웹 개발, 백엔드, 프론트엔드, DevOps 등 다양한 개발 기술과 경험을 공유하는 개발자 블로그입니다.",
           url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dev-soob-log.vercel.app',
           type: 'website',

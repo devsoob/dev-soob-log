@@ -19,7 +19,5 @@
     <!-- 메인 타이틀 -->
     <text x="0" y="-20" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" fill="#ffffff" filter="url(#shadow)">Dev Soob Log</text>
     
-    <!-- 서브 타이틀 -->
-    <text x="0" y="40" font-family="Arial, sans-serif" font-size="36" text-anchor="middle" fill="#ffffff" filter="url(#shadow)">개발 경험과 지식을 공유하는 블로그</text>
   </g>
 </svg> 
